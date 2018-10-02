@@ -38,29 +38,64 @@ public class AvlTreeTest {
 
     @Test
     public void testAvlTreeRightRotate() {
-        for (int i = 0; i < 10000000; i++) {
+        for (int i = 10000; i > 0; i--) {
             Assert.assertTrue(testAvlTreeAscendant_.insert(i));
+            Assert.assertTrue("Nie je spnena podmienka AVL stromu" ,testAvlTreeAscendant_.checkAvlTreeConditions());
         }
-
+        testAvlTreeAscendant_.printCounter();
     }
 
     @Test
     public void testAvlTreeLeftRotate() {
-        for (int i = 10000000; i > 0; i--) {
+        for (int i = 0; i < 10000; i++) {
             Assert.assertTrue(testAvlTreeAscendant_.insert(i));
+            Assert.assertTrue("Nie je spnena podmienka AVL stromu" ,testAvlTreeAscendant_.checkAvlTreeConditions());
         }
+        testAvlTreeAscendant_.printCounter();
     }
 
     @Test
     public void testAvlTreeRightLeftRotate() {
-
+        for (int i = 0; i < 10000; i += 3) {
+            int first = i;
+            int second = i + 2;
+            int third = i + 1;
+            Assert.assertTrue(testAvlTreeAscendant_.insert(first));
+            Assert.assertTrue("Nie je spnena podmienka AVL stromu" ,testAvlTreeAscendant_.checkAvlTreeConditions());
+            Assert.assertTrue(testAvlTreeAscendant_.insert(second));
+            Assert.assertTrue("Nie je spnena podmienka AVL stromu" ,testAvlTreeAscendant_.checkAvlTreeConditions());
+            Assert.assertTrue(testAvlTreeAscendant_.insert(third));
+            Assert.assertTrue("Nie je spnena podmienka AVL stromu" ,testAvlTreeAscendant_.checkAvlTreeConditions());
+        }
+        testAvlTreeAscendant_.printCounter();
+        printLevelOrder(testAvlTreeAscendant_);
     }
 
     @Test
     public void testAvlTreeLeftRightRotate() {
-
+        for (int i = 0; i < 100000; i += 3) {
+            int first = i + 2;
+            int second = i;
+            int third = i + 1;
+            Assert.assertTrue(testAvlTreeAscendant_.insert(first));
+            Assert.assertTrue("Nie je spnena podmienka AVL stromu" ,testAvlTreeAscendant_.checkAvlTreeConditions());
+            Assert.assertTrue(testAvlTreeAscendant_.insert(second));
+            Assert.assertTrue("Nie je spnena podmienka AVL stromu" ,testAvlTreeAscendant_.checkAvlTreeConditions());
+            Assert.assertTrue(testAvlTreeAscendant_.insert(third));
+            Assert.assertTrue("Nie je spnena podmienka AVL stromu" ,testAvlTreeAscendant_.checkAvlTreeConditions());
+        }
+        testAvlTreeAscendant_.printCounter();
+        printLevelOrder(testAvlTreeAscendant_);
     }
 
+
+    @Test
+    public void testAvlTreeInsertionByHand() {
+        testAvlTreeAscendant_.insert(6);
+        testAvlTreeAscendant_.insert(4);
+        testAvlTreeAscendant_.insert(5);
+        printLevelOrder(testAvlTreeAscendant_);
+    }
 
     @Test
     public void testAvlTreeInsertion() {
@@ -82,37 +117,47 @@ public class AvlTreeTest {
 
     @Test
     public void testRandomInsertion() {
-        for (int k = 0; k < 10; k++) {
+        for (int k = 0; k < 1; k++) {
             testAvlTreeAscendant_.clear();
+            Map<Integer, Integer> insertedTree = new TreeMap<>((o1, o2) -> o1 - o2);
             ArrayList<Integer> insertedValues = new ArrayList<>();
             Random generator = new Random();
 
 
-            int iterations = 100;
+            int iterations = 10000000;
 
             for (int i = 0; i < iterations; i++) {
-                int generated = generator.nextInt(iterations);
-                boolean found = false;
-                for (Integer num: insertedValues) {
-                    if (num == generated) {
-                        found = true;
-                        break;
-                    }
+                int generated = generator.nextInt(iterations * 2);
+                boolean found = insertedTree.get(generated) != null ? true : false;
+                if (found) {
+                    continue;
                 }
                 if (!found) {
-                    insertedValues.add(generated);
+                    //System.out.println("vkladam: " + generated);
+                    insertedTree.put(generated, generated);
                     boolean inserted = testAvlTreeAscendant_.insert(generated);
                     Assert.assertTrue("Nepodarilo a vlozit", inserted);
+                    Assert.assertNotNull(testAvlTreeAscendant_.findData(generated));
+                    //Assert.assertTrue("Avl condition nedodrzana", testAvlTreeAscendant_.checkAvlTreeConditions());
+                    //printLevelOrder(testAvlTreeAscendant_);
+
                 }
             }
-            insertedValues.sort((o1, o2) -> o1 - o2);
+            //testAvlTreeAscendant_.printCounter();
 
-            ArrayList<Integer> resultList = new ArrayList<>();
+
+            ArrayList<Integer> resultList = new ArrayList<>(insertedValues.size());
             AvlTree.traverseTree(testAvlTreeAscendant_, resultList);
-            for (int i = 0; i < insertedValues.size(); ++i) {
-                Assert.assertEquals(insertedValues.get(i), resultList.get(i));
+            Set<Map.Entry<Integer, Integer>> entrySet = insertedTree.entrySet();
+            int i = 0;
+            for (Map.Entry<Integer,Integer> pair : entrySet) {
+                int treeValue = resultList.get(i);
+                Assert.assertEquals( pair.getKey().intValue(), treeValue);
+                ++i;
             }
+
             System.out.println("Result list size: " + resultList.size());
+            testAvlTreeAscendant_.printCounter();
         }
     }
 
