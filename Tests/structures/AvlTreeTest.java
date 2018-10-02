@@ -46,7 +46,9 @@ public class AvlTreeTest {
 
     @Test
     public void testAvlTreeLeftRotate() {
-
+        for (int i = 10000000; i > 0; i--) {
+            Assert.assertTrue(testAvlTreeAscendant_.insert(i));
+        }
     }
 
     @Test
