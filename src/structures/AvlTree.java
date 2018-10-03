@@ -1,9 +1,6 @@
 package structures;
 
-import com.sun.istack.internal.NotNull;
-
 import java.util.*;
-import java.util.function.Consumer;
 
 public class AvlTree<T> implements Iterable<T> {
 
@@ -17,6 +14,13 @@ public class AvlTree<T> implements Iterable<T> {
         long rightRotate = 0;
         long rightLeftRotate = 0;
         long leftRightRotate = 0;
+
+        public void reset() {
+            leftRotate = 0;
+            rightRotate = 0;
+            rightLeftRotate = 0;
+            leftRightRotate = 0;
+        }
 
         @Override
         public String toString() {
@@ -90,6 +94,7 @@ public class AvlTree<T> implements Iterable<T> {
     public void clear() {
         root_ = null;
         size_ = 0;
+        counter_.reset();
     }
 
     private boolean isEqual(T first, T second) {
@@ -118,7 +123,7 @@ public class AvlTree<T> implements Iterable<T> {
         return result == null ? null : result.getData();
     }
 
-    private AvlTreeNode<T> trySearchData(@NotNull T data) {
+    private AvlTreeNode<T> trySearchData(T data) {
         AvlTreeNode<T> node = root_;
         while (node != null) {
             if (isEqual(data, node.getData())) {
@@ -138,7 +143,7 @@ public class AvlTree<T> implements Iterable<T> {
         return inserted;
     }
 
-    private boolean insertDataIntoTree(@NotNull T data) {
+    private boolean insertDataIntoTree(T data) {
         if (root_ == null) {
             root_ = new AvlTreeNode<>(data);
         } else {
@@ -149,7 +154,7 @@ public class AvlTree<T> implements Iterable<T> {
             // ak nenajdem, mozem vkladat
             AvlTreeNode<T> lastNodeOnPath = stack_.peek();
             AvlTreeNode<T> nodeToInsert = new AvlTreeNode<>(data);
-            stack_.push(nodeToInsert);
+
             if (isSmaller(data, lastNodeOnPath.getData())) {
                 lastNodeOnPath.setLeftSon(nodeToInsert);
             } else {
@@ -157,13 +162,10 @@ public class AvlTree<T> implements Iterable<T> {
             }
 
 
-
-            int lastIndex = stack_.size() - 2; // zaciname az od parenta
+            int lastIndex = stack_.size() - 1; // zaciname od parenta pridanej node
             byte balanceFactor = 0;
 
             AvlTreeNode<T> currentNode = null;
-            AvlTreeNode<T> childOfCurrentNodeOnPath = null;
-            AvlTreeNode<T> newRootAfterRotation = null;
             AvlTreeNode<T> parentOfCurrentNode = null;
             boolean isCurrentNodeLeftChild = false;
 
@@ -177,62 +179,62 @@ public class AvlTree<T> implements Iterable<T> {
                 }
                 // ak je balance +1 or -1 potom pokracujeme hore
                 if (balanceFactor > 1 || balanceFactor < -1) { // treba rotaciu
-
-                    childOfCurrentNodeOnPath = stack_.get(lastIndex + 1);
                     parentOfCurrentNode = lastIndex > 0 ? stack_.get(lastIndex - 1) : null;
+
                     if (parentOfCurrentNode != null) {
                         isCurrentNodeLeftChild = currentNode.isLeftSon(parentOfCurrentNode);
                     }
-                    int balanceFactorChild = childOfCurrentNodeOnPath.getBalance();
-
-                    if (childOfCurrentNodeOnPath.isRightSon(currentNode) && balanceFactor > 1) {
-
-                        if (balanceFactorChild < 0) {
-                            newRootAfterRotation = rotateRightLeft(currentNode, childOfCurrentNodeOnPath);
-                            // rotate right left
-                        } else {
-                            newRootAfterRotation = rotateLeft(currentNode, childOfCurrentNodeOnPath);
-                            // rotate left
-                        }
-
-                    } else if (childOfCurrentNodeOnPath.isLeftSon(currentNode) && balanceFactor < -1) {
-
-                        if (balanceFactorChild > 0) {
-                            // rotate left right
-                            newRootAfterRotation = rotateLeftRight(currentNode, childOfCurrentNodeOnPath);
-                        } else {
-                            newRootAfterRotation = rotateRight(currentNode, childOfCurrentNodeOnPath);
-                            // rotate right
-                        }
-
-                    } else {
-                        System.out.println("tu sa nemas ako dostat");
-                    }
-                    if (parentOfCurrentNode != null) {
-                        if (isCurrentNodeLeftChild) {
-                            parentOfCurrentNode.setLeftSon(newRootAfterRotation);
-                        } else {
-                            parentOfCurrentNode.setRightSon(newRootAfterRotation);
-                        }
-                    } else {
-                        root_ = newRootAfterRotation;
-                    }
-
+                    rebalance(currentNode, parentOfCurrentNode, isCurrentNodeLeftChild);
                     break;
                 }
                 --lastIndex;
             }
-
-
-
         }
         return true;
+    }
+
+
+    private void rebalance(AvlTreeNode<T> nodeToBalance, AvlTreeNode<T> parent, boolean isLeftChildOfParent) {
+        byte balanceFactorNode  = nodeToBalance.getBalance();
+        AvlTreeNode<T> childOfNode = null;
+        AvlTreeNode<T> newRootAfterRotation = null;
+        byte balanceFactorChildNode = 0;
+        if (balanceFactorNode == -2) { // ideme vyvazovat zlava
+            childOfNode = nodeToBalance.getLeftSon();
+            balanceFactorChildNode = childOfNode.getBalance();
+            if (balanceFactorChildNode > 0) {
+                newRootAfterRotation = rotateLeftRight(nodeToBalance, childOfNode);
+            } else {
+                newRootAfterRotation = rotateRight(nodeToBalance, childOfNode);
+            }
+        } else if (balanceFactorNode == 2) {
+            childOfNode = nodeToBalance.getRightSon();
+            balanceFactorChildNode = childOfNode.getBalance();
+            if (balanceFactorChildNode < 0) {
+                newRootAfterRotation = rotateRightLeft(nodeToBalance, childOfNode);
+            } else {
+                newRootAfterRotation = rotateLeft(nodeToBalance, childOfNode);
+            }
+        } else {
+            System.out.println("Tu sa nikdy nedostanes, balance fasctor nie je 2 alebo -2");
+            throw new RuntimeException("Balance factor je vacsi ako 2 alebo - 2");
+        }
+
+        if (parent != null) {
+            if (isLeftChildOfParent) {
+                parent.setLeftSon(newRootAfterRotation);
+            } else {
+                parent.setRightSon(newRootAfterRotation);
+            }
+        } else {
+            root_ = newRootAfterRotation;
+        }
     }
 
     // true if found
     // false if not found
     // naplna clensku premennu stack_
-    private boolean getPathToElement(@NotNull T data) {
+    private boolean getPathToElement(T data) {
         stack_.clear();
         AvlTreeNode<T> node = root_;
         while (node != null) {
@@ -296,6 +298,10 @@ public class AvlTree<T> implements Iterable<T> {
         return rotateRight(parent, rootAfterLeftRotation);
     }
 
+    public void resetCounter() {
+        counter_.reset();
+    }
+
     public void printCounter() {
         System.out.println(counter_);
     }
@@ -321,13 +327,9 @@ public class AvlTree<T> implements Iterable<T> {
 
     // metoda pracujuca s obsahom stacku
     private void extractNode() {
-        int indexInStack = stack_.size() - 2; // index na rodica mazaneho prvku
-
-
-
-
-        AvlTreeNode<T> node = stack_.peek();
-        AvlTreeNode<T> parent = indexInStack >= 0 ? stack_.get(indexInStack) : null;
+        int indexInStack = stack_.size() - 1; // index na mazany node
+        AvlTreeNode<T> node = stack_.peek(); // v node zostane smernik na mazany prvok
+        AvlTreeNode<T> parent = indexInStack > 0 ? stack_.get(indexInStack - 1) : null; // otec mazaneho prvku
         if (parent == null) { // koren
             if (node.isLeaf()) {
                 root_ = null;
@@ -339,17 +341,6 @@ public class AvlTree<T> implements Iterable<T> {
                     root_= node.getRightSon();
                 }
                 return;
-            } else { // 2 synovia
-                AvlTreeNode<T> inorderSuccesor = node.getRightSon();
-                AvlTreeNode<T> inorderSuccesorParent = node;
-                stack_.push(inorderSuccesor);
-                while (inorderSuccesor.getLeftSon() != null) {
-                    inorderSuccesorParent = inorderSuccesor;
-                    inorderSuccesor = inorderSuccesor.getLeftSon();
-                    stack_.push(inorderSuccesor);
-                }
-                node.setData_(inorderSuccesor.getData()); // nastavim data mazanemu na inorder succsor a vymazem succesora
-                extractNodeWithOneChildren(inorderSuccesor, inorderSuccesorParent);
             }
         } else {
             if (node.isLeaf()) {
@@ -359,86 +350,75 @@ public class AvlTree<T> implements Iterable<T> {
                     parent.setRightSon(null);
                 }
             } else if (node.getNumberOfSons() == 1) {
-                AvlTreeNode<T> childOfDeletedElement = node.hasLeftSon() ? node.getLeftSon() : node.getRightSon();
-                if (node.isLeftSon(parent)) {
-                    parent.setLeftSon(childOfDeletedElement);
-                }  else {
-                    parent.setRightSon(childOfDeletedElement);
-                }
-            } else {
-                AvlTreeNode<T> inorderSuccesor = node.getRightSon();
-                AvlTreeNode<T> inorderSuccesorParent = node;
-                stack_.push(inorderSuccesor);
-                while (inorderSuccesor.getLeftSon() != null) {
-                    inorderSuccesorParent = inorderSuccesor;
-                    inorderSuccesor = inorderSuccesor.getLeftSon();
-                    stack_.push(inorderSuccesor);
-                }
-                node.setData_(inorderSuccesor.getData());
-
-                extractNodeWithOneChildren(inorderSuccesor, inorderSuccesorParent);
+                extractNodeWithOneChildren(node, parent);
             }
+        }
+        if (node.getNumberOfSons() == 2) {
+            AvlTreeNode<T> inorderSuccesor = node.getRightSon();
+            parent = node;
+            stack_.push(inorderSuccesor);
+            while (inorderSuccesor.getLeftSon() != null) {
+                parent = inorderSuccesor;
+                inorderSuccesor = inorderSuccesor.getLeftSon();
+                stack_.push(inorderSuccesor);
+            }
+            node.setData_(inorderSuccesor.getData());
+            extractNodeWithOneChildren(inorderSuccesor, parent);
+            //node = inorderSuccesor;
+        }
+        // mame vymazane, mozeme rebalancovat
+
+        // ideme cestou az spat ku korenu a vyvazujeme
+
+        stack_.pop(); // vyhodim mazany prvok, cim ho moze GC odstranit
+        indexInStack = stack_.size() - 1; //balancujeme od konca
+        byte balanceFactorNode = 0;
+        boolean isNodeLeftChild = false;
+
+        while (indexInStack >= 0) {
+            node = stack_.get(indexInStack);
+            node.updateHeight();
+            balanceFactorNode = node.getBalance();
+            if (balanceFactorNode == 1 || balanceFactorNode == -1) { // predtym bolo 0 a ked sa nam balance zmenmil o 1, nenarusi to avl strom, vyska zostava rovnaka
+                break;
+            }
+            if (balanceFactorNode > 1 || balanceFactorNode < -1) { // nie je balancovana vetva
+                parent = indexInStack > 0 ? stack_.get(indexInStack - 1) : null; // otec vyvazovaneho prvku
+                if (parent != null) {
+                    isNodeLeftChild = node.isLeftSon(parent);
+                }
+                rebalance(node, parent, isNodeLeftChild);
+            }
+            --indexInStack;
         }
     }
 
     private void extractNodeWithOneChildren(AvlTreeNode<T> nodeToRemove, AvlTreeNode<T> parentOfNode) {
-        if (nodeToRemove.getNumberOfSons() != 1) {
-            return;
+        if (nodeToRemove.getNumberOfSons() > 1) {
+            System.out.println("nemozes mazaet 2 deti");
+            throw new RuntimeException("nemozes mazaet 2 deti");
+        }
+        AvlTreeNode<T> childOfDeletedElement = nodeToRemove.hasLeftSon() ? nodeToRemove.getLeftSon() : nodeToRemove.getRightSon();
+        if (nodeToRemove.isLeftSon(parentOfNode)) {
+            parentOfNode.setLeftSon(childOfDeletedElement);
+        }  else {
+            parentOfNode.setRightSon(childOfDeletedElement);
         }
     }
-
-    private void traverseInOrderMorris(AvlTreeNode<T> root, List<T> storageList) {
-        AvlTreeNode<T> current = null;
-        AvlTreeNode<T> previous = null;
-        if (root == null)
-            return;
-        current = root;
-        while (current != null) {
-            if (current.getLeftSon() == null) {
-                //System.out.print(current.getData() + " ");
-                storageList.add(current.getData());
-                current = current.getRightSon();
-            }
-            else {
-                /* Find the inorder predecessor of current */
-                previous = current.getLeftSon();
-                while (previous.getRightSon() != null && previous.getRightSon() != current)
-                    previous = previous.getRightSon();
-
-                /* Make current as right child of its inorder predecessor */
-                if (previous.getRightSon() == null) {
-                    previous.setRightSon(current);
-                    current = current.getLeftSon();
-                }
-
-                /* Revert the changes made in if part to restore the
-                    original tree i.e., fix the right child of predecssor*/
-                else {
-                    previous.setRightSon(null);
-                    //System.out.print(current.getData() + " ");
-                    storageList.add(current.getData());
-                    current = current.getRightSon();
-                } /* End of if condition pre->right == NULL */
-
-            } /* End of if condition current->left == NULL*/
-
-        } /* End of while */
-
-    }
-
+    
     private void traverseInOrderStack(AvlTreeNode<T> root, List<T> storageList) {
         if (root == null)
             return;
-        Stack<AvlTreeNode<T>> stack = new Stack<>();
+        stack_.clear();
         AvlTreeNode<T> current = root;
 
-        while (current != null || stack.size() > 0) {
+        while (current != null || stack_.size() > 0) {
             while (current != null) {
-                stack.push(current);
+                stack_.push(current);
                 current = current.getLeftSon();
             }
 
-            current = stack.pop();
+            current = stack_.pop();
             //System.out.println(current.getData());
             storageList.add(current.getData());
             current = current.getRightSon();
@@ -446,7 +426,7 @@ public class AvlTree<T> implements Iterable<T> {
 
     }
 
-    private static <T> void traverseLevelOrder(AvlTreeNode<T> current, List<List<T>> storageList) {
+    private void traverseLevelOrder(AvlTreeNode<T> current, List<List<T>> storageList) {
         storageList.clear();
         LinkedList<AvlTreeNode<T>> queue = new LinkedList<>();
         if (current != null) {
@@ -506,12 +486,12 @@ public class AvlTree<T> implements Iterable<T> {
         }
     }
 
-    public static <T> void traverseTreeLevelOrder(AvlTree<T> tree, List<List<T>> storageList) {
+    public static <T> void TraverseTreeLevelOrder(AvlTree<T> tree, List<List<T>> storageList) {
         tree.traverseLevelOrder(tree.getRoot(), storageList);
     }
 
-    public static <T> void traverseTree(AvlTree<T> tree, List<T> storageList) {
-        tree.traverseInOrderMorris(tree.getRoot(), storageList);
+    public static <T> void TraverseTree(AvlTree<T> tree, List<T> storageList) {
+        tree.traverseInOrderStack(tree.getRoot(), storageList);
     }
 
     public boolean checkAvlTreeConditions() {
