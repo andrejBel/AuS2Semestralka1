@@ -95,6 +95,7 @@ public class AvlTree<T> implements Iterable<T> {
         root_ = null;
         size_ = 0;
         counter_.reset();
+        stack_.clear();
     }
 
     private boolean isEqual(T first, T second) {
@@ -543,13 +544,11 @@ public class AvlTree<T> implements Iterable<T> {
         public T next() {
             if (!hasNext()) throw new NoSuchElementException("No more nodes remain to iterate");
             AvlTreeNode<T> current = stack_.pop();
-            AvlTreeNode<T> forReturn = null;
             if (current != null || stack_.size() > 0) {
                 while (current != null) {
                     stack_.push(current);
                     current = current.getLeftSon();
                 }
-
                 current = stack_.pop();
                 stack_.push(current.getRightSon());
             }

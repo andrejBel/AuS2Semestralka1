@@ -5,6 +5,8 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.util.*;
+
+
 import java.util.stream.IntStream;
 
 
@@ -171,6 +173,11 @@ public class AvlTreeTest {
 
     @Test
     public void testRemoveByHand() {
+        testAvlTreeAscendant_.insert(10);
+        testAvlTreeAscendant_.insert(9);
+
+        testAvlTreeAscendant_.remove(10);
+
 
         testAvlTreeAscendant_.insert(10);
         testAvlTreeAscendant_.insert(11);
@@ -319,7 +326,8 @@ public class AvlTreeTest {
             for (Object num: keyAfterRemove) {
                 Assert.assertEquals( (Integer)num , resultList.get(index++));
             }
-            if (indexToRemove % 41 == 1 && insertedTreeMap.size() < iterations) {
+            /*
+                if (indexToRemove % 317 == 1 && insertedTreeMap.size() < iterations) {
                 int toInsert = -numberToRemove - 1;
                 if (toInsert < 0)
                 {
@@ -329,30 +337,11 @@ public class AvlTreeTest {
                     Assert.assertNotNull("Nepodarilo a vlozit", testAvlTreeAscendant_.findData(toInsert));
                 }
             }
+            */
+
         }
 
         testAvlTreeAscendant_.printCounter();
-    }
-
-    @Test
-    public void testInOrderIterator() {
-        Random generator = new Random();
-        ArrayList<Integer> generatedValues = new ArrayList<>();
-        IntStream stream = generator.ints(10000);
-        stream.forEach(value -> generatedValues.add(value));
-
-        generatedValues.forEach(value -> testAvlTreeAscendant_.insert(value));
-        generatedValues.forEach(value -> {
-            Assert.assertNotNull("Prvok nebol najdeny", testAvlTreeAscendant_.findData(value));
-        });
-
-        List<List<Integer>> resultList = new ArrayList<>();
-        AvlTree.TraverseTreeLevelOrder(testAvlTreeAscendant_, resultList);
-        int levelNum = 1;
-        for (List<Integer> level : resultList) {
-            System.out.println(levelNum + " " + level);
-            ++levelNum;
-        }
     }
 
     @Test
