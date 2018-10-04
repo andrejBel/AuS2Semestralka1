@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXSlider?>
+<?import com.jfoenix.controls.JFXSpinner?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox prefHeight="800.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8.0.181" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <GridPane hgap="16.0" vgap="24.0">
+        <columnConstraints>
+          <ColumnConstraints hgrow="NEVER" minWidth="117.0" />
+          <ColumnConstraints hgrow="ALWAYS" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <Label text="Počet katastrálnych území" />
+            <JFXSlider fx:id="sliderKatastralneUzemie_" blockIncrement="100.0" majorTickUnit="250.0" max="4000.0" showTickLabels="true" value="0" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" />
+             <Label text="Celkový počet občanov" GridPane.rowIndex="1" />
+             <JFXSlider fx:id="sliderObcania_" blockIncrement="100.0" majorTickUnit="250.0" max="4000.0" showTickLabels="true" style="-fx-re: #000000;" value="0" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" />
+             <Label text="Počet listov vlastníctva v katastrálnom území" GridPane.rowIndex="2" />
+             <JFXSlider fx:id="sliderListVlastnictva_" blockIncrement="1.0" majorTickUnit="10.0" showTickLabels="true" style="-fx-re: #000000;" value="0" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" />
+             <Label text="Počet vlastníkov na liste vlastníctva" GridPane.rowIndex="3" />
+             <JFXSlider fx:id="sliderPocetObyvatelovVListeVl_" blockIncrement="1.0" majorTickUnit="10.0" showTickLabels="true" style="-fx-re: #000000;" value="0" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="3" />
+             <Label text="Počet nehnuteľností na liste vlastníctva" GridPane.rowIndex="4" />
+             <JFXSlider fx:id="sliderPocetNehnutelnostiVListeVl_" blockIncrement="1.0" majorTickUnit="10.0" showTickLabels="true" value="0" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="4" />
+          </children>
+         <VBox.margin>
+            <Insets top="36.0" />
+         </VBox.margin>
+      </GridPane>
+      <BorderPane prefHeight="105.0" prefWidth="768.0">
+         <center>
+            <JFXButton fx:id="buttonGeneruj" buttonType="RAISED" style="-fx-background-color: #FFFFFF;" text="Generuj" BorderPane.alignment="CENTER" />
+         </center>
+         <right>
+            <JFXSpinner BorderPane.alignment="CENTER" />
+         </right>
+      </BorderPane>
+
+
+   </children>
+   <padding>
+      <Insets bottom="16.0" left="16.0" right="16.0" top="16.0" />
+   </padding>
+</VBox>
