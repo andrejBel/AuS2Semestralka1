@@ -1,7 +1,6 @@
 package GUI;
 
-import GUI.Controller.ControllerBase;
-import GUI.Controller.Generator;
+import GUI.Controller.*;
 import InformacnySystem.ISSpravyKatastra;
 import com.jfoenix.controls.JFXTabPane;
 import javafx.scene.Scene;
@@ -22,7 +21,12 @@ public class Aplikacia {
     private Stage stage_;
 
     private List<ControllerBase> controllers = Arrays.asList(
-            new Generator(isSpravyKatastra_)
+            new CGenerator(isSpravyKatastra_),
+            new C15VypisKatastralnychUzemi(isSpravyKatastra_),
+            new C16PridanieObcana(isSpravyKatastra_),
+            new C17PridanieListuVlastnictva(isSpravyKatastra_),
+            new C18PridanieNehnutelnosti(isSpravyKatastra_),
+            new C21PridanieKatastralnehoUzemia(isSpravyKatastra_)
     );
 
 
@@ -35,6 +39,13 @@ public class Aplikacia {
         for (ControllerBase controller : controllers) {
             Tab tab = new Tab(controller.getViewName());
             tab.setContent(controller.getView());
+            if (controller.getRunnableOnSelection() != null) {
+                tab.setOnSelectionChanged(event -> {
+                    if (tab.isSelected()) {
+                        controller.getRunnableOnSelection().run();
+                    }
+                });
+            }
             tabPane_.getTabs().add(tab);
         }
 

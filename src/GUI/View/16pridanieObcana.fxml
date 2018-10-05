@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXDatePicker?>
+<?import com.jfoenix.controls.JFXDialog?>
+<?import com.jfoenix.controls.JFXDialogLayout?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+
+<StackPane fx:id="stackPane" xmlns="http://javafx.com/javafx/8.0.181" xmlns:fx="http://javafx.com/fxml/1">
+    <children>
+        <JFXDialog fx:id="dialog" overlayClose="false" transitionType="TOP">
+            <JFXDialogLayout fx:id="dialogLayout">
+                <body>
+                    <VBox fx:id="dialogVBox" alignment="CENTER" spacing="10">
+
+                    </VBox>
+                </body>
+            </JFXDialogLayout>
+        </JFXDialog>
+        <VBox fx:id="contentVBox" prefHeight="800.0" prefWidth="800.0">
+            <padding>
+                <Insets bottom="16.0" left="16.0" right="16.0" top="16.0" />
+            </padding>
+         <children>
+            <JFXTextField fx:id="textFieldMenoAPriezvisko" labelFloat="true" promptText="Meno a priezvisko" VBox.vgrow="ALWAYS">
+               <VBox.margin>
+                  <Insets bottom="36.0" top="8.0" />
+               </VBox.margin>
+            </JFXTextField>
+             <JFXTextField fx:id="textFieldRodneCislo" labelFloat="true" promptText="Rodné číslo" VBox.vgrow="ALWAYS">
+                 <VBox.margin>
+                     <Insets bottom="36.0" />
+                 </VBox.margin>
+             </JFXTextField>
+            <JFXDatePicker fx:id="datePicker" defaultColor="#35c2ff" promptText="Dátum narodenia" />
+            <BorderPane prefHeight="100.0" prefWidth="768.0">
+               <center>
+                  <JFXButton fx:id="buttonPridajObcana" buttonType="RAISED" style="-fx-background-color: #FFFFFF;" text="Pridaj občana" BorderPane.alignment="CENTER" />
+               </center>
+            </BorderPane>
+         </children>
+        </VBox>
+    </children>
+</StackPane>

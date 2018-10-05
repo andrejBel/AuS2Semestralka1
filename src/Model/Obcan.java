@@ -22,7 +22,9 @@ public class Obcan {
         this.nehnutelnostiVoVlastnictve_ = new AvlTree<>(Comparator.comparing(Pair::getKey));
     }
 
-
+    public Obcan() {
+        this("", "", 0);
+    }
 
     public String getMenoPriezvisko() {
         return menoPriezvisko_;
@@ -34,5 +36,9 @@ public class Obcan {
 
     public long getDatumNarodenia() {
         return datumNarodenia_;
+    }
+
+    public void setRodneCislo_(String rodneCislo) {
+        this.rodneCislo_ = rodneCislo;
     }
 }

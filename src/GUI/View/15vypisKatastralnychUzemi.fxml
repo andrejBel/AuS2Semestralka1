@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXDialog?>
+<?import com.jfoenix.controls.JFXDialogLayout?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+
+<StackPane fx:id="stackPane" xmlns="http://javafx.com/javafx/8.0.181" xmlns:fx="http://javafx.com/fxml/1">
+    <children>
+        <VBox fx:id="contentVBox" prefHeight="800.0" prefWidth="800.0">
+            <padding>
+                <Insets bottom="16.0" left="16.0" right="16.0" top="16.0" />
+            </padding>
+         <children>
+            <Label text="Katastrálne územia utriedené podľa názvu" />
+            <TableView fx:id="tableViewKatastralneUzemia" prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
+              <columns>
+                <TableColumn fx:id="tableColumnCisloKU" prefWidth="231.0" text="Číslo katastrálneho územia" />
+                <TableColumn fx:id="tableColumnNazovKU" minWidth="0.0" prefWidth="185.0" text="Názov katastrálneho územia" />
+              </columns>
+               <VBox.margin>
+                  <Insets top="16.0" />
+               </VBox.margin>
+            </TableView>
+         </children>
+        </VBox>
+        <JFXDialog fx:id="dialog" overlayClose="false" transitionType="TOP">
+            <JFXDialogLayout fx:id="dialogLayout">
+                <body>
+                    <VBox fx:id="dialogVBox" alignment="CENTER" spacing="10">
+
+                    </VBox>
+                </body>
+            </JFXDialogLayout>
+        </JFXDialog>
+    </children>
+</StackPane>

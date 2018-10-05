@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXDialog?>
+<?import com.jfoenix.controls.JFXDialogLayout?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+
+<StackPane fx:id="stackPane" xmlns="http://javafx.com/javafx/8.0.181" xmlns:fx="http://javafx.com/fxml/1">
+    <children>
+        <VBox fx:id="contentVBox" prefHeight="800.0" prefWidth="800.0">
+            <children>
+                <JFXTextField fx:id="textFieldNazovKatastralnehoUzemia" labelFloat="true" promptText="Názov katastrálneho územia" VBox.vgrow="ALWAYS">
+                    <VBox.margin>
+                        <Insets bottom="36.0" top="8.0" />
+                    </VBox.margin>
+                </JFXTextField>
+                <JFXTextField fx:id="textFieldCisloListuVlastnictva" labelFloat="true" promptText="Číslo listu vlastníctva" VBox.vgrow="ALWAYS">
+                    <VBox.margin>
+                        <Insets bottom="36.0" />
+                    </VBox.margin>
+                </JFXTextField>
+                <BorderPane prefHeight="100.0" prefWidth="768.0">
+                    <center>
+                        <JFXButton fx:id="buttonPridajListVlastnictva" buttonType="RAISED" style="-fx-background-color: #FFFFFF;" text="Pridaj list vlastnictva" BorderPane.alignment="CENTER" />
+                    </center>
+                </BorderPane>
+            </children>
+            <padding>
+                <Insets bottom="16.0" left="16.0" right="16.0" top="16.0" />
+            </padding>
+        </VBox>
+        <JFXDialog fx:id="dialog" overlayClose="false" transitionType="TOP">
+            <JFXDialogLayout fx:id="dialogLayout">
+                <body>
+                    <VBox fx:id="dialogVBox" alignment="CENTER" spacing="10">
+
+                    </VBox>
+                </body>
+            </JFXDialogLayout>
+        </JFXDialog>
+    </children>
+</StackPane>
