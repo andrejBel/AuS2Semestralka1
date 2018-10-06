@@ -13,6 +13,8 @@ public class KatastralneUzemie {
     private AvlTree<Nehnutelnost> nehnutelnostiVkatastralnomUzemi_;
     private AvlTree<ListVlastnictva> listyVlastnictvaVKatastralnomUzemi_;
 
+    ListVlastnictva dummyListVlastnictva = new ListVlastnictva();
+
     public KatastralneUzemie(long cisloKatastralnehoUzemia_, String nazov_) {
         this.cisloKatastralnehoUzemia_ = cisloKatastralnehoUzemia_;
         this.nazov_ = nazov_;
@@ -37,6 +39,11 @@ public class KatastralneUzemie {
         boolean inserted = listyVlastnictvaVKatastralnomUzemi_.insert(listVlastnictva);
         vlozenyListVlastnictva.ifPresent(listVlastnictvaHolder -> listVlastnictvaHolder.value = inserted ? listVlastnictva : null);
         return inserted;
+    }
+
+    public ListVlastnictva najdiListVlastnictva(long cisloListuVlastnictva) {
+        dummyListVlastnictva.setCisloListuVlastnictva(cisloListuVlastnictva);
+        return listyVlastnictvaVKatastralnomUzemi_.findData(dummyListVlastnictva);
     }
 
     public void setCisloKatastralnehoUzemia(long cisloKatastralnehoUzemia) {

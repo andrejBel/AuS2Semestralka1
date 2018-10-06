@@ -8,17 +8,15 @@ import com.jfoenix.controls.JFXDatePicker;
 import com.jfoenix.controls.JFXSpinner;
 import com.jfoenix.controls.JFXTextField;
 import com.jfoenix.validation.RequiredFieldValidator;
-import com.jfoenix.validation.base.ValidatorBase;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
-import javafx.scene.control.TextInputControl;
 import javafx.scene.paint.Color;
 
 import java.time.LocalDate;
-
-import static javafx.beans.binding.Bindings.createBooleanBinding;
+import java.util.Arrays;
+import java.util.List;
 
 public class C16PridanieObcana extends ControllerBase {
 
@@ -39,49 +37,24 @@ public class C16PridanieObcana extends ControllerBase {
     private SimpleBooleanProperty isRodneCisloOk = new SimpleBooleanProperty(false);
     private SimpleBooleanProperty isdateOk = new SimpleBooleanProperty(false);
 
+    private List<SimpleBooleanProperty> simpleBooleanProperties = Arrays.asList(
+            isMenoPriezviskoOk,
+            isRodneCisloOk,
+            isdateOk
+    );
+
+    private List<JFXTextField> textFields;
 
     public C16PridanieObcana(ISSpravyKatastra isSpravyKatastra) {
         super(isSpravyKatastra);
         initView();
+        textFields = Arrays.asList(
+                textFieldMenoAPriezvisko,
+                textFieldRodneCislo
+        );
 
-        textFieldMenoAPriezvisko.getValidators().add(new RequiredFieldValidator() {
-            {
-                setMessage(Helper.EMPTY_WARNING_MESSAGE);
-            }
-        });
-        textFieldRodneCislo.getValidators().add(new RequiredFieldValidator() {
-            {
-                setMessage(Helper.EMPTY_WARNING_MESSAGE);
-            }
-        });
-        ValidatorBase validatorRC = new ValidatorBase() {
-            @Override
-            protected void eval() {
-
-                TextInputControl textField = (TextInputControl)this.srcControl.get();
-                String text = textField.getText();
-                if (text != null && text.length() > 0)
-                {
-                    if (text.contains(" ")) {
-                        this.hasErrors.set(true);
-                        setMessage("Rodné číslo nesmie mať medzery");
-                        return;
-                    }
-                    if (text.length() == 16) {
-                        this.hasErrors.set(false);
-                    } else {
-                        setMessage("Rodné číslo musí mať 16 znakov");
-                        this.hasErrors.set(true);
-                    }
-
-                } else
-                {
-                    this.hasErrors.set(false);
-                }
-            }
-        };
-        textFieldRodneCislo.getValidators().add(validatorRC);
-
+        Helper.decorateTextFieldWithValidator(textFieldMenoAPriezvisko, isMenoPriezviskoOk);
+        Helper.decorateTextFieldWithValidator(textFieldRodneCislo, isRodneCisloOk, 16, "Rodné číslo");
 
         datePicker.getValidators().add(new RequiredFieldValidator() {
             {
@@ -90,27 +63,16 @@ public class C16PridanieObcana extends ControllerBase {
         });
 
 
-
-        textFieldMenoAPriezvisko.textProperty().addListener((observable, oldValue, newValue) -> {
-            boolean validateResult = textFieldMenoAPriezvisko.validate();
-            isMenoPriezviskoOk.set(validateResult);
-        });
-        textFieldRodneCislo.textProperty().addListener((observable, oldValue, newValue) -> {
-
-            if (textFieldRodneCislo.getText().length() > 16) {
-                String s = textFieldRodneCislo.getText().substring(0, 16);
-                textFieldRodneCislo.setText(s);
-            }
-            boolean validateResult = textFieldRodneCislo.validate();
-            isRodneCisloOk.set(validateResult);
-        });
         datePicker.valueProperty().addListener((observable, oldValue, newValue) -> {
             boolean validateResult = datePicker.validate();
             isdateOk.setValue(validateResult);
         });
 
         buttonPridajObcana.setOnAction(event -> {
-            if (setButtonPridajDisabled()) {
+            if (Helper.disableButton(buttonPridajObcana, simpleBooleanProperties, () -> {
+                textFields.forEach(JFXTextField::validate);
+                datePicker.validate();
+            })) {
                 return;
             }
             new PridajObcana().execute();
@@ -119,19 +81,6 @@ public class C16PridanieObcana extends ControllerBase {
 
     }
 
-    private boolean setButtonPridajDisabled() {
-        if (buttonPridajObcana.isDisable() == false && (!isMenoPriezviskoOk.get() || !isRodneCisloOk.get() || !isdateOk.get())) {
-            textFieldMenoAPriezvisko.validate();
-            textFieldRodneCislo.validate();
-            datePicker.validate();
-            buttonPridajObcana.disableProperty().unbind();
-            buttonPridajObcana.disableProperty().bind(createBooleanBinding(
-                    () -> !(isMenoPriezviskoOk.get() && isRodneCisloOk.get() && isdateOk.get()), isMenoPriezviskoOk, isRodneCisloOk, isdateOk
-            ));
-            return true;
-        }
-        return false;
-    }
 
     @Override
     protected void initView() {
@@ -158,11 +107,11 @@ public class C16PridanieObcana extends ControllerBase {
     private void clearFormulars() {
         buttonPridajObcana.disableProperty().unbind();
         buttonPridajObcana.disableProperty().set(false);
-        textFieldMenoAPriezvisko.setText("");
-        textFieldRodneCislo.setText("");
+        textFields.forEach(jfxTextField -> {
+            jfxTextField.setText("");
+            jfxTextField.resetValidation();
+        });
         datePicker.setValue(null);
-        textFieldMenoAPriezvisko.resetValidation();
-        textFieldRodneCislo.resetValidation();
         datePicker.resetValidation();
     }
 

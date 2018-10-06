@@ -1,14 +1,20 @@
 package Utils;
 
+import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextField;
-import com.jfoenix.validation.IntegerValidator;
 import com.jfoenix.validation.RequiredFieldValidator;
+import com.jfoenix.validation.base.ValidatorBase;
+import javafx.beans.Observable;
+import javafx.beans.property.SimpleBooleanProperty;
+import javafx.scene.control.TextInputControl;
 
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
+
+import static javafx.beans.binding.Bindings.createBooleanBinding;
 
 public class Helper {
 
@@ -61,24 +67,103 @@ public class Helper {
         return SIMPLE_DATE_FORMASTTER.format(date);
     }
 
-    public static void decorateTextFieldWithValidator(JFXTextField textField) {
+
+    public static void decorateTextFieldWithValidator(JFXTextField textField, SimpleBooleanProperty propertyToBind) {
         textField.getValidators().add(new RequiredFieldValidator() {
             {
                 setMessage(EMPTY_WARNING_MESSAGE);
             }
         });
+        textField.textProperty().addListener((observable, oldValue, newValue) -> {
+            boolean validateResult = textField.validate();
+            propertyToBind.set(validateResult);
+        });
     }
 
-    public static void decorateNumberTextFieldWithValidator(JFXTextField textField) {
+    public static void decorateTextFieldWithValidator(JFXTextField textField, SimpleBooleanProperty propertyToBind, int maximumlength, String atributeName) {
         textField.getValidators().addAll(new RequiredFieldValidator() {
             {
                 setMessage(EMPTY_WARNING_MESSAGE);
             }
-        }, new IntegerValidator() {
+        }, new ValidatorBase() {
+            @Override
+            protected void eval() {
+                TextInputControl textField = (TextInputControl)this.srcControl.get();
+                String text = textField.getText();
+                if (text != null && text.length() > 0)
+                {
+                    if (text.contains(" ")) {
+                        this.hasErrors.set(true);
+                        setMessage(atributeName +" nesmie mať medzery");
+                        return;
+                    }
+                    if (text.length() == maximumlength) {
+                        this.hasErrors.set(false);
+                    } else {
+                        setMessage(atributeName +" musí mať 16 znakov");
+                        this.hasErrors.set(true);
+                    }
+
+                } else
+                {
+                    this.hasErrors.set(false);
+                }
+            }
+        });
+        textField.textProperty().addListener((observable, oldValue, newValue) -> {
+            if (textField.getText().length() > maximumlength) {
+                String s = textField.getText().substring(0, maximumlength);
+                textField.setText(s);
+            }
+            boolean validateResult = textField.validate();
+            propertyToBind.set(validateResult);
+        });
+    }
+
+    public static void decorateNumberTextFieldWithValidator(JFXTextField textField, SimpleBooleanProperty propertyToBind) {
+        textField.getValidators().addAll(new RequiredFieldValidator() {
+            {
+                setMessage(EMPTY_WARNING_MESSAGE);
+            }
+        }, new ValidatorBase() {
             {
                 setMessage(EMPTY_WARNING_MESSAGE_NUMBER);
             }
+            @Override
+            protected void eval() {
+                TextInputControl textField = (TextInputControl)this.srcControl.get();
+                String text = textField.getText();
+                try {
+                    this.hasErrors.set(false);
+                    if (!text.isEmpty()) {
+                        Long.parseLong(text);
+                    }
+                } catch (Exception var4) {
+                    this.hasErrors.set(true);
+                }
+            }
         });
+
+        textField.textProperty().addListener((observable, oldValue, newValue) -> {
+            if (!newValue.matches("\\d*")) {
+                textField.setText(newValue.replaceAll("[^\\d]", ""));
+            }
+            boolean validateResult = textField.validate();
+            propertyToBind.set(validateResult);
+        });
+
+    }
+
+    public static boolean disableButton(JFXButton button, List<SimpleBooleanProperty> simpleBooleanProperties, Runnable validationCheck) {
+        if (button.isDisable() == false && simpleBooleanProperties.stream().anyMatch(simpleBooleanProperty -> simpleBooleanProperty.get() == false)) {
+            validationCheck.run();
+            button.disableProperty().unbind();
+            button.disableProperty().bind( createBooleanBinding(
+                    () -> simpleBooleanProperties.stream().anyMatch(simpleBooleanProperty -> simpleBooleanProperty.get() == false),(Observable[]) simpleBooleanProperties.toArray()
+            ));
+            return true;
+        }
+        return false;
     }
 
     private static List<String> MENA = Arrays.asList(

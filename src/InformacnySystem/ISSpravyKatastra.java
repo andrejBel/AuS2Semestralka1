@@ -2,6 +2,7 @@ package InformacnySystem;
 
 import Model.KatastralneUzemie;
 import Model.ListVlastnictva;
+import Model.Nehnutelnost;
 import Model.Obcan;
 import Utils.Helper;
 import Utils.Status;
@@ -22,10 +23,24 @@ public class ISSpravyKatastra {
     Obcan dummyObcan = new Obcan();
     KatastralneUzemie dummyKatastralneUzemie = new KatastralneUzemie();
 
+
     public ISSpravyKatastra() {
         this.obcania_ = new AvlTree<>(Comparator.comparing(Obcan::getRodneCislo));
         this.katastralneUzemieCislo_ = new AvlTree<>(Comparator.comparing(KatastralneUzemie::getCisloKatastralnehoUzemia));
         this.katastralneUzemieNapis_ = new AvlTree<>(Comparator.comparing(KatastralneUzemie::getNazov));
+        pridajObcana("Andrej Beliancin", "1111111111111111", Helper.GetNahodnyDatumNarodenia());
+        pridajObcana("Gabriela Beliancinova", "1111111111111112", Helper.GetNahodnyDatumNarodenia());
+
+        pridajKatastralneUzemie(1, "Terchova");
+        pridajKatastralneUzemie(2, "Bela");
+        pridajKatastralneUzemie(3, "Krasnany");
+
+        pridajListVlastnictva("Terchova", 1);
+        pridajListVlastnictva("Terchova", 2);
+        pridajListVlastnictva("Terchova", 3);
+        pridajListVlastnictva("Bela", 1);
+        pridajListVlastnictva("Bela", 2);
+        pridajListVlastnictva("Bela", 3);
     }
 
     // 15
@@ -64,6 +79,24 @@ public class ISSpravyKatastra {
     }
 
     // 18
+    public boolean pridajNehnutelnostNaListVlastnictva(long cisloKatastralnehoUzemia, long cisloListuVlastnictva, long supisneCisloNehnutelnosti, String adresaNehnutelnosti, String popisNehnutelnosti) {
+        return pridajNehnutelnostNaListVlastnictva(cisloKatastralnehoUzemia, cisloListuVlastnictva, supisneCisloNehnutelnosti, adresaNehnutelnosti, popisNehnutelnosti, Optional.empty());
+    }
+
+    public boolean pridajNehnutelnostNaListVlastnictva(long cisloKatastralnehoUzemia, long cisloListuVlastnictva, long supisneCisloNehnutelnosti, String adresaNehnutelnosti, String popisNehnutelnosti, Optional<Holder<Nehnutelnost>> vlozenaNehnutelnost) {
+        dummyKatastralneUzemie.setCisloKatastralnehoUzemia(cisloKatastralnehoUzemia);
+        KatastralneUzemie katastralneUzemie = katastralneUzemieCislo_.findData(dummyKatastralneUzemie);
+        if (katastralneUzemie != null) {
+            ListVlastnictva listVlastnictva = katastralneUzemie.najdiListVlastnictva(cisloListuVlastnictva);
+            if (listVlastnictva != null) {
+                return  listVlastnictva.vlozNehnutelnostNaListVlastnictva(supisneCisloNehnutelnosti, adresaNehnutelnosti, popisNehnutelnosti, vlozenaNehnutelnost);
+            }
+        }
+        vlozenaNehnutelnost.ifPresent(nehnutelnostHolder -> nehnutelnostHolder.value = null);
+        return false;
+    }
+
+    // 21
     public boolean pridajKatastralneUzemie(long cisloKatastralnehoUzemia, String nazovKatastralnehoUzemia) {
         return pridajKatastralneUzemie(cisloKatastralnehoUzemia, nazovKatastralnehoUzemia, Optional.empty());
     }
