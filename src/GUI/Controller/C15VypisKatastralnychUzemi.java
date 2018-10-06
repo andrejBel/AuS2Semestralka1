@@ -2,6 +2,8 @@ package GUI.Controller;
 
 import InformacnySystem.ISSpravyKatastra;
 import Model.KatastralneUzemie;
+import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleLongProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -31,10 +33,10 @@ public class C15VypisKatastralnychUzemi extends ControllerBase {
     }
 
     @FXML
-    private TableView tableViewKatastralneUzemia;
+    private TableView<TableItemKatastralneUzemie> tableViewKatastralneUzemia;
 
     @FXML
-    private TableColumn<TableItemKatastralneUzemie, String> tableColumnCisloKU;
+    private TableColumn<TableItemKatastralneUzemie, Number> tableColumnCisloKU;
 
     @FXML
     private TableColumn<TableItemKatastralneUzemie, String> tableColumnNazovKU;
@@ -43,7 +45,7 @@ public class C15VypisKatastralnychUzemi extends ControllerBase {
         super(isSpravyKatastra);
         loadView();
         tableColumnCisloKU.setCellValueFactory(param -> {
-            return new SimpleStringProperty("" + param.getValue().getCisloKU());
+            return new SimpleLongProperty( param.getValue().getCisloKU() );
         });
         tableColumnNazovKU.setCellValueFactory(param -> {
             return new SimpleStringProperty( param.getValue().getNazovKU());

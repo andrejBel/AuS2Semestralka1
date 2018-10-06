@@ -32,19 +32,9 @@
                         <Insets bottom="36.0" />
                     </VBox.margin>
                 </JFXTextField>
-                <JFXTextField fx:id="textFieldAdresaNehnutelnosti" labelFloat="true" promptText="Adresa nehnuteľnosti" VBox.vgrow="ALWAYS">
-                    <VBox.margin>
-                        <Insets bottom="36.0" />
-                    </VBox.margin>
-                </JFXTextField>
-                <JFXTextField fx:id="textFieldPopisNehnutelnosti" labelFloat="true" promptText="Popis nehnuteľnosti" VBox.vgrow="ALWAYS">
-                    <VBox.margin>
-                        <Insets bottom="36.0" />
-                    </VBox.margin>
-                </JFXTextField>
                 <BorderPane prefHeight="100.0" prefWidth="768.0">
                     <center>
-                        <JFXButton fx:id="buttonPridajNehnutelnost" buttonType="RAISED" style="-fx-background-color: #FFFFFF;" text="Pridaj nehnuteľnosť" BorderPane.alignment="CENTER" />
+                        <JFXButton fx:id="buttonOdstranNehnutelnost" buttonType="RAISED" style="-fx-background-color: #FFFFFF;" text="Odstráň nehnuteľnosť" BorderPane.alignment="CENTER" />
                     </center>
                 </BorderPane>
             </children>

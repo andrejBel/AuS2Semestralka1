@@ -20,14 +20,7 @@ public class Aplikacia {
     private JFXTabPane tabPane_;
     private Stage stage_;
 
-    private List<ControllerBase> controllers = Arrays.asList(
-            new CGenerator(isSpravyKatastra_),
-            new C15VypisKatastralnychUzemi(isSpravyKatastra_),
-            new C16PridanieObcana(isSpravyKatastra_),
-            new C17PridanieListuVlastnictva(isSpravyKatastra_),
-            new C18PridanieNehnutelnosti(isSpravyKatastra_),
-            new C21PridanieKatastralnehoUzemia(isSpravyKatastra_)
-    );
+    private List<ControllerBase> controllers;
 
 
     public Aplikacia(Stage stage) {
@@ -35,6 +28,18 @@ public class Aplikacia {
         stage_ = stage;
         tabPane_ = new JFXTabPane();
         tabPane_.setTabClosingPolicy(TabPane.TabClosingPolicy.UNAVAILABLE);
+        controllers = Arrays.asList(
+                new CGenerator(isSpravyKatastra_),
+                new C7VypisNehnutelnosti(isSpravyKatastra_),
+                new C10PridanieTrvalehoPobytu(isSpravyKatastra_),
+                new C12ZapisZmenaMajetkovehoPodielu(isSpravyKatastra_),
+                new C15VypisKatastralnychUzemi(isSpravyKatastra_),
+                new C16PridanieObcana(isSpravyKatastra_),
+                new C17PridanieListuVlastnictva(isSpravyKatastra_),
+                new C18PridanieNehnutelnosti(isSpravyKatastra_),
+                //new C20OdstranenieNehnutelnosti(isSpravyKatastra_),
+                new C21PridanieKatastralnehoUzemia(isSpravyKatastra_)
+        );
 
         for (ControllerBase controller : controllers) {
             Tab tab = new Tab(controller.getViewName());

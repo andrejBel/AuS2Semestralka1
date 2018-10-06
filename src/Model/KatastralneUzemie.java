@@ -14,6 +14,7 @@ public class KatastralneUzemie {
     private AvlTree<ListVlastnictva> listyVlastnictvaVKatastralnomUzemi_;
 
     ListVlastnictva dummyListVlastnictva = new ListVlastnictva();
+    Nehnutelnost dummyNehnutelnost = new Nehnutelnost();
 
     public KatastralneUzemie(long cisloKatastralnehoUzemia_, String nazov_) {
         this.cisloKatastralnehoUzemia_ = cisloKatastralnehoUzemia_;
@@ -34,6 +35,16 @@ public class KatastralneUzemie {
         return nazov_;
     }
 
+    public AvlTree<Nehnutelnost> getNehnutelnostiVKatastralnomUzemi() {
+        return nehnutelnostiVkatastralnomUzemi_;
+    }
+
+    public Nehnutelnost getNehnutelnostVKatastralnomUzemi(long supisneCisloNehnutelnosti) {
+        dummyNehnutelnost.setSupisneCislo(supisneCisloNehnutelnosti);
+        return nehnutelnostiVkatastralnomUzemi_.findData(dummyNehnutelnost);
+    }
+
+
     public boolean vlozListVlastnictva(long cisloListuVlastnictva, Optional<Holder<ListVlastnictva>> vlozenyListVlastnictva) {
         ListVlastnictva listVlastnictva = new ListVlastnictva(this, cisloListuVlastnictva);
         boolean inserted = listyVlastnictvaVKatastralnomUzemi_.insert(listVlastnictva);
@@ -45,6 +56,37 @@ public class KatastralneUzemie {
         dummyListVlastnictva.setCisloListuVlastnictva(cisloListuVlastnictva);
         return listyVlastnictvaVKatastralnomUzemi_.findData(dummyListVlastnictva);
     }
+
+    public boolean vlozNehnutelnostNaListVlastnictva(long cisloListuVlastnictva, long supisneCisloNehnutelnosti, String adresaNehnutelnosti, String popisNehnutelnosti, Optional<Holder<Nehnutelnost>> vlozenaNehnutelnost) {
+        boolean inserted = false;
+        dummyListVlastnictva.setCisloListuVlastnictva(cisloListuVlastnictva);
+        ListVlastnictva listVlastnictva = listyVlastnictvaVKatastralnomUzemi_.findData(dummyListVlastnictva);
+        if (listVlastnictva != null) {
+            return vlozNehnutelnostNaListVlastnictva(listVlastnictva, supisneCisloNehnutelnosti, adresaNehnutelnosti, popisNehnutelnosti, vlozenaNehnutelnost);
+        }
+        return false;
+    }
+
+    public boolean vlozNehnutelnostNaListVlastnictva(ListVlastnictva listVlastnictva, long supisneCisloNehnutelnosti, String adresaNehnutelnosti, String popisNehnutelnosti, Optional<Holder<Nehnutelnost>> vlozenaNehnutelnost) {
+        boolean inserted = false;
+        Nehnutelnost nehnutelnost = null;
+        if (listVlastnictva != null && listVlastnictva.getKatastralneUzemie() == this) {
+            nehnutelnost = new Nehnutelnost(supisneCisloNehnutelnosti, adresaNehnutelnosti, popisNehnutelnosti, listVlastnictva);
+            inserted = nehnutelnostiVkatastralnomUzemi_.insert(nehnutelnost);
+            if (inserted) {
+                inserted = listVlastnictva.vlozNehnutelnostNaListVlastnictva(nehnutelnost);
+                if (!inserted) {
+                    nehnutelnostiVkatastralnomUzemi_.remove(nehnutelnost);
+                }
+            }
+        }
+
+        boolean finalInserted = inserted;
+        Nehnutelnost finalNehnutelnost = nehnutelnost;
+        vlozenaNehnutelnost.ifPresent(nehnutelnostHolder -> nehnutelnostHolder.value = finalInserted ? finalNehnutelnost : null);
+        return inserted;
+    }
+
 
     public void setCisloKatastralnehoUzemia(long cisloKatastralnehoUzemia) {
         this.cisloKatastralnehoUzemia_ = cisloKatastralnehoUzemia;

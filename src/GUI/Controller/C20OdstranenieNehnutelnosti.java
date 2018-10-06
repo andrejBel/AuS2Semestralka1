@@ -14,7 +14,7 @@ import javafx.scene.paint.Color;
 import java.util.Arrays;
 import java.util.List;
 
-public class C18PridanieNehnutelnosti extends ControllerBase {
+public class C20OdstranenieNehnutelnosti extends ControllerBase {
 
     @FXML
     private JFXTextField textFieldCisloKatastralnehoUzemia;
@@ -26,62 +26,45 @@ public class C18PridanieNehnutelnosti extends ControllerBase {
     private JFXTextField textFieldSupisneCisloNehnutelnosti;
 
     @FXML
-    private JFXTextField textFieldAdresaNehnutelnosti;
-
-    @FXML
-    private JFXTextField textFieldPopisNehnutelnosti;
-
-    @FXML
-    private JFXButton buttonPridajNehnutelnost;
+    private JFXButton buttonOdstranNehnutelnost;
 
     private SimpleBooleanProperty isCisloKUOk = new SimpleBooleanProperty(false);
     private SimpleBooleanProperty isCisloListuVlastnictvaOk = new SimpleBooleanProperty(false);
     private SimpleBooleanProperty isSupisneCisloOk = new SimpleBooleanProperty(false);
-    private SimpleBooleanProperty isAdresaNehnutelnostiOk = new SimpleBooleanProperty(false);
-    private SimpleBooleanProperty isPopisNehnutelnostiOk = new SimpleBooleanProperty(false);
 
     private List<SimpleBooleanProperty> simpleBooleanProperties = Arrays.asList(
             isCisloKUOk,
             isCisloListuVlastnictvaOk,
-            isSupisneCisloOk,
-            isAdresaNehnutelnostiOk,
-            isPopisNehnutelnostiOk
+            isSupisneCisloOk
     );
 
     private List<JFXTextField> textFields;
 
-    public C18PridanieNehnutelnosti(ISSpravyKatastra isSpravyKatastra) {
+    public C20OdstranenieNehnutelnosti(ISSpravyKatastra isSpravyKatastra) {
         super(isSpravyKatastra);
         initView();
         textFields = Arrays.asList(
                 textFieldCisloKatastralnehoUzemia,
                 textFieldCisloListuVlastnictva,
-                textFieldSupisneCisloNehnutelnosti,
-                textFieldAdresaNehnutelnosti,
-                textFieldPopisNehnutelnosti
+                textFieldSupisneCisloNehnutelnosti
         );
-
 
         Helper.decorateNumberTextFieldWithValidator(textFieldCisloKatastralnehoUzemia, isCisloKUOk);
         Helper.decorateNumberTextFieldWithValidator(textFieldCisloListuVlastnictva, isCisloListuVlastnictvaOk);
         Helper.decorateNumberTextFieldWithValidator(textFieldSupisneCisloNehnutelnosti, isSupisneCisloOk);
-        Helper.decorateTextFieldWithValidator(textFieldAdresaNehnutelnosti, isAdresaNehnutelnostiOk);
-        Helper.decorateTextFieldWithValidator(textFieldPopisNehnutelnosti, isPopisNehnutelnostiOk);
 
-        buttonPridajNehnutelnost.setOnAction(event -> {
-            if (Helper.disableButton(buttonPridajNehnutelnost, simpleBooleanProperties, () -> textFields.forEach(JFXTextField::validate))) {
+        buttonOdstranNehnutelnost.setOnAction(event -> {
+            if (Helper.disableButton(buttonOdstranNehnutelnost, simpleBooleanProperties, () -> textFields.forEach(JFXTextField::validate))) {
                 return;
             }
+            new OdstranNehnutelnost().execute();
 
-            new PridajNehnutelnost().execute();
         });
-
-
     }
 
     private void clearFormulars() {
-        buttonPridajNehnutelnost.disableProperty().unbind();
-        buttonPridajNehnutelnost.disableProperty().set(false);
+        buttonOdstranNehnutelnost.disableProperty().unbind();
+        buttonOdstranNehnutelnost.disableProperty().set(false);
         textFields.forEach(jfxTextField -> {
             jfxTextField.setText("");
             jfxTextField.resetValidation();
@@ -100,24 +83,18 @@ public class C18PridanieNehnutelnosti extends ControllerBase {
 
     @Override
     protected String getViewFileName() {
-        return "18pridanieNehnutelnosti.fxml";
+        return "20odstranenieNehnutelnosti.fxml";
     }
 
     @Override
     public String getViewName() {
-        return "18. Pridanie nehnuteľnosti na list vlastníctva";
+        return "20. Odstránenie nehnuteľnosti";
     }
 
-    private class PridajNehnutelnost extends SimpleTask {
+    private class OdstranNehnutelnost extends SimpleTask {
 
         @Override
         public boolean compute() {
-            /*
-            * textFieldCisloKatastralnehoUzemia,
-                textFieldCisloListuVlastnictva,
-                textFieldSupisneCisloNehnutelnosti,
-                textFieldAdresaNehnutelnosti,
-                textFieldPopisNehnutelnosti*/
             long cisloKatastralnehoUzemia = 0;
             long cisloListuVlastnictva = 0;
             long supisneCisloNehnutelnosti = 0;
@@ -137,19 +114,20 @@ public class C18PridanieNehnutelnosti extends ControllerBase {
             }catch (NumberFormatException e) {
                 return false;
             }
-            return isSpravyKatastra_.pridajNehnutelnostNaListVlastnictva(cisloKatastralnehoUzemia, cisloListuVlastnictva, supisneCisloNehnutelnosti, textFieldAdresaNehnutelnosti.getText(), textFieldPopisNehnutelnosti.getText());
+            return true;
         }
 
         @Override
         public void onSuccess() {
-            showSuccessDialog("Nehnuteľnosť úspešne pridaná");
+            showSuccessDialog("Nehnuteľnosť úspešne odstránené");
             clearFormulars();
         }
 
         @Override
         public void onFail() {
-            showWarningDialog("Nehnuteľnosť nebola pridaná");
+            showWarningDialog("Nehnuteľnosť nebola odstránená");
         }
     }
+
 
 }

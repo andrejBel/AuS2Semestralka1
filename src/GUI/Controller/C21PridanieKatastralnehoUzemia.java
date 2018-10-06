@@ -93,21 +93,6 @@ public class C21PridanieKatastralnehoUzemia extends ControllerBase {
 
     private class PridajKatastralneUzemie extends SimpleTask {
 
-        private Label label;
-
-        public PridajKatastralneUzemie() {
-            label = new Label();
-            label.setStyle("-fx-font-weight: bold");
-            label.setAlignment(Pos.CENTER);
-            dialogVBox.getChildren().clear();
-            dialogVBox.getChildren().addAll(label);
-            JFXButton button = new JFXButton("Zavrieť");
-            button.setOnAction(event1 -> {
-                dialog.close();
-            });
-            dialogLayout.setActions(button);
-        }
-
         @Override
         public boolean compute() {
             long cisloKatastralnehoUzemia = 0;
@@ -122,17 +107,13 @@ public class C21PridanieKatastralnehoUzemia extends ControllerBase {
 
         @Override
         public void onSuccess() {
-            label.setTextFill(Color.GREEN);
-            label.setText("Katastrálne územie úspešne pridané");
+            showSuccessDialog("Katastrálne územie úspešne pridané");
             clearFormulars();
-            dialog.show();
         }
 
         @Override
         public void onFail() {
-            label.setTextFill(Color.RED);
-            label.setText("Katastrálne územie nebolo pridané");
-            dialog.show();
+            showWarningDialog("Katastrálne územie nebolo pridané");
         }
     }
 

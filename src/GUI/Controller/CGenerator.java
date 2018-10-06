@@ -69,6 +69,7 @@ public class CGenerator extends ControllerBase {
             JFXSpinner spinner = new JFXSpinner();
             dialogVBox.getChildren().clear();
             dialogVBox.getChildren().addAll(label, spinner);
+            dialogLayout.getActions().clear();
             dialog.show();
         }
 

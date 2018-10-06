@@ -13,9 +13,12 @@ public class ListVlastnictva {
         private Obcan obcan_;
         private double podiel_;
 
+        public ObcanSPodielom() {
+            this(null, 0.0);
+        }
+
         public ObcanSPodielom(Obcan obcan) {
-            this.obcan_ = obcan;
-            this.podiel_ = 0.0;
+            this(obcan, 0.0);
         }
 
         public ObcanSPodielom(Obcan obcan, double podiel) {
@@ -34,12 +37,19 @@ public class ListVlastnictva {
         public void setPodiel(double podiel) {
             this.podiel_ = podiel;
         }
+
+        public void setObcan(Obcan obcan) {
+            this.obcan_ = obcan;
+        }
+
     }
 
     private KatastralneUzemie katastralneUzemie_;
     private long cisloListuVlastnictva_;
     private AvlTree<Nehnutelnost> nehnutelnostiNaListeVlastnictva_;
     private AvlTree<ObcanSPodielom> vlastniciSPodielom_;
+
+    private static final ObcanSPodielom dummyObcanSPodielom = new ObcanSPodielom();
 
     public ListVlastnictva(KatastralneUzemie katastralneUzemie, long cisloListuVlastnictva) {
         this.katastralneUzemie_ = katastralneUzemie;
@@ -52,11 +62,8 @@ public class ListVlastnictva {
         this(null, 0);
     }
 
-    public boolean vlozNehnutelnostNaListVlastnictva(long supisneCisloNehnutelnosti, String adresaNehnutelnosti, String popisNehnutelnosti, Optional<Holder<Nehnutelnost>> vlozenaNehnutelnost) {
-        Nehnutelnost nehnutelnost = new Nehnutelnost(supisneCisloNehnutelnosti, adresaNehnutelnosti, popisNehnutelnosti);
-        boolean inserted = nehnutelnostiNaListeVlastnictva_.insert(nehnutelnost);
-        vlozenaNehnutelnost.ifPresent(nehnutelnostHolder -> nehnutelnostHolder.value = inserted ? nehnutelnost: null);
-        return inserted;
+    public boolean vlozNehnutelnostNaListVlastnictva(Nehnutelnost vkladanaNehnutelnost) {
+        return nehnutelnostiNaListeVlastnictva_.insert(vkladanaNehnutelnost);
     }
 
     public KatastralneUzemie getKatastralneUzemie() {
@@ -79,4 +86,14 @@ public class ListVlastnictva {
     public void setCisloListuVlastnictva(long cisloListuVlastnictva) {
         this.cisloListuVlastnictva_ = cisloListuVlastnictva;
     }
+
+    public boolean pridajAleboPonechajVlastnika(Obcan obcan) {
+        ObcanSPodielom obcanNaPridanie = new ObcanSPodielom(obcan, 0.0);
+        boolean inserted = vlastniciSPodielom_.insert(obcanNaPridanie);
+        if (inserted) {
+
+        }
+        return true;
+    }
+
 }

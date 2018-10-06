@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXDialog?>
+<?import com.jfoenix.controls.JFXDialogLayout?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+
+<StackPane fx:id="stackPane" xmlns="http://javafx.com/javafx/8.0.181" xmlns:fx="http://javafx.com/fxml/1">
+    <children>
+        <VBox fx:id="contentVBox" prefHeight="800.0" prefWidth="800.0">
+            <padding>
+                <Insets bottom="16.0" left="16.0" right="16.0" top="16.0" />
+            </padding>
+            <children>
+                <JFXTextField fx:id="textFieldNazovKatastralnehoUzemia" labelFloat="true" promptText="Názov katastrálneho územia" VBox.vgrow="ALWAYS">
+                    <VBox.margin>
+                        <Insets bottom="36.0" top="8.0" />
+                    </VBox.margin>
+                </JFXTextField>
+            <GridPane>
+              <columnConstraints>
+                <ColumnConstraints halignment="LEFT" hgrow="ALWAYS" minWidth="10.0" prefWidth="100.0" />
+                <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" minWidth="10.0" prefWidth="100.0" />
+              </columnConstraints>
+              <rowConstraints>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+              </rowConstraints>
+               <children>
+                      <Label text="Nehnuteľnosti v katastrálnom území utriedené podľa súpisného čísla" />
+                  <JFXButton fx:id="buttonHladaj" buttonType="RAISED" style="-fx-background-color: #FFFFFF;" text="Hľadaj" GridPane.columnIndex="1" GridPane.valignment="CENTER" />
+               </children>
+            </GridPane>
+                <TableView fx:id="tableViewNehnutelnosti" prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
+                    <columns>
+                        <TableColumn fx:id="tableColumnSupisneCislo" prefWidth="150.0" text="Súpisné číslo nehnuteľnosti" />
+                        <TableColumn fx:id="tableColumnAdresa" prefWidth="250.0" text="Adresa nehnuteľnosti" />
+                        <TableColumn fx:id="tableColumnPopis" prefWidth="250.0" text="Popis nehnuteľnosti" />
+                    </columns>
+                    <VBox.margin>
+                        <Insets top="16.0" />
+                    </VBox.margin>
+               <columnResizePolicy>
+                  <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+               </columnResizePolicy>
+                </TableView>
+            </children>
+        </VBox>
+        <JFXDialog fx:id="dialog" overlayClose="false" transitionType="TOP">
+            <JFXDialogLayout fx:id="dialogLayout">
+                <body>
+                    <VBox fx:id="dialogVBox" alignment="CENTER" spacing="10">
+
+                    </VBox>
+                </body>
+            </JFXDialogLayout>
+        </JFXDialog>
+    </children>
+</StackPane>

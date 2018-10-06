@@ -1,29 +1,73 @@
 package Model;
 
-import javafx.util.Pair;
 import structures.AvlTree;
 
 import java.util.Comparator;
 
 public class Obcan {
 
+    private static class Pair<K,V> {
+
+         K key;
+         V value;
+
+        public Pair(K key, V value) {
+            this.key = key;
+            this.value = value;
+        }
+
+        public K getKey() {
+            return key;
+        }
+
+        public void setKey(K key) {
+            this.key = key;
+        }
+
+        public V getValue() {
+            return value;
+        }
+
+        public void setValue(V value) {
+            this.value = value;
+        }
+    }
+
     private String menoPriezvisko_;
     private String rodneCislo_;
     long datumNarodenia_;
     Nehnutelnost trvalyPobyt_;
     // kluc je cislo katastralnehoo uzemia, hodnota su nehnutelnosti obcana v danom uzemi
-    AvlTree<Pair< Long, AvlTree<Nehnutelnost> > > nehnutelnostiVoVlastnictve_;
+    AvlTree<Pair< Long, AvlTree<ListVlastnictva> > > listyVlatnictva_;
+
+    private static final  Pair< Long, AvlTree<ListVlastnictva> > dummyPair = new Pair<>((long) 0, null);
 
     public Obcan(String menoPriezvisko, String rodneCislo, long datumNarodenia) {
         this.menoPriezvisko_ = menoPriezvisko;
         this.rodneCislo_ = rodneCislo;
         this.datumNarodenia_ = datumNarodenia;
         trvalyPobyt_ = null;
-        this.nehnutelnostiVoVlastnictve_ = new AvlTree<>(Comparator.comparing(Pair::getKey));
+        this.listyVlatnictva_ = new AvlTree<>(Comparator.comparing(Pair::getKey));
     }
 
     public Obcan() {
         this("", "", 0);
+    }
+
+    public boolean pridajAleboPonechajListVlastnictva(ListVlastnictva listVlastnictva) {
+        long cisloKatastralnehoUzemia = listVlastnictva.getKatastralneUzemie().getCisloKatastralnehoUzemia();
+        dummyPair.setKey(cisloKatastralnehoUzemia);
+        Pair< Long, AvlTree<ListVlastnictva> > listyVlastnictvaVKatastralnomUzemi = listyVlatnictva_.findData(dummyPair);
+        if (listyVlastnictvaVKatastralnomUzemi == null) {
+            listyVlastnictvaVKatastralnomUzemi = vyrobParPreStromListovVlastnictva(cisloKatastralnehoUzemia);
+            listyVlatnictva_.insert(listyVlastnictvaVKatastralnomUzemi);
+        }
+        listyVlastnictvaVKatastralnomUzemi.getValue().insert(listVlastnictva);
+        return true;
+    }
+
+    private Pair< Long, AvlTree<ListVlastnictva> > vyrobParPreStromListovVlastnictva(long cisloKatastralnehoUzemia) {
+        return new Pair<>(cisloKatastralnehoUzemia, new AvlTree<>(Comparator.comparing(listVlastnictva -> listVlastnictva.getKatastralneUzemie().getCisloKatastralnehoUzemia())));
     }
 
     public String getMenoPriezvisko() {
@@ -38,7 +82,15 @@ public class Obcan {
         return datumNarodenia_;
     }
 
-    public void setRodneCislo_(String rodneCislo) {
+    public Nehnutelnost getTrvalyPobyt() {
+        return trvalyPobyt_;
+    }
+
+    public void setRodneCislo(String rodneCislo) {
         this.rodneCislo_ = rodneCislo;
+    }
+
+    public void setTrvalyPobyt(Nehnutelnost trvalyPobyt) {
+        this.trvalyPobyt_ = trvalyPobyt;
     }
 }

@@ -17,7 +17,6 @@ import java.util.List;
 
 public class C17PridanieListuVlastnictva extends ControllerBase {
 
-    private static final String EMPTY_WARNING_MESSAGE = "Vstup musí byť zadaný";
 
     @FXML
     private JFXTextField textFieldNazovKatastralnehoUzemia;
@@ -91,21 +90,6 @@ public class C17PridanieListuVlastnictva extends ControllerBase {
 
     private class PridanieListuVlastnictva extends SimpleTask {
 
-        private Label label;
-
-        public PridanieListuVlastnictva() {
-            label = new Label();
-            label.setStyle("-fx-font-weight: bold");
-            label.setAlignment(Pos.CENTER);
-            dialogVBox.getChildren().clear();
-            dialogVBox.getChildren().addAll(label);
-            JFXButton button = new JFXButton("Zavrieť");
-            button.setOnAction(event1 -> {
-                dialog.close();
-            });
-            dialogLayout.setActions(button);
-        }
-
         @Override
         public boolean compute() {
             String nazovKatastralnehoUzemia = textFieldNazovKatastralnehoUzemia.getText();
@@ -121,17 +105,13 @@ public class C17PridanieListuVlastnictva extends ControllerBase {
 
         @Override
         public void onSuccess() {
-            label.setTextFill(Color.GREEN);
-            label.setText("List vlastníctva úspešne pridaný");
+            showSuccessDialog("List vlastníctva úspešne pridaný");
             clearFormulars();
-            dialog.show();
         }
 
         @Override
         public void onFail() {
-            label.setTextFill(Color.RED);
-            label.setText("List vlastníctva nebol pridaný");
-            dialog.show();
+            showWarningDialog("List vlastníctva nebol pridaný");
         }
     }
 

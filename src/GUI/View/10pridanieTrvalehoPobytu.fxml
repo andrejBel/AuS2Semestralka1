@@ -1,30 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-
-<?import com.jfoenix.controls.JFXDialog?>
-<?import com.jfoenix.controls.JFXDialogLayout?>
+<?import com.jfoenix.controls.*?>
 <?import javafx.geometry.Insets?>
-
-
-<?import com.jfoenix.controls.JFXTextField?>
-<?import com.jfoenix.controls.JFXButton?>
+<?import javafx.scene.layout.*?>
 <StackPane fx:id="stackPane" xmlns="http://javafx.com/javafx/8.0.181" xmlns:fx="http://javafx.com/fxml/1">
     <children>
         <VBox fx:id="contentVBox" prefHeight="800.0" prefWidth="800.0">
             <children>
-                <JFXTextField fx:id="textFieldCisloKatastralnehoUzemia" labelFloat="true" promptText="Číslo katastrálneho územia" VBox.vgrow="ALWAYS">
+                <JFXTextField fx:id="textFieldNazovKatastralnehoUzemia" labelFloat="true" promptText="Názov katastrálneho územia" VBox.vgrow="ALWAYS">
                     <VBox.margin>
                         <Insets bottom="36.0" top="8.0" />
-                    </VBox.margin>
-                </JFXTextField>
-                <JFXTextField fx:id="textFieldCisloListuVlastnictva" labelFloat="true" promptText="Číslo listu vlastníctva" VBox.vgrow="ALWAYS">
-                    <VBox.margin>
-                        <Insets bottom="36.0" />
                     </VBox.margin>
                 </JFXTextField>
                 <JFXTextField fx:id="textFieldSupisneCisloNehnutelnosti" labelFloat="true" promptText="Súpisné číslo nehnuteľnosti" VBox.vgrow="ALWAYS">
@@ -32,19 +16,14 @@
                         <Insets bottom="36.0" />
                     </VBox.margin>
                 </JFXTextField>
-                <JFXTextField fx:id="textFieldAdresaNehnutelnosti" labelFloat="true" promptText="Adresa nehnuteľnosti" VBox.vgrow="ALWAYS">
-                    <VBox.margin>
-                        <Insets bottom="36.0" />
-                    </VBox.margin>
-                </JFXTextField>
-                <JFXTextField fx:id="textFieldPopisNehnutelnosti" labelFloat="true" promptText="Popis nehnuteľnosti" VBox.vgrow="ALWAYS">
+                <JFXTextField fx:id="textFieldRodneCislo" labelFloat="true" promptText="Rodné číslo" VBox.vgrow="ALWAYS">
                     <VBox.margin>
                         <Insets bottom="36.0" />
                     </VBox.margin>
                 </JFXTextField>
                 <BorderPane prefHeight="100.0" prefWidth="768.0">
                     <center>
-                        <JFXButton fx:id="buttonPridajNehnutelnost" buttonType="RAISED" style="-fx-background-color: #FFFFFF;" text="Pridaj nehnuteľnosť" BorderPane.alignment="CENTER" />
+                        <JFXButton fx:id="buttonPridajTrvalyPobyt" buttonType="RAISED" style="-fx-background-color: #FFFFFF;" text="Zapíš trvalý pobyt" BorderPane.alignment="CENTER" />
                     </center>
                 </BorderPane>
             </children>
