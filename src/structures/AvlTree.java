@@ -41,7 +41,7 @@ public class AvlTree<T> implements Iterable<T> {
         }
 
         public Stack() {
-            list_ = new ArrayList<>(10);
+            list_ = new ArrayList<>();
         }
 
         public void push(T data) {
@@ -79,7 +79,14 @@ public class AvlTree<T> implements Iterable<T> {
     public AvlTree(Comparator<T> comparator) {
         root_ = null;
         comparator_ = comparator;
-        stack_ = new Stack<>(Byte.MAX_VALUE);
+        stack_ = new Stack<>();
+        counter_ = new Counter();
+    }
+
+    public AvlTree(Comparator<T> comparator, byte stackInitialSize) {
+        root_ = null;
+        comparator_ = comparator;
+        stack_ = new Stack<>(stackInitialSize);
         counter_ = new Counter();
     }
 

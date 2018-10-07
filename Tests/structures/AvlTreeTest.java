@@ -286,7 +286,7 @@ public class AvlTreeTest {
         Map<Integer, Integer> insertedTreeMap = new TreeMap<>();
 
         Random generator = new Random();
-        int iterations = 1000000;
+        int iterations = 100000;
 
         for (int i = 0; i < iterations; i++) {
             int generated = generator.nextInt(iterations * 3);
