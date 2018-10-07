@@ -19,8 +19,8 @@ public class KatastralneUzemie {
     public KatastralneUzemie(long cisloKatastralnehoUzemia_, String nazov_) {
         this.cisloKatastralnehoUzemia_ = cisloKatastralnehoUzemia_;
         this.nazov_ = nazov_;
-        nehnutelnostiVkatastralnomUzemi_ = new AvlTree<>(Comparator.comparing(Nehnutelnost::getSupisneCislo));
-        listyVlastnictvaVKatastralnomUzemi_ = new AvlTree<>(Comparator.comparing(ListVlastnictva::getCisloListuVlastnictva));
+        nehnutelnostiVkatastralnomUzemi_ = new AvlTree<>((o1, o2) -> Long.compare(o1.getSupisneCislo(), o2.getSupisneCislo()));
+        listyVlastnictvaVKatastralnomUzemi_ = new AvlTree<>((o1, o2) -> Long.compare(o1.getCisloListuVlastnictva(), o2.getCisloListuVlastnictva()));
     }
 
     public KatastralneUzemie() {

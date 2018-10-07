@@ -47,7 +47,7 @@ public class Obcan {
         this.rodneCislo_ = rodneCislo;
         this.datumNarodenia_ = datumNarodenia;
         trvalyPobyt_ = null;
-        this.listyVlatnictva_ = new AvlTree<>(Comparator.comparing(Pair::getKey));
+        this.listyVlatnictva_ = new AvlTree<>((o1, o2) -> Long.compare(o1.getKey(), o2.getKey()));
     }
 
     public Obcan() {
@@ -67,7 +67,7 @@ public class Obcan {
     }
 
     private Pair< Long, AvlTree<ListVlastnictva> > vyrobParPreStromListovVlastnictva(long cisloKatastralnehoUzemia) {
-        return new Pair<>(cisloKatastralnehoUzemia, new AvlTree<>(Comparator.comparing(listVlastnictva -> listVlastnictva.getKatastralneUzemie().getCisloKatastralnehoUzemia())));
+        return new Pair<>(cisloKatastralnehoUzemia, new AvlTree<>((o1, o2) -> Long.compare(o1.getCisloListuVlastnictva(), o2.getCisloListuVlastnictva())));
     }
 
     public String getMenoPriezvisko() {

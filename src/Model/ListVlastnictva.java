@@ -54,8 +54,8 @@ public class ListVlastnictva {
     public ListVlastnictva(KatastralneUzemie katastralneUzemie, long cisloListuVlastnictva) {
         this.katastralneUzemie_ = katastralneUzemie;
         this.cisloListuVlastnictva_ = cisloListuVlastnictva;
-        nehnutelnostiNaListeVlastnictva_ = new AvlTree<>(Comparator.comparing(Nehnutelnost::getSupisneCislo));
-        vlastniciSPodielom_ = new AvlTree<>(Comparator.comparing(obcanSPodielom -> obcanSPodielom.getObcan().getRodneCislo()));
+        nehnutelnostiNaListeVlastnictva_ = new AvlTree<>((o1, o2) -> Long.compare(o1.getSupisneCislo(), o2.getSupisneCislo()));
+        vlastniciSPodielom_ = new AvlTree<>((o1, o2) -> o1.getObcan().getRodneCislo().compareTo(o2.getObcan().getRodneCislo()));
     }
 
     public ListVlastnictva() {

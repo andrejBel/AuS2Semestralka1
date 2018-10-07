@@ -16,7 +16,7 @@ public class Nehnutelnost {
         this.supisneCislo_ = supisneCislo;
         this.adresa_ = adresa;
         this.popis_ = popis;
-        obcaniaSTravalymPobytom_ = new AvlTree<>(Comparator.comparing(Obcan::getRodneCislo));
+        obcaniaSTravalymPobytom_ = new AvlTree<>((o1, o2) -> o1.getRodneCislo().compareTo(o2.getRodneCislo()));
         listVlastnictva_ = listVlastnictva;
     }
 

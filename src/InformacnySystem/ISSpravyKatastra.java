@@ -25,9 +25,9 @@ public class ISSpravyKatastra {
     Nehnutelnost dummyNehnutelnost = new Nehnutelnost();
 
     public ISSpravyKatastra() {
-        this.obcania_ = new AvlTree<>(Comparator.comparing(Obcan::getRodneCislo));
-        this.katastralneUzemieCislo_ = new AvlTree<>(Comparator.comparing(KatastralneUzemie::getCisloKatastralnehoUzemia));
-        this.katastralneUzemieNazov_ = new AvlTree<>(Comparator.comparing(KatastralneUzemie::getNazov));
+        this.obcania_ = new AvlTree<>((o1, o2) -> o1.getRodneCislo().compareTo(o2.getRodneCislo()));
+        this.katastralneUzemieCislo_ = new AvlTree<>((o1, o2) -> Long.compare(o1.getCisloKatastralnehoUzemia(), o2.getCisloKatastralnehoUzemia()));
+        this.katastralneUzemieNazov_ = new AvlTree<>((o1, o2) -> o1.getNazov().compareTo(o2.getNazov()));
         pridajObcana("Andrej Beliancin", "1111111111111111", Helper.GetNahodnyDatumNarodenia());
         pridajObcana("Gabriela Beliancinova", "1111111111111112", Helper.GetNahodnyDatumNarodenia());
 
@@ -78,7 +78,7 @@ public class ISSpravyKatastra {
                 if (nehnutelnost != null) {
                     Nehnutelnost aktualnyTrvalyPobytObcana = obcan.getTrvalyPobyt();
                     if (aktualnyTrvalyPobytObcana != null) {
-                        nehnutelnost.odstranObcanaSTrvalymPobytom(obcan);
+                        aktualnyTrvalyPobytObcana.odstranObcanaSTrvalymPobytom(obcan);
                     }
                     nehnutelnost.pridajObcanaSTrvalymPobytom(obcan);
                     obcan.setTrvalyPobyt(nehnutelnost);
