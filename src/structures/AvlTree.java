@@ -98,27 +98,6 @@ public class AvlTree<T> implements Iterable<T> {
         stack_.clear();
     }
 
-    private boolean isEqual(T first, T second) {
-        return comparator_.compare(first, second) == 0;
-    }
-
-    private boolean isSmaller(T first, T second) {
-        return comparator_.compare(first, second) < 0;
-    }
-
-    private boolean isLargerOrEqual(T first, T second) {
-        return comparator_.compare(first, second) >= 0;
-    }
-
-    private boolean isSmallerOrEqual(T first, T second) {
-        return comparator_.compare(first, second) <= 0;
-    }
-
-    private boolean isLarger(T first, T second) {
-        return comparator_.compare(first, second) > 0;
-    }
-
-
     public T findData(T data) {
         AvlTreeNode<T> result = trySearchData(data);
         return result == null ? null : result.getData();
@@ -126,10 +105,12 @@ public class AvlTree<T> implements Iterable<T> {
 
     private AvlTreeNode<T> trySearchData(T data) {
         AvlTreeNode<T> node = root_;
+        int compareResult = 0;
         while (node != null) {
-            if (isEqual(data, node.getData())) {
+            compareResult = comparator_.compare(data, node.getData());
+            if (compareResult == 0) {
                 return node;
-            } else if (isSmaller(data, node.getData())) {
+            } else if (compareResult < 0) {
                 node = node.getLeftSon();
             } else {
                 node = node.getRightSon();
@@ -156,7 +137,7 @@ public class AvlTree<T> implements Iterable<T> {
             AvlTreeNode<T> lastNodeOnPath = stack_.peek();
             AvlTreeNode<T> nodeToInsert = new AvlTreeNode<>(data);
 
-            if (isSmaller(data, lastNodeOnPath.getData())) {
+            if (comparator_.compare(data, lastNodeOnPath.getData()) < 0) {
                 lastNodeOnPath.setLeftSon(nodeToInsert);
             } else {
                 lastNodeOnPath.setRightSon(nodeToInsert);
@@ -238,11 +219,13 @@ public class AvlTree<T> implements Iterable<T> {
     private boolean getPathToElement(T data) {
         stack_.clear();
         AvlTreeNode<T> node = root_;
+        int compareResult = 0;
         while (node != null) {
             stack_.push(node);
-            if (isEqual(data, node.getData())) {
+            compareResult = comparator_.compare(data, node.getData());
+            if (compareResult == 0) {
                 return true;
-            } else if (isSmaller(data, node.getData())) {
+            } else if (compareResult < 0) {
                 node = node.getLeftSon();
             } else {
                 node = node.getRightSon();
@@ -406,7 +389,7 @@ public class AvlTree<T> implements Iterable<T> {
             parentOfNode.setRightSon(childOfDeletedElement);
         }
     }
-    
+
     private void traverseInOrderStack(AvlTreeNode<T> root, List<T> storageList) {
         if (root == null)
             return;
@@ -449,41 +432,6 @@ public class AvlTree<T> implements Iterable<T> {
                 --nodeSize;
             }
             storageList.add(resultLevel);
-        }
-    }
-
-    public void getInterval(T from, T to, List<T> storageList) {
-        boolean isDataLargerAsFrom = false;
-        boolean isDataSmallerAsTo = false;
-        boolean dataInRange = false;
-        if (root_ == null) {
-            return;
-        }
-        Stack<AvlTreeNode<T>> stack = new Stack<>();
-        AvlTreeNode<T> current = root_;
-
-        while (current != null || stack.size() > 0) {
-            while (current != null) {
-                stack.push(current);
-                isDataLargerAsFrom = isLarger(current.getData(), from);
-                if (isDataLargerAsFrom) {
-                    current = current.getLeftSon();
-                } else {
-                    break;
-                }
-            }
-
-            current = stack.pop();
-            dataInRange = isLargerOrEqual(current.getData(), from) && isSmallerOrEqual(current.getData(), to);
-            if (dataInRange) {
-                storageList.add(current.getData());
-            }
-            isDataSmallerAsTo = isSmaller(current.getData(), to);
-            if (isDataSmallerAsTo) {
-                current = current.getRightSon();
-            } else {
-                current = null;
-            }
         }
     }
 
