@@ -31,8 +31,11 @@ public class Aplikacia {
         controllers = Arrays.asList(
                 new CGenerator(isSpravyKatastra_),
                 new C7VypisNehnutelnosti(isSpravyKatastra_),
+                new C8VypisNehnutelnostiMajitelaVKU(isSpravyKatastra_),
+                new C9VypisNehnutelnostimajitela(isSpravyKatastra_),
                 new C10PridanieTrvalehoPobytu(isSpravyKatastra_),
                 new C12ZapisZmenaMajetkovehoPodielu(isSpravyKatastra_),
+                new C13OdstranenieMajetkovehoPodielu(isSpravyKatastra_),
                 new C15VypisKatastralnychUzemi(isSpravyKatastra_),
                 new C16PridanieObcana(isSpravyKatastra_),
                 new C17PridanieListuVlastnictva(isSpravyKatastra_),

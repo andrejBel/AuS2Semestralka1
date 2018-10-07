@@ -82,6 +82,10 @@ public class ListVlastnictva {
         return vlastniciSPodielom_;
     }
 
+    public ObcanSPodielom getObcanSPodielom(Obcan obcan) {
+        dummyObcanSPodielom.setObcan(obcan);
+        return vlastniciSPodielom_.findData(dummyObcanSPodielom);
+    }
 
     public void setCisloListuVlastnictva(long cisloListuVlastnictva) {
         this.cisloListuVlastnictva_ = cisloListuVlastnictva;
@@ -90,10 +94,12 @@ public class ListVlastnictva {
     public boolean pridajAleboPonechajVlastnika(Obcan obcan) {
         ObcanSPodielom obcanNaPridanie = new ObcanSPodielom(obcan, 0.0);
         boolean inserted = vlastniciSPodielom_.insert(obcanNaPridanie);
-        if (inserted) {
-
-        }
         return true;
+    }
+
+    public boolean odstranVlastnika(Obcan obcan) {
+        dummyObcanSPodielom.setObcan(obcan);
+        return vlastniciSPodielom_.remove(dummyObcanSPodielom);
     }
 
 }

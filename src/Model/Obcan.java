@@ -1,44 +1,18 @@
 package Model;
 
+import Utils.Pair;
 import structures.AvlTree;
 
 import java.util.Comparator;
 
 public class Obcan {
 
-    private static class Pair<K,V> {
-
-         K key;
-         V value;
-
-        public Pair(K key, V value) {
-            this.key = key;
-            this.value = value;
-        }
-
-        public K getKey() {
-            return key;
-        }
-
-        public void setKey(K key) {
-            this.key = key;
-        }
-
-        public V getValue() {
-            return value;
-        }
-
-        public void setValue(V value) {
-            this.value = value;
-        }
-    }
-
     private String menoPriezvisko_;
     private String rodneCislo_;
     long datumNarodenia_;
     Nehnutelnost trvalyPobyt_;
     // kluc je cislo katastralnehoo uzemia, hodnota su nehnutelnosti obcana v danom uzemi
-    AvlTree<Pair< Long, AvlTree<ListVlastnictva> > > listyVlatnictva_;
+    AvlTree<Pair< Long, AvlTree<ListVlastnictva> >> listyVlatnictva_;
 
     private static final  Pair< Long, AvlTree<ListVlastnictva> > dummyPair = new Pair<>((long) 0, null);
 
@@ -54,6 +28,12 @@ public class Obcan {
         this("", "", 0);
     }
 
+    public AvlTree<ListVlastnictva> dajVsetkyListyVlastnictvaVkatastralnomUzemi(long cisloKatastralnehoUzemia) {
+        dummyPair.setKey(cisloKatastralnehoUzemia);
+        Pair< Long, AvlTree<ListVlastnictva> > result = listyVlatnictva_.findData(dummyPair);
+        return result != null ? result.getValue() : null;
+    }
+
     public boolean pridajAleboPonechajListVlastnictva(ListVlastnictva listVlastnictva) {
         long cisloKatastralnehoUzemia = listVlastnictva.getKatastralneUzemie().getCisloKatastralnehoUzemia();
         dummyPair.setKey(cisloKatastralnehoUzemia);
@@ -64,6 +44,20 @@ public class Obcan {
         }
         listyVlastnictvaVKatastralnomUzemi.getValue().insert(listVlastnictva);
         return true;
+    }
+
+    public boolean odstranListVlastnictva(ListVlastnictva listVlastnictva) {
+        long cisloKatastralnehoUzemia = listVlastnictva.getKatastralneUzemie().getCisloKatastralnehoUzemia();
+        dummyPair.setKey(cisloKatastralnehoUzemia);
+        Pair< Long, AvlTree<ListVlastnictva> > listyVlastnictvaVKatastralnomUzemi = listyVlatnictva_.findData(dummyPair);
+        if (listyVlastnictvaVKatastralnomUzemi != null) {
+            boolean removed = listyVlastnictvaVKatastralnomUzemi.getValue().remove(listVlastnictva);
+            if (removed && listyVlastnictvaVKatastralnomUzemi.getValue().getSize() == 0) {
+                listyVlatnictva_.remove(listyVlastnictvaVKatastralnomUzemi);
+            }
+            return removed;
+        }
+        return false;
     }
 
     private Pair< Long, AvlTree<ListVlastnictva> > vyrobParPreStromListovVlastnictva(long cisloKatastralnehoUzemia) {
@@ -84,6 +78,10 @@ public class Obcan {
 
     public Nehnutelnost getTrvalyPobyt() {
         return trvalyPobyt_;
+    }
+
+    public AvlTree<Pair<Long, AvlTree<ListVlastnictva>>> getListyVlatnictva() {
+        return listyVlatnictva_;
     }
 
     public void setRodneCislo(String rodneCislo) {

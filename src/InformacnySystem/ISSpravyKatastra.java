@@ -5,10 +5,12 @@ import Model.ListVlastnictva;
 import Model.Nehnutelnost;
 import Model.Obcan;
 import Utils.Helper;
+import Utils.Pair;
 import Utils.Status;
 import structures.AvlTree;
 
 import javax.xml.ws.Holder;
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Optional;
 
@@ -46,13 +48,19 @@ public class ISSpravyKatastra {
         pridajNehnutelnostNaListVlastnictva(1, 1, 2, "Tarchava 2", "Popis 2");
         pridajNehnutelnostNaListVlastnictva(1, 1, 3, "Tarchava 3", "Popis 3");
 
-        pridajNehnutelnostNaListVlastnictva(1, 1, 1, "Bela 1", "Popis 1");
+        pridajNehnutelnostNaListVlastnictva(1, 2, 4, "Tarchava 4", "Popis 1");
+        pridajNehnutelnostNaListVlastnictva(1, 2, 5, "Tarchava 5", "Popis 2");
+        pridajNehnutelnostNaListVlastnictva(1, 2, 6, "Tarchava 6", "Popis 3");
+
+        pridajNehnutelnostNaListVlastnictva(2, 1, 1, "Bela 1", "Popis 1");
         pridajNehnutelnostNaListVlastnictva(2, 1, 2, "Bela 2", "Popis 2");
-        pridajNehnutelnostNaListVlastnictva(3, 1, 3, "Bela 3", "Popis 3");
+        pridajNehnutelnostNaListVlastnictva(2, 1, 3, "Bela 3", "Popis 3");
 
         zapisObcanoviTrvalyPobyt("Terchova", 1, "1111111111111111");
         zapisObcanoviTrvalyPobyt("Bela", 1, "1111111111111112");
 
+        upravMajetkovyPodielNaListeVlastnictva(1,1, "1111111111111111");
+        upravMajetkovyPodielNaListeVlastnictva(1,2, "1111111111111111");
     }
 
 
@@ -64,6 +72,22 @@ public class ISSpravyKatastra {
             return katastralneUzemie.getNehnutelnostiVKatastralnomUzemi();
         }
         return null;
+    }
+
+    // 8
+    public Pair<Obcan, AvlTree<ListVlastnictva>> getObcanoveListyVlastnictvaPodlaKatastralnehoUzemia(long cisloKatastralnehoUzemia, String rodneCislo) {
+        dummyObcan.setRodneCislo(rodneCislo);
+        Obcan obcan = obcania_.findData(dummyObcan);
+        if (obcan != null) {
+            return new Pair<>(obcan, obcan.dajVsetkyListyVlastnictvaVkatastralnomUzemi(cisloKatastralnehoUzemia));
+        }
+        return null;
+    }
+
+    // 9
+    public Obcan najdiObcana(String rodneCislo) {
+        dummyObcan.setRodneCislo(rodneCislo);
+        return obcania_.findData(dummyObcan);
     }
 
     // C10
@@ -102,6 +126,26 @@ public class ISSpravyKatastra {
                     listVlastnictva.pridajAleboPonechajVlastnika(obcan);
                     obcan.pridajAleboPonechajListVlastnictva(listVlastnictva);
                     return listVlastnictva;
+                }
+            }
+        }
+        return null;
+    }
+
+    // 13
+    public ListVlastnictva odstranMajetkovyPodielNaListeVlastnictva(long cisloKatastralnehoUzemia, long cisloListuVlastnictva, String rodneCislo) {
+        dummyObcan.setRodneCislo(rodneCislo);
+        Obcan obcan = obcania_.findData(dummyObcan);
+        if (obcan != null) {
+            dummyKatastralneUzemie.setCisloKatastralnehoUzemia(cisloKatastralnehoUzemia);
+            KatastralneUzemie katastralneUzemie = katastralneUzemieCislo_.findData(dummyKatastralneUzemie);
+            if (katastralneUzemie != null) {
+                ListVlastnictva listVlastnictva = katastralneUzemie.najdiListVlastnictva(cisloListuVlastnictva);
+                if (listVlastnictva != null) {
+                    boolean odstranenyVlastnik = listVlastnictva.odstranVlastnika(obcan);
+                    if (odstranenyVlastnik) {
+                        return obcan.odstranListVlastnictva(listVlastnictva) ? listVlastnictva : null;
+                    }
                 }
             }
         }
@@ -181,13 +225,23 @@ public class ISSpravyKatastra {
 
     public boolean generujData(int pocetKatastralnychUzemi, int celkovyPocetObcanov, int pocetListovVlastnictvaVKatastralnomUzemi, int pocetVlastnikovNaListeVlastnictva, int pocetNehnutelnostiNaListeVlastnictva) {
         boolean inserted = false;
-
+        ArrayList<Obcan> vlozeniObcania = new ArrayList<>(celkovyPocetObcanov);
         this.obcania_.clear();
         this.katastralneUzemieNazov_.clear();
         this.katastralneUzemieCislo_.clear();
         Optional<Holder<KatastralneUzemie>> katastralneUzemieHolder = Optional.of(new Holder<>());
         Optional<Holder<Nehnutelnost>> nehnutelnostHolder = Optional.of(new Holder<>());
         Optional<Holder<ListVlastnictva>> listVlastnictvaHolder = Optional.of(new Holder<>());
+        Optional<Holder<Obcan>> obcanHolder = Optional.of(new Holder<>());
+
+
+        for (int indexPocetObcanov = 0; indexPocetObcanov < celkovyPocetObcanov; indexPocetObcanov++) {
+            inserted = pridajObcana(Helper.GetNahodneMenoAPriezvisko(), Helper.GetNahodneRodneCislo(), Helper.GetNahodnyDatumNarodenia(), obcanHolder);
+            vlozeniObcania.add(obcanHolder.get().value);
+            if (!inserted) {
+                indexPocetObcanov--;
+            }
+        }
 
         for (int indexKatastralneUzemie = 1; indexKatastralneUzemie <= pocetKatastralnychUzemi; indexKatastralneUzemie++) {
             inserted = pridajKatastralneUzemie(indexKatastralneUzemie, Helper.GetNahodnyNazovKatastralnehoUzemie() + indexKatastralneUzemie, katastralneUzemieHolder);
@@ -202,21 +256,19 @@ public class ISSpravyKatastra {
                 }
                 ListVlastnictva listVlastnictva = listVlastnictvaHolder.get().value;
                 for (int indexPocetNehnutelnostinaListeVlastnictva = 1; indexPocetNehnutelnostinaListeVlastnictva <= pocetNehnutelnostiNaListeVlastnictva; indexPocetNehnutelnostinaListeVlastnictva++) {
-                    long supisneCislo = indexPocetListovVlastnictvaVkatastralnomUzemi * indexPocetNehnutelnostinaListeVlastnictva;
+                    long supisneCislo = (indexPocetListovVlastnictvaVkatastralnomUzemi * pocetNehnutelnostiNaListeVlastnictva) + indexPocetNehnutelnostinaListeVlastnictva;
                     inserted = katastralneUzemie.vlozNehnutelnostNaListVlastnictva(listVlastnictva, supisneCislo, Helper.GetNahodnaAdresa(), Helper.GetNahodnyPopis(), nehnutelnostHolder);
+                    if (!inserted) {
+                        return false;
+                    }
+
                 }
-                if (!inserted) {
-                    return false;
+                for (int ndexPocetVlastnikovNaListeVlastnictva = 1; ndexPocetVlastnikovNaListeVlastnictva <= pocetVlastnikovNaListeVlastnictva ; ndexPocetVlastnikovNaListeVlastnictva++) {
+                    listVlastnictva.pridajAleboPonechajVlastnika(vlozeniObcania.get(Helper.GetNahodneCislo(celkovyPocetObcanov -1)));
                 }
             }
         }
 
-        for (int indexPocetObcanov = 0; indexPocetObcanov < celkovyPocetObcanov; indexPocetObcanov++) {
-            inserted = pridajObcana(Helper.GetNahodneMenoAPriezvisko(), Helper.GetNahodneRodneCislo(), Helper.GetNahodnyDatumNarodenia());;
-            if (!inserted) {
-                indexPocetObcanov--;
-            }
-        }
         return true;
     }
 

@@ -1,29 +1,26 @@
 package GUI.View.ViewItems;
 
+import Model.ListVlastnictva;
+import Model.Obcan;
+
 public class TableItemObcanPodiel {
 
-    String menoPriezvisko_;
-    String rodneCislo_;
     double staryPodiel_;
     double novyPodiel_;
+    ListVlastnictva.ObcanSPodielom obcanSPodielom_;
 
-    public TableItemObcanPodiel(String menoPriezvisko, String rodneCislo, double staryPodiel, double novyPodiel) {
-        this.menoPriezvisko_ = menoPriezvisko;
-        this.rodneCislo_ = rodneCislo;
-        this.staryPodiel_ = staryPodiel;
-        this.novyPodiel_ = novyPodiel;
-    }
-
-    public TableItemObcanPodiel(String menoPriezvisko, String rodneCislo, double staryPodiel) {
-        this(menoPriezvisko, rodneCislo, staryPodiel, 0.0);
+    public TableItemObcanPodiel(ListVlastnictva.ObcanSPodielom obcanSPodielom) {
+        obcanSPodielom_ = obcanSPodielom;
+        this.staryPodiel_ = obcanSPodielom.getPodiel();
+        this.novyPodiel_ = obcanSPodielom.getPodiel();
     }
 
     public String getMenoPriezvisko() {
-        return menoPriezvisko_;
+        return obcanSPodielom_.getObcan().getMenoPriezvisko();
     }
 
     public String getRodneCislo() {
-        return rodneCislo_;
+        return obcanSPodielom_.getObcan().getRodneCislo();
     }
 
     public double getStaryPodiel() {
@@ -37,4 +34,9 @@ public class TableItemObcanPodiel {
     public void setNovyPodiel(double novyPodiel) {
         this.novyPodiel_ = novyPodiel;
     }
+
+    public void setObcanoviNovyPodiel() {
+        obcanSPodielom_.setPodiel(novyPodiel_);
+    }
+
 }

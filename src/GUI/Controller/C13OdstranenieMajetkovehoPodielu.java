@@ -24,7 +24,7 @@ import structures.AvlTree;
 import java.util.Arrays;
 import java.util.List;
 
-public class C12ZapisZmenaMajetkovehoPodielu extends ControllerBase {
+public class C13OdstranenieMajetkovehoPodielu extends ControllerBase {
 
     @FXML
     private JFXTextField textFieldCisloKatastralnehoUzemia;
@@ -36,7 +36,7 @@ public class C12ZapisZmenaMajetkovehoPodielu extends ControllerBase {
     private JFXTextField textFieldRodneCislo;
 
     @FXML
-    private JFXButton buttonUpravMajetkovyPodiel;
+    private JFXButton buttonOdstranMajetkovyPodiel;
 
     @FXML
     private TableView<TableItemNehnutelnost> tableViewNehnutelnosti;
@@ -80,9 +80,10 @@ public class C12ZapisZmenaMajetkovehoPodielu extends ControllerBase {
 
     private List<JFXTextField> textFields;
 
-    public C12ZapisZmenaMajetkovehoPodielu(ISSpravyKatastra isSpravyKatastra) {
+    public C13OdstranenieMajetkovehoPodielu(ISSpravyKatastra isSpravyKatastra) {
         super(isSpravyKatastra);
         initView();
+
         textFields = Arrays.asList(
                 textFieldCisloKatastralnehoUzemia,
                 textFieldCisloListuVlastnictva,
@@ -93,11 +94,11 @@ public class C12ZapisZmenaMajetkovehoPodielu extends ControllerBase {
         Helper.decorateNumberTextFieldWithValidator( textFieldCisloListuVlastnictva, isCisloLVOk);
         Helper.decorateTextFieldWithValidator(textFieldRodneCislo, isRodneCisloOk, 16, "Rodné číslo");
 
-        buttonUpravMajetkovyPodiel.setOnAction(event -> {
-            if (Helper.disableButton(buttonUpravMajetkovyPodiel, simpleBooleanProperties, () -> textFields.forEach(JFXTextField::validate))) {
+        buttonOdstranMajetkovyPodiel.setOnAction(event -> {
+            if (Helper.disableButton(buttonOdstranMajetkovyPodiel, simpleBooleanProperties, () -> textFields.forEach(JFXTextField::validate))) {
                 return;
             }
-            new NacitajMajetkovePodiely().execute();
+            new OdstranMajetkovyPodiel().execute();
         });
 
         tableColumnSupisneCislo.setCellValueFactory(param -> new SimpleLongProperty(param.getValue().getSupisneCislo()));
@@ -127,6 +128,7 @@ public class C12ZapisZmenaMajetkovehoPodielu extends ControllerBase {
             tableViewObcanPodiely.refresh();
         });
 
+
         buttonUlozMajetkovePodiely.setOnAction(event -> {
             ObservableList<TableItemObcanPodiel> tableViewObcanPodielyItems = tableViewObcanPodiely.getItems();
             if (tableViewObcanPodielyItems.size() == 0) {
@@ -139,18 +141,8 @@ public class C12ZapisZmenaMajetkovehoPodielu extends ControllerBase {
             }
             tableViewObcanPodielyItems.forEach(tableItemObcanPodiel -> tableItemObcanPodiel.setObcanoviNovyPodiel());
             showSuccessDialog("Nové podiely boli uložené");
-        });
-    }
 
-    private void clearFormulars() {
-        buttonUpravMajetkovyPodiel.disableProperty().unbind();
-        buttonUpravMajetkovyPodiel.disableProperty().set(false);
-        textFields.forEach(jfxTextField -> {
-            jfxTextField.setText("");
-            jfxTextField.resetValidation();
         });
-        tableViewNehnutelnosti.getItems().clear();
-        tableViewObcanPodiely.getItems().clear();
     }
 
     private boolean isSumaPodielovOk() {
@@ -162,12 +154,21 @@ public class C12ZapisZmenaMajetkovehoPodielu extends ControllerBase {
         return Math.abs(suma  - 100.0) < 0.1;
     }
 
+    private void clearFormulars() {
+        buttonOdstranMajetkovyPodiel.disableProperty().unbind();
+        buttonOdstranMajetkovyPodiel.disableProperty().set(false);
+        textFields.forEach(jfxTextField -> {
+            jfxTextField.setText("");
+            jfxTextField.resetValidation();
+        });
+        tableViewNehnutelnosti.getItems().clear();
+        tableViewObcanPodiely.getItems().clear();
+    }
 
     @Override
     public Runnable getRunnableOnSelection() {
         return () -> clearFormulars();
     }
-
 
     @Override
     protected void initView() {
@@ -176,21 +177,20 @@ public class C12ZapisZmenaMajetkovehoPodielu extends ControllerBase {
 
     @Override
     protected String getViewFileName() {
-        return "12zapisZmenaMajetkovehoPodielu.fxml";
+        return "13odstranenieMajetkovehoPodielu.fxml";
     }
 
     @Override
     public String getViewName() {
-        return "12. Zápis/zmena majetkového podielu";
+        return "13. Odstránenie majetkového podielu";
     }
 
-    private class NacitajMajetkovePodiely extends SimpleTask {
+    private class OdstranMajetkovyPodiel extends SimpleTask {
 
         ListVlastnictva listVlastnictva = null;
 
         @Override
         public boolean compute() {
-
             long cisloKatastralnehoUzemia = 0;
             try {
                 cisloKatastralnehoUzemia = Long.valueOf(textFieldCisloKatastralnehoUzemia.getText());
@@ -204,13 +204,12 @@ public class C12ZapisZmenaMajetkovehoPodielu extends ControllerBase {
             } catch (NumberFormatException e) {
                 return false;
             }
-            listVlastnictva = isSpravyKatastra_.upravMajetkovyPodielNaListeVlastnictva(cisloKatastralnehoUzemia, cisloListuVlastnictva, textFieldRodneCislo.getText());
+            listVlastnictva = isSpravyKatastra_.odstranMajetkovyPodielNaListeVlastnictva(cisloKatastralnehoUzemia, cisloListuVlastnictva, textFieldRodneCislo.getText());
             return listVlastnictva != null;
         }
 
         @Override
         public void onSuccess() {
-
             ObservableList<TableItemNehnutelnost> tableViewItemsNehnutelnosti = tableViewNehnutelnosti.getItems();
             tableViewItemsNehnutelnosti.clear();
             AvlTree<Nehnutelnost> nehnutelnosti = listVlastnictva.getNehnutelnostiNaListeVlastnictva();
@@ -220,7 +219,6 @@ public class C12ZapisZmenaMajetkovehoPodielu extends ControllerBase {
                 tableViewItemsNehnutelnosti.add(tableItemNehnutelnost);
             }
 
-
             ObservableList<TableItemObcanPodiel> tableViewItemObcanSPodielmi = tableViewObcanPodiely.getItems();
             tableViewItemObcanSPodielmi.clear();
             AvlTree<ListVlastnictva.ObcanSPodielom> obcaniaSPodielom = listVlastnictva.getVlastniciSPodielom();
@@ -229,12 +227,16 @@ public class C12ZapisZmenaMajetkovehoPodielu extends ControllerBase {
                 tableItemObcanPodiel = new TableItemObcanPodiel(obcanSPodielom);
                 tableViewItemObcanSPodielmi.add(tableItemObcanPodiel);
             }
-            showSuccessDialog("Údaje boli úspešne načítané. Môžete upraviť podiely vlastníkov.");
+            if (obcaniaSPodielom.getSize() > 0) {
+                showSuccessDialog("Občanovi bol úspešne odstránený majetkový posiel. Môžete upraviť podiely ostatných vlastníkov.");
+            } else {
+                showSuccessDialog("Občanovi bol úspešne odstránený majetkový posiel. Na liste vlastníctva nie sú žiadny iný vlastníci.");
+            }
         }
 
         @Override
         public void onFail() {
-            showWarningDialog("Nepodarilo sa nájsť údaje potrebné pre úpravu majetkového podielu");
+            showWarningDialog("Nepodarilo sa odstrániť majetkový podiel");
         }
     }
 
