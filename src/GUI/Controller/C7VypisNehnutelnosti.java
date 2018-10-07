@@ -84,19 +84,7 @@ public class C7VypisNehnutelnosti extends ControllerBase {
                 tableItems.add(tableItemNehnutelnost);
             }
         } else {
-            Label label = new Label();
-            label.setStyle("-fx-font-weight: bold");
-            label.setAlignment(Pos.CENTER);
-            dialogVBox.getChildren().clear();
-            dialogVBox.getChildren().addAll(label);
-            JFXButton button = new JFXButton("Zavrieť");
-            button.setOnAction(event1 -> {
-                dialog.close();
-            });
-            dialogLayout.setActions(button);
-            label.setTextFill(Color.RED);
-            label.setText("Katastrálne územie nebolo nájdené");
-            dialog.show();
+            showWarningDialog("Katastrálne územie nebolo nájdené");
         }
     }
 

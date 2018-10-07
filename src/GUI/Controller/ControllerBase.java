@@ -4,6 +4,12 @@ import InformacnySystem.ISSpravyKatastra;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXDialog;
 import com.jfoenix.controls.JFXDialogLayout;
+import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
+import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
+import de.jensd.fx.glyphs.materialdesignicons.MaterialDesignIcon;
+import de.jensd.fx.glyphs.materialdesignicons.MaterialDesignIconView;
+import de.jensd.fx.glyphs.materialicons.MaterialIcon;
+import de.jensd.fx.glyphs.materialicons.MaterialIconView;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
@@ -13,12 +19,17 @@ import javafx.scene.effect.BoxBlur;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Text;
 
 import java.io.IOException;
+
+
 
 public abstract class ControllerBase {
 
     private Label messageLabel_;
+
+
 
     @FXML
     protected StackPane rootStackPane_;
@@ -81,22 +92,52 @@ public abstract class ControllerBase {
         dialogVBox.setAlignment(Pos.CENTER);
     }
 
-    protected void showSuccessDialog(String message) {
+    protected void showInfoDialog(String message) {
+        Color black54 = new Color(0,0,0,0.54);
+        MaterialDesignIconView materialDesignIconView =
+                new MaterialDesignIconView(MaterialDesignIcon.INFORMATION);
+        materialDesignIconView.setFill(black54);
+        materialDesignIconView.setSize("3em");
+        dialogVBox.setSpacing(5);
         dialogVBox.getChildren().clear();
-        dialogVBox.getChildren().addAll(messageLabel_);
+        dialogVBox.getChildren().addAll(materialDesignIconView, messageLabel_);
+        JFXButton button = new JFXButton("Zavrieť");
+        button.setOnAction(event1 -> {
+            dialog.close();
+        });
+        dialogLayout.setActions(button);
+        messageLabel_.setTextFill(black54);
+        messageLabel_.setText(message);
+        dialog.show();
+    }
+
+
+    protected void showSuccessDialog(String message) {
+        MaterialDesignIconView materialDesignIconView =
+                new MaterialDesignIconView(MaterialDesignIcon.CHECK);
+        materialDesignIconView.setFill( Color.GREEN);
+        materialDesignIconView.setSize("3em");
+        dialogVBox.setSpacing(5);
+        dialogVBox.getChildren().clear();
+        dialogVBox.getChildren().addAll(materialDesignIconView, messageLabel_);
         JFXButton button = new JFXButton("Zavrieť");
         button.setOnAction(event1 -> {
             dialog.close();
         });
         dialogLayout.setActions(button);
         messageLabel_.setTextFill(Color.GREEN);
-        messageLabel_.setText("Nehnuteľnosť nebola odstránená");
+        messageLabel_.setText(message);
         dialog.show();
     }
 
     protected void showWarningDialog(String message) {
+        MaterialDesignIconView materialDesignIconView =
+                new MaterialDesignIconView(MaterialDesignIcon.ALERT_CIRCLE);
+        materialDesignIconView.setFill( Color.RED);
+        materialDesignIconView.setSize("3em");
+        dialogVBox.setSpacing(5);
         dialogVBox.getChildren().clear();
-        dialogVBox.getChildren().addAll(messageLabel_);
+        dialogVBox.getChildren().addAll(materialDesignIconView, messageLabel_ );
         JFXButton button = new JFXButton("Zavrieť");
         button.setOnAction(event1 -> {
             dialog.close();
