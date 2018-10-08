@@ -17,6 +17,7 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.input.KeyCode;
 import structures.AvlTree;
 
 import java.util.Arrays;
@@ -79,6 +80,12 @@ public class C8VypisNehnutelnostiMajitelaVKU extends ControllerBase {
             }
             nacitajData();
         });
+        textFields.forEach(jfxTextField -> jfxTextField.setOnKeyPressed(event -> {
+            if (event.getCode().equals(KeyCode.ENTER))
+            {
+                buttonHladaj.fire();
+            }
+        }));
 
         tableColumnSupisneCislo.setCellValueFactory(param -> new SimpleLongProperty(param.getValue().getSupisneCislo()));
         tableColumnAdresa.setCellValueFactory(param -> new SimpleStringProperty(param.getValue().getAdresa()));

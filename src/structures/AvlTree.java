@@ -9,30 +9,6 @@ public class AvlTree<T> implements Iterable<T> {
         return new InOrderIterator();
     }
 
-    private static class Counter {
-        long leftRotate = 0;
-        long rightRotate = 0;
-        long rightLeftRotate = 0;
-        long leftRightRotate = 0;
-
-        public void reset() {
-            leftRotate = 0;
-            rightRotate = 0;
-            rightLeftRotate = 0;
-            leftRightRotate = 0;
-        }
-
-        @Override
-        public String toString() {
-            return "Counter{" +
-                    "leftRotate=" + leftRotate +
-                    ", rightRotate=" + rightRotate +
-                    ", rightLeftRotate=" + rightLeftRotate +
-                    ", leftRightRotate=" + leftRightRotate +
-                    '}';
-        }
-    }
-
     private static class Stack<T> {
         private ArrayList<T> list_;
 
@@ -74,20 +50,17 @@ public class AvlTree<T> implements Iterable<T> {
     private Comparator<T> comparator_;
     private long size_;
     private Stack<AvlTreeNode<T>> stack_;
-    private Counter counter_;
 
     public AvlTree(Comparator<T> comparator) {
         root_ = null;
         comparator_ = comparator;
-        stack_ = new Stack<>();
-        counter_ = new Counter();
+        stack_ = new Stack<>(10);
     }
 
     public AvlTree(Comparator<T> comparator, byte stackInitialSize) {
         root_ = null;
         comparator_ = comparator;
         stack_ = new Stack<>(stackInitialSize);
-        counter_ = new Counter();
     }
 
     public AvlTreeNode<T> getRoot() {
@@ -101,7 +74,6 @@ public class AvlTree<T> implements Iterable<T> {
     public void clear() {
         root_ = null;
         size_ = 0;
-        counter_.reset();
         stack_.clear();
     }
 
@@ -242,7 +214,6 @@ public class AvlTree<T> implements Iterable<T> {
     }
 
     private AvlTreeNode<T> rotateRight(AvlTreeNode<T> parent, AvlTreeNode<T> child) {
-        counter_.rightRotate++;
         AvlTreeNode<T> root = child;
         AvlTreeNode<T> rightChildOfChild = child.getRightSon();
 
@@ -256,7 +227,6 @@ public class AvlTree<T> implements Iterable<T> {
     }
 
     private AvlTreeNode<T> rotateLeft(AvlTreeNode<T> parent, AvlTreeNode<T> child) {
-        counter_.leftRotate++;
         AvlTreeNode<T> root = child;
         AvlTreeNode<T> leftChildOfChild = child.getLeftSon();
 
@@ -271,9 +241,6 @@ public class AvlTree<T> implements Iterable<T> {
     }
 
     private AvlTreeNode<T> rotateRightLeft(AvlTreeNode<T> parent, AvlTreeNode<T> child) {
-        counter_.rightRotate--;
-        counter_.leftRotate--;
-        counter_.rightLeftRotate++;
         AvlTreeNode<T> rootAfterRightRotation = rotateRight(child, child.getLeftSon());
         parent.setRightSon(rootAfterRightRotation);
         return rotateLeft(parent, rootAfterRightRotation);
@@ -281,20 +248,9 @@ public class AvlTree<T> implements Iterable<T> {
     }
 
     private AvlTreeNode<T> rotateLeftRight(AvlTreeNode<T> parent, AvlTreeNode<T> child) {
-        counter_.rightRotate--;
-        counter_.leftRotate--;
-        counter_.leftRightRotate++;
         AvlTreeNode<T> rootAfterLeftRotation = rotateLeft(child, child.getRightSon());
         parent.setLeftSon(rootAfterLeftRotation);
         return rotateRight(parent, rootAfterLeftRotation);
-    }
-
-    public void resetCounter() {
-        counter_.reset();
-    }
-
-    public void printCounter() {
-        System.out.println(counter_);
     }
 
     public boolean remove(T data)

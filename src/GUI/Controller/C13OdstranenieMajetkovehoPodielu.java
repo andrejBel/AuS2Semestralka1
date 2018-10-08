@@ -19,6 +19,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.TextFieldTableCell;
+import javafx.scene.input.KeyCode;
 import structures.AvlTree;
 
 import java.util.Arrays;
@@ -100,6 +101,12 @@ public class C13OdstranenieMajetkovehoPodielu extends ControllerBase {
             }
             new OdstranMajetkovyPodiel().execute();
         });
+        textFields.forEach(jfxTextField -> jfxTextField.setOnKeyPressed(event -> {
+            if (event.getCode().equals(KeyCode.ENTER))
+            {
+                buttonOdstranMajetkovyPodiel.fire();
+            }
+        }));
 
         tableColumnSupisneCislo.setCellValueFactory(param -> new SimpleLongProperty(param.getValue().getSupisneCislo()));
         tableColumnAdresa.setCellValueFactory(param -> new SimpleStringProperty(param.getValue().getAdresa()));
@@ -143,6 +150,8 @@ public class C13OdstranenieMajetkovehoPodielu extends ControllerBase {
             showSuccessDialog("Nové podiely boli uložené");
 
         });
+
+
     }
 
     private boolean isSumaPodielovOk() {

@@ -16,6 +16,7 @@ import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.input.KeyCode;
 import javafx.scene.paint.Color;
 import structures.AvlTree;
 
@@ -67,7 +68,12 @@ public class C7VypisNehnutelnosti extends ControllerBase {
             nacitajNehnutelnosti();
 
         });
-
+        textFields.forEach(jfxTextField -> jfxTextField.setOnKeyPressed(event -> {
+            if (event.getCode().equals(KeyCode.ENTER))
+            {
+                buttonHladaj.fire();
+            }
+        }));
         tableColumnSupisneCislo.setCellValueFactory(param -> new SimpleLongProperty(param.getValue().getSupisneCislo()));
         tableColumnAdresa.setCellValueFactory(param -> new SimpleStringProperty(param.getValue().getAdresa()));
         tableColumnPopis.setCellValueFactory(param -> new SimpleStringProperty(param.getValue().getPopis()));

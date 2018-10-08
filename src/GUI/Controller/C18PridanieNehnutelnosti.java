@@ -9,6 +9,7 @@ import javafx.beans.property.SimpleBooleanProperty;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
+import javafx.scene.input.KeyCode;
 import javafx.scene.paint.Color;
 
 import java.util.Arrays;
@@ -75,7 +76,12 @@ public class C18PridanieNehnutelnosti extends ControllerBase {
 
             new PridajNehnutelnost().execute();
         });
-
+        textFields.forEach(jfxTextField -> jfxTextField.setOnKeyPressed(event -> {
+            if (event.getCode().equals(KeyCode.ENTER))
+            {
+                buttonPridajNehnutelnost.fire();
+            }
+        }));
 
     }
 

@@ -9,6 +9,7 @@ import javafx.beans.property.SimpleBooleanProperty;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
+import javafx.scene.input.KeyCode;
 import javafx.scene.paint.Color;
 
 import java.util.Arrays;
@@ -61,7 +62,12 @@ public class C10PridanieTrvalehoPobytu extends ControllerBase {
             }
             new PridajTrvalyPobyt().execute();
         });
-
+        textFields.forEach(jfxTextField -> jfxTextField.setOnKeyPressed(event -> {
+            if (event.getCode().equals(KeyCode.ENTER))
+            {
+                buttonPridajTrvalyPobyt.fire();
+            }
+        }));
     }
 
     @Override

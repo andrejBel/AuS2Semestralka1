@@ -53,7 +53,6 @@ public class AvlTreeTest {
             totalTime += end;
         }
         System.out.println("Average time[miliseconds] for insert is: " + (totalTime / (iteration)));
-        testAvlTreeAscendant_.printCounter();
     }
 
     @Test
@@ -62,7 +61,6 @@ public class AvlTreeTest {
             Assert.assertTrue(testAvlTreeAscendant_.insert(i));
             Assert.assertTrue("Nie je spnena podmienka AVL stromu" ,testAvlTreeAscendant_.checkAvlTreeConditions());
         }
-        testAvlTreeAscendant_.printCounter();
     }
 
     @Test
@@ -78,7 +76,6 @@ public class AvlTreeTest {
             Assert.assertTrue(testAvlTreeAscendant_.insert(third));
             Assert.assertTrue("Nie je spnena podmienka AVL stromu" ,testAvlTreeAscendant_.checkAvlTreeConditions());
         }
-        testAvlTreeAscendant_.printCounter();
         printLevelOrder(testAvlTreeAscendant_);
     }
 
@@ -95,7 +92,6 @@ public class AvlTreeTest {
             Assert.assertTrue(testAvlTreeAscendant_.insert(third));
             Assert.assertTrue("Nie je spnena podmienka AVL stromu" ,testAvlTreeAscendant_.checkAvlTreeConditions());
         }
-        testAvlTreeAscendant_.printCounter();
         printLevelOrder(testAvlTreeAscendant_);
     }
 
@@ -167,7 +163,6 @@ public class AvlTreeTest {
             }
 
             System.out.println("Result list size: " + resultList.size());
-            testAvlTreeAscendant_.printCounter();
         }
     }
 
@@ -306,7 +301,6 @@ public class AvlTreeTest {
         //insertedValues.sort((o1, o2) -> o1 - o2);
 
         ArrayList<Integer> resultList = new ArrayList<>(insertedTreeMap.size());
-        testAvlTreeAscendant_.resetCounter();
         while (insertedTreeMap.size() > 0) {
             int indexToRemove = generator.nextInt(insertedTreeMap.size());
             Object[] keys = insertedTreeMap.keySet().toArray();
@@ -341,7 +335,6 @@ public class AvlTreeTest {
 
         }
 
-        testAvlTreeAscendant_.printCounter();
     }
 
     @Test

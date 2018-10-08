@@ -16,6 +16,7 @@ import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.control.Label;
 import javafx.scene.effect.BoxBlur;
+import javafx.scene.input.KeyCode;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
@@ -88,7 +89,6 @@ public abstract class ControllerBase {
         dialog.setDialogContainer(rootStackPane_);
         dialog.setOnDialogOpened(event -> contentVBox.setEffect(new BoxBlur(3,3,3)));
         dialog.setOnDialogClosed(event -> contentVBox.setEffect(null));
-
         dialogVBox.setAlignment(Pos.CENTER);
     }
 
