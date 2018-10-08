@@ -58,6 +58,9 @@ public class C13OdstranenieMajetkovehoPodielu extends ControllerBase {
     private TableColumn<TableItemObcanPodiel, String> tableColumnMenoPriezvisko;
 
     @FXML
+    private TableColumn<TableItemObcanPodiel, String> tableColumnDatumNarodenia;
+
+    @FXML
     private TableColumn<TableItemObcanPodiel, String> tableColumnRodneCislo;
 
     @FXML
@@ -91,12 +94,12 @@ public class C13OdstranenieMajetkovehoPodielu extends ControllerBase {
                 textFieldRodneCislo
         );
 
-        Helper.decorateNumberTextFieldWithValidator( textFieldCisloKatastralnehoUzemia, isCisloKUOk);
-        Helper.decorateNumberTextFieldWithValidator( textFieldCisloListuVlastnictva, isCisloLVOk);
-        Helper.decorateTextFieldWithValidator(textFieldRodneCislo, isRodneCisloOk, 16, "Rodné číslo");
+        Helper.DecorateNumberTextFieldWithValidator( textFieldCisloKatastralnehoUzemia, isCisloKUOk);
+        Helper.DecorateNumberTextFieldWithValidator( textFieldCisloListuVlastnictva, isCisloLVOk);
+        Helper.DecorateTextFieldWithValidator(textFieldRodneCislo, isRodneCisloOk, 16, "Rodné číslo");
 
         buttonOdstranMajetkovyPodiel.setOnAction(event -> {
-            if (Helper.disableButton(buttonOdstranMajetkovyPodiel, simpleBooleanProperties, () -> textFields.forEach(JFXTextField::validate))) {
+            if (Helper.DisableButton(buttonOdstranMajetkovyPodiel, simpleBooleanProperties, () -> textFields.forEach(JFXTextField::validate))) {
                 return;
             }
             new OdstranMajetkovyPodiel().execute();
@@ -116,6 +119,7 @@ public class C13OdstranenieMajetkovehoPodielu extends ControllerBase {
 
         tableColumnMenoPriezvisko.setCellValueFactory(param -> new SimpleStringProperty(param.getValue().getMenoPriezvisko()));
         tableColumnRodneCislo.setCellValueFactory(param -> new SimpleStringProperty(param.getValue().getRodneCislo()));
+        tableColumnDatumNarodenia.setCellValueFactory(param -> new SimpleStringProperty(Helper.FormatujDatum(param.getValue().getDatumNarodenia())));
         tableColumnStaryPodiel.setCellValueFactory(param -> new SimpleDoubleProperty(param.getValue().getStaryPodiel()));
 
 
@@ -150,7 +154,8 @@ public class C13OdstranenieMajetkovehoPodielu extends ControllerBase {
             showSuccessDialog("Nové podiely boli uložené");
 
         });
-
+        Helper.InstallCopyPasteHandler(tableViewNehnutelnosti);
+        Helper.InstallCopyPasteHandler(tableViewObcanPodiely);
 
     }
 

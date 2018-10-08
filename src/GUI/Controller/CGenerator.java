@@ -15,8 +15,11 @@ public class CGenerator extends ControllerBase {
 
     @FXML
     private JFXSlider sliderKatastralneUzemie_;
+
     @FXML
     private JFXSlider sliderObcania_;
+    @FXML
+    private JFXSlider sliderPocetObyvatelovSTrvalymPobytom;
 
     @FXML
     private JFXSlider sliderListVlastnictva_;
@@ -77,6 +80,7 @@ public class CGenerator extends ControllerBase {
         public Object doInBackground(Object[] params) throws InterruptedException {
             int pocetKatastralnychUzemi = (int) sliderKatastralneUzemie_.getValue();
             int celkovyPocetObcanov = (int) sliderObcania_.getValue();
+            int pocetObyvatelovSTravlymPobytom = (int) sliderPocetObyvatelovSTrvalymPobytom.getValue();
             int pocetListovVlastnictvaVKatastralnomUzemi = (int) sliderListVlastnictva_.getValue();
             int pocetVlastnikovNaListeVlastnictva = (int) sliderPocetObyvatelovVListeVl_.getValue();
             int pocetNehnutelnostiNaListeVlastnictva = (int) sliderPocetNehnutelnostiVListeVl_.getValue();
@@ -85,7 +89,7 @@ public class CGenerator extends ControllerBase {
             System.out.println("pocetListovVlastnictvaVKatastralnomUzemi: " + pocetListovVlastnictvaVKatastralnomUzemi);
             System.out.println("pocetVlastnikovNaListeVlastnictva: " + pocetVlastnikovNaListeVlastnictva);
             System.out.println("pocetNehnutelnostiNaListeVlastnictva: " + pocetNehnutelnostiNaListeVlastnictva);
-            return new Boolean(isSpravyKatastra_.generujData( pocetKatastralnychUzemi, celkovyPocetObcanov,  pocetListovVlastnictvaVKatastralnomUzemi, pocetVlastnikovNaListeVlastnictva, pocetNehnutelnostiNaListeVlastnictva));
+            return new Boolean(isSpravyKatastra_.generujData( pocetKatastralnychUzemi, celkovyPocetObcanov, pocetObyvatelovSTravlymPobytom, pocetListovVlastnictvaVKatastralnomUzemi, pocetVlastnikovNaListeVlastnictva, pocetNehnutelnostiNaListeVlastnictva));
         }
 
         @Override

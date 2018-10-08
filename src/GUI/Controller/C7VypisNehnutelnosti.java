@@ -2,7 +2,6 @@ package GUI.Controller;
 
 import GUI.View.ViewItems.TableItemNehnutelnost;
 import InformacnySystem.ISSpravyKatastra;
-import Model.KatastralneUzemie;
 import Model.Nehnutelnost;
 import Utils.Helper;
 import com.jfoenix.controls.JFXButton;
@@ -12,12 +11,9 @@ import javafx.beans.property.SimpleLongProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.geometry.Pos;
-import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.input.KeyCode;
-import javafx.scene.paint.Color;
 import structures.AvlTree;
 
 import java.util.Arrays;
@@ -59,10 +55,10 @@ public class C7VypisNehnutelnosti extends ControllerBase {
                 textFieldNazovKatastralnehoUzemia
         );
 
-        Helper.decorateTextFieldWithValidator(textFieldNazovKatastralnehoUzemia, isNazovKUOk);
+        Helper.DecorateTextFieldWithValidator(textFieldNazovKatastralnehoUzemia, isNazovKUOk);
 
         buttonHladaj.setOnAction(event -> {
-            if (Helper.disableButton(buttonHladaj, simpleBooleanProperties, () -> textFields.forEach(JFXTextField::validate))) {
+            if (Helper.DisableButton(buttonHladaj, simpleBooleanProperties, () -> textFields.forEach(JFXTextField::validate))) {
                 return;
             }
             nacitajNehnutelnosti();

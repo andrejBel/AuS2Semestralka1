@@ -30,6 +30,9 @@ public class Aplikacia {
         tabPane_.setTabClosingPolicy(TabPane.TabClosingPolicy.UNAVAILABLE);
         controllers = Arrays.asList(
                 new CGenerator(isSpravyKatastra_),
+                new C3VypisOsobSTrvalymPobytom(isSpravyKatastra_),
+                new C4VyhladanieLVPodlaCislaKU(isSpravyKatastra_),
+                new C6VyhladanieLVPodlaNazvuKU(isSpravyKatastra_),
                 new C7VypisNehnutelnosti(isSpravyKatastra_),
                 new C8VypisNehnutelnostiMajitelaVKU(isSpravyKatastra_),
                 new C9VypisNehnutelnostimajitela(isSpravyKatastra_),
@@ -61,7 +64,6 @@ public class Aplikacia {
         stage.setTitle("Algoritmy a údajové štruktúry 2- Semestrálna práca 1");
         stage.setScene(scene);
         stage.setMaximized(true);
-
     }
 
     public void run() {

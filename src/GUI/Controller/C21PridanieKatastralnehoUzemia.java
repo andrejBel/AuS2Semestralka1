@@ -7,10 +7,7 @@ import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextField;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.fxml.FXML;
-import javafx.geometry.Pos;
-import javafx.scene.control.Label;
 import javafx.scene.input.KeyCode;
-import javafx.scene.paint.Color;
 
 import java.util.Arrays;
 import java.util.List;
@@ -46,12 +43,12 @@ public class C21PridanieKatastralnehoUzemia extends ControllerBase {
                 textFieldNazovKatastralnehoUzemia
         );
 
-        Helper.decorateNumberTextFieldWithValidator(textFieldCisloKatastralnehoUzemia, isCisloOk);
-        Helper.decorateTextFieldWithValidator(textFieldNazovKatastralnehoUzemia, isNazovOk);
+        Helper.DecorateNumberTextFieldWithValidator(textFieldCisloKatastralnehoUzemia, isCisloOk);
+        Helper.DecorateTextFieldWithValidator(textFieldNazovKatastralnehoUzemia, isNazovOk);
 
 
         buttonPridajUzemie.setOnAction(event -> {
-            if (Helper.disableButton(buttonPridajUzemie, simpleBooleanProperties, () -> textFields.forEach(JFXTextField::validate))) {
+            if (Helper.DisableButton(buttonPridajUzemie, simpleBooleanProperties, () -> textFields.forEach(JFXTextField::validate))) {
                 return;
             }
 

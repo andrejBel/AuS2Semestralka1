@@ -7,10 +7,7 @@ import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextField;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.fxml.FXML;
-import javafx.geometry.Pos;
-import javafx.scene.control.Label;
 import javafx.scene.input.KeyCode;
-import javafx.scene.paint.Color;
 
 import java.util.Arrays;
 import java.util.List;
@@ -52,12 +49,12 @@ public class C10PridanieTrvalehoPobytu extends ControllerBase {
                 textFieldSupisneCisloNehnutelnosti,
                 textFieldRodneCislo
         );
-        Helper.decorateTextFieldWithValidator(textFieldNazovKatastralnehoUzemia, isNazovKUOk);
-        Helper.decorateNumberTextFieldWithValidator( textFieldSupisneCisloNehnutelnosti, isSupisneCisloOk);
-        Helper.decorateTextFieldWithValidator(textFieldRodneCislo, isRodneCisloOk, 16, "Rodné číslo");
+        Helper.DecorateTextFieldWithValidator(textFieldNazovKatastralnehoUzemia, isNazovKUOk);
+        Helper.DecorateNumberTextFieldWithValidator( textFieldSupisneCisloNehnutelnosti, isSupisneCisloOk);
+        Helper.DecorateTextFieldWithValidator(textFieldRodneCislo, isRodneCisloOk, 16, "Rodné číslo");
 
         buttonPridajTrvalyPobyt.setOnAction(event -> {
-            if (Helper.disableButton(buttonPridajTrvalyPobyt, simpleBooleanProperties, () -> textFields.forEach(JFXTextField::validate))) {
+            if (Helper.DisableButton(buttonPridajTrvalyPobyt, simpleBooleanProperties, () -> textFields.forEach(JFXTextField::validate))) {
                 return;
             }
             new PridajTrvalyPobyt().execute();

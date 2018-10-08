@@ -1,26 +1,18 @@
 package GUI.View.ViewItems;
 
 import Model.ListVlastnictva;
-import Model.Obcan;
 
-public class TableItemObcanPodiel {
+public class TableItemObcanPodiel extends TableItemObcan {
 
     double staryPodiel_;
     double novyPodiel_;
     ListVlastnictva.ObcanSPodielom obcanSPodielom_;
 
     public TableItemObcanPodiel(ListVlastnictva.ObcanSPodielom obcanSPodielom) {
+        super(obcanSPodielom.getObcan().getMenoPriezvisko(), obcanSPodielom.getObcan().getRodneCislo(), obcanSPodielom.getObcan().getDatumNarodenia());
         obcanSPodielom_ = obcanSPodielom;
         this.staryPodiel_ = obcanSPodielom.getPodiel();
         this.novyPodiel_ = obcanSPodielom.getPodiel();
-    }
-
-    public String getMenoPriezvisko() {
-        return obcanSPodielom_.getObcan().getMenoPriezvisko();
-    }
-
-    public String getRodneCislo() {
-        return obcanSPodielom_.getObcan().getRodneCislo();
     }
 
     public double getStaryPodiel() {

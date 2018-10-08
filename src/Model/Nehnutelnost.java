@@ -48,6 +48,14 @@ public class Nehnutelnost {
         return listVlastnictva_;
     }
 
+    public AvlTree<Obcan> getObcaniaSTravalymPobytom() {
+        return obcaniaSTravalymPobytom_;
+    }
+
+    public void setObcaniaSTravalymPobytom_(AvlTree<Obcan> obcaniaSTravalymPobytom_) {
+        this.obcaniaSTravalymPobytom_ = obcaniaSTravalymPobytom_;
+    }
+
     public void setSupisneCislo(long supisneCislo) {
         this.supisneCislo_ = supisneCislo;
     }

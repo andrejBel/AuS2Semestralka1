@@ -1,7 +1,6 @@
 package GUI.Controller;
 
 
-import GUI.View.ViewItems.TableItemNehnutelnostListVlastnictva;
 import GUI.View.ViewItems.TableItemNehnutelnostListVlastnictvaKU;
 import InformacnySystem.ISSpravyKatastra;
 import Model.ListVlastnictva;
@@ -69,9 +68,9 @@ public class C9VypisNehnutelnostimajitela extends ControllerBase {
                 textFieldRodneCislo
         );
 
-        Helper.decorateTextFieldWithValidator(textFieldRodneCislo, isRodneCisloOk, 16, "Rodné číslo");
+        Helper.DecorateTextFieldWithValidator(textFieldRodneCislo, isRodneCisloOk, 16, "Rodné číslo");
         buttonHladaj.setOnAction(event -> {
-            if (Helper.disableButton(buttonHladaj, simpleBooleanProperties, () -> textFields.forEach(JFXTextField::validate))) {
+            if (Helper.DisableButton(buttonHladaj, simpleBooleanProperties, () -> textFields.forEach(JFXTextField::validate))) {
                 return;
             }
             nacitajData();

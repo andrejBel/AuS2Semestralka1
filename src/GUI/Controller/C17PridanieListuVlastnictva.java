@@ -7,10 +7,7 @@ import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextField;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.fxml.FXML;
-import javafx.geometry.Pos;
-import javafx.scene.control.Label;
 import javafx.scene.input.KeyCode;
-import javafx.scene.paint.Color;
 
 import java.util.Arrays;
 import java.util.List;
@@ -46,11 +43,11 @@ public class C17PridanieListuVlastnictva extends ControllerBase {
                 textFieldCisloListuVlastnictva
         );
 
-        Helper.decorateTextFieldWithValidator(textFieldNazovKatastralnehoUzemia, isNazovKUOk);
-        Helper.decorateNumberTextFieldWithValidator(textFieldCisloListuVlastnictva, isCisloListuVlastnictvaOk);
+        Helper.DecorateTextFieldWithValidator(textFieldNazovKatastralnehoUzemia, isNazovKUOk);
+        Helper.DecorateNumberTextFieldWithValidator(textFieldCisloListuVlastnictva, isCisloListuVlastnictvaOk);
 
         buttonPridajListVlastnictva.setOnAction(event -> {
-            if (Helper.disableButton(buttonPridajListVlastnictva, simpleBooleanProperties, () -> textFields.forEach(JFXTextField::validate))) {
+            if (Helper.DisableButton(buttonPridajListVlastnictva, simpleBooleanProperties, () -> textFields.forEach(JFXTextField::validate))) {
                 return;
             }
             new PridanieListuVlastnictva().execute();

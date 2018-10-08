@@ -54,8 +54,8 @@ public class C16PridanieObcana extends ControllerBase {
                 textFieldRodneCislo
         );
 
-        Helper.decorateTextFieldWithValidator(textFieldMenoAPriezvisko, isMenoPriezviskoOk);
-        Helper.decorateTextFieldWithValidator(textFieldRodneCislo, isRodneCisloOk, 16, "Rodné číslo");
+        Helper.DecorateTextFieldWithValidator(textFieldMenoAPriezvisko, isMenoPriezviskoOk);
+        Helper.DecorateTextFieldWithValidator(textFieldRodneCislo, isRodneCisloOk, 16, "Rodné číslo");
 
         datePicker.getValidators().add(new RequiredFieldValidator() {
             {
@@ -70,7 +70,7 @@ public class C16PridanieObcana extends ControllerBase {
         });
 
         buttonPridajObcana.setOnAction(event -> {
-            if (Helper.disableButton(buttonPridajObcana, simpleBooleanProperties, () -> {
+            if (Helper.DisableButton(buttonPridajObcana, simpleBooleanProperties, () -> {
                 textFields.forEach(JFXTextField::validate);
                 datePicker.validate();
             })) {

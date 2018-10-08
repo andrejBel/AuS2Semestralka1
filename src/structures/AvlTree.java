@@ -9,23 +9,23 @@ public class AvlTree<T> implements Iterable<T> {
         return new InOrderIterator();
     }
 
-    private static class Stack<T> {
-        private ArrayList<T> list_;
+    private static class Stack {
+        private ArrayList<Object> list_;
 
         public Stack(int initialCapacity) {
             list_ = new ArrayList<>(initialCapacity);
         }
 
         public Stack() {
-            list_ = new ArrayList<>();
+            list_ = new ArrayList<>(10);
         }
 
-        public void push(T data) {
+        public <T> void  push(AvlTreeNode<T> data) {
             list_.add(data);
         }
 
-        public T pop() {
-            return list_.remove(list_.size() - 1);
+        public <T> AvlTreeNode<T> pop() {
+            return (AvlTreeNode<T>) list_.remove(list_.size() - 1);
         }
 
         public void clear() {
@@ -36,12 +36,12 @@ public class AvlTree<T> implements Iterable<T> {
             return list_.size();
         }
 
-        public T peek() {
-            return list_.get(list_.size() - 1);
+        public <T> AvlTreeNode<T> peek() {
+            return (AvlTreeNode<T>) list_.get(list_.size() - 1);
         }
 
-        public T get(int index) {
-            return list_.get(index);
+        public <T> AvlTreeNode<T> get(int index) {
+            return (AvlTreeNode<T>) list_.get(index);
         }
 
     }
@@ -49,18 +49,11 @@ public class AvlTree<T> implements Iterable<T> {
     private AvlTreeNode<T> root_;
     private Comparator<T> comparator_;
     private long size_;
-    private Stack<AvlTreeNode<T>> stack_;
+    private static Stack stack_ = new Stack(Byte.MAX_VALUE);
 
     public AvlTree(Comparator<T> comparator) {
         root_ = null;
         comparator_ = comparator;
-        stack_ = new Stack<>(10);
-    }
-
-    public AvlTree(Comparator<T> comparator, byte stackInitialSize) {
-        root_ = null;
-        comparator_ = comparator;
-        stack_ = new Stack<>(stackInitialSize);
     }
 
     public AvlTreeNode<T> getRoot() {
@@ -410,8 +403,8 @@ public class AvlTree<T> implements Iterable<T> {
         if (root_ == null) {
             return true;
         }
-        Stack<AvlTreeNode<T>> stack1 = new Stack<>(Byte.MAX_VALUE);
-        Stack<AvlTreeNode<T>> stack2 = new Stack<>(Byte.MAX_VALUE);
+        Stack stack1 = new Stack(Byte.MAX_VALUE);
+        Stack stack2 = new Stack(Byte.MAX_VALUE);
 
         AvlTreeNode<T> currentNode = null;
 
@@ -439,10 +432,10 @@ public class AvlTree<T> implements Iterable<T> {
 
     private class InOrderIterator implements Iterator<T> {
 
-        private final Stack<AvlTreeNode<T>> stack_;
+        private final Stack stack_;
 
         public InOrderIterator() {
-            stack_ = new Stack<>();
+            stack_ = new Stack();
             stack_.push(root_);
         }
 

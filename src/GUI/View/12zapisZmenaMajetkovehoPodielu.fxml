@@ -66,6 +66,7 @@
                     <columns>
                       <TableColumn fx:id="tableColumnMenoPriezvisko" editable="false" prefWidth="117.0" text="Meno a priezvisko" />
                       <TableColumn fx:id="tableColumnRodneCislo" editable="false" text="Rodné číslo" />
+                        <TableColumn fx:id="tableColumnDatumNarodenia" maxWidth="130.0" minWidth="130.0" text="Dátum narodenia" />
                         <TableColumn fx:id="tableColumnStaryPodiel" editable="false" minWidth="0.0" prefWidth="131.0" text="Starý podiel[%]" />
                         <TableColumn fx:id="tableColumnNovyPodiel" minWidth="0.0" prefWidth="131.0" text="Nový podiel[%]" />
                     </columns>
