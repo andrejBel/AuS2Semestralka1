@@ -2,33 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="850b46cd-5e02-4d57-b0d2-2dbb3c23d6cd" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/GUI/Controller/C3VypisOsobSTrvalymPobytom.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/GUI/Controller/C4VyhladanieLVPodlaCislaKU.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/GUI/View/4vyhladanieLVPodlaCislaKU.fxml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/GUI/View/6vyhladanieLVPodlaNazvuKU.fxml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/GUI/View/ViewItems/TableItemObcan.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/jfoenix_8_0_7.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/jfoenix_8_0_7.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/GUI/Aplikacia.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/Aplikacia.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/GUI/Controller/C10PridanieTrvalehoPobytu.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/Controller/C10PridanieTrvalehoPobytu.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/GUI/Controller/C12ZapisZmenaMajetkovehoPodielu.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/Controller/C12ZapisZmenaMajetkovehoPodielu.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/GUI/Controller/C13OdstranenieMajetkovehoPodielu.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/Controller/C13OdstranenieMajetkovehoPodielu.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/GUI/Controller/C16PridanieObcana.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/Controller/C16PridanieObcana.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/GUI/Controller/C17PridanieListuVlastnictva.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/Controller/C17PridanieListuVlastnictva.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/GUI/Controller/C18PridanieNehnutelnosti.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/Controller/C18PridanieNehnutelnosti.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/GUI/Controller/C20OdstranenieNehnutelnosti.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/Controller/C20OdstranenieNehnutelnosti.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/GUI/Controller/C21PridanieKatastralnehoUzemia.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/Controller/C21PridanieKatastralnehoUzemia.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/GUI/Controller/C7VypisNehnutelnosti.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/Controller/C7VypisNehnutelnosti.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/GUI/Controller/C8VypisNehnutelnostiMajitelaVKU.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/Controller/C8VypisNehnutelnostiMajitelaVKU.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/GUI/Controller/C9VypisNehnutelnostimajitela.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/Controller/C9VypisNehnutelnostimajitela.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/GUI/Controller/CGenerator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/Controller/CGenerator.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/GUI/View/12zapisZmenaMajetkovehoPodielu.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/View/12zapisZmenaMajetkovehoPodielu.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/GUI/View/13odstranenieMajetkovehoPodielu.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/View/13odstranenieMajetkovehoPodielu.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/GUI/View/ViewItems/TableItemObcanPodiel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/View/ViewItems/TableItemObcanPodiel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/GUI/View/generator.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/GUI/View/generator.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/InformacnySystem/ISSpravyKatastra.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/InformacnySystem/ISSpravyKatastra.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Model/Nehnutelnost.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Model/Nehnutelnost.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Utils/Helper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Utils/Helper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/structures/AvlTree.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/structures/AvlTree.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/AuS2Semestralka1.iml" beforeDir="false" afterPath="$PROJECT_DIR$/AuS2Semestralka1.iml" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -38,10 +14,10 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="CoverageDataManager">
-    <SUITE FILE_PATH="coverage/AuS2Semestralka1$AvlTreeTest_testAvlTreeRightRotate.ic" NAME="AvlTreeTest.testAvlTreeRightRotate Coverage Results" MODIFIED="1538427124071" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
+    <SUITE FILE_PATH="coverage/AuS2Semestralka1$AvlTreeTest_testRemoveByHand.ic" NAME="AvlTreeTest.testRemoveByHand Coverage Results" MODIFIED="1538555970760" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
       <FILTER>structures.*</FILTER>
     </SUITE>
-    <SUITE FILE_PATH="coverage/AuS2Semestralka1$AvlTreeTest_testRemoveByHand.ic" NAME="AvlTreeTest.testRemoveByHand Coverage Results" MODIFIED="1538555970760" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
+    <SUITE FILE_PATH="coverage/AuS2Semestralka1$AvlTreeTest_testAvlTreeRightRotate.ic" NAME="AvlTreeTest.testAvlTreeRightRotate Coverage Results" MODIFIED="1538427124071" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
       <FILTER>structures.*</FILTER>
     </SUITE>
   </component>
@@ -98,14 +74,48 @@
         </counts>
       </usages-collector>
     </session>
+    <session id="1311049407">
+      <usages-collector id="statistics.lifecycle.project">
+        <counts>
+          <entry key="project.closed" value="1" />
+          <entry key="project.open.time.12" value="1" />
+          <entry key="project.open.time.6" value="1" />
+          <entry key="project.opened" value="2" />
+        </counts>
+      </usages-collector>
+      <usages-collector id="statistics.file.extensions.open">
+        <counts>
+          <entry key="iml" value="1" />
+          <entry key="java" value="5" />
+          <entry key="xml" value="3" />
+        </counts>
+      </usages-collector>
+      <usages-collector id="statistics.file.types.open">
+        <counts>
+          <entry key="IDEA_MODULE" value="1" />
+          <entry key="JAVA" value="5" />
+          <entry key="XML" value="3" />
+        </counts>
+      </usages-collector>
+      <usages-collector id="statistics.file.extensions.edit">
+        <counts>
+          <entry key="iml" value="21" />
+        </counts>
+      </usages-collector>
+      <usages-collector id="statistics.file.types.edit">
+        <counts>
+          <entry key="IDEA_MODULE" value="21" />
+        </counts>
+      </usages-collector>
+    </session>
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/GUI/Controller/C4VyhladanieLVPodlaCislaKU.java">
+        <entry file="file://$PROJECT_DIR$/src/GUI/Controller/C9VypisNehnutelnostimajitela.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="355">
-              <caret line="184" column="37" selection-start-line="184" selection-start-column="37" selection-end-line="184" selection-end-column="37" />
+            <state relative-caret-position="442">
+              <caret line="26" column="13" selection-start-line="26" selection-start-column="13" selection-end-line="26" selection-end-column="13" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -114,79 +124,78 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/GUI/View/ViewItems/TableItemObcan.java">
+        <entry file="file://$PROJECT_DIR$/AuS2Semestralka1.iml">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="34">
-              <caret line="2" column="22" selection-start-line="2" selection-start-column="22" selection-end-line="2" selection-end-column="22" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/GUI/View/18pridanieNehnutelnosti.fxml">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-82">
-              <caret line="24" column="64" selection-end-line="63" selection-end-column="12" />
-            </state>
-          </provider>
-          <provider editor-type-id="JavaFX-Scene-Builder" />
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/GUI/Controller/C18PridanieNehnutelnosti.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="222">
-              <caret line="119" column="12" lean-forward="true" selection-start-line="119" selection-start-column="12" selection-end-line="119" selection-end-column="42" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/GUI/View/generator.fxml">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="380">
-              <caret line="38" column="78" selection-start-line="38" selection-start-column="42" selection-end-line="38" selection-end-column="78" />
-            </state>
-          </provider>
-          <provider editor-type-id="JavaFX-Scene-Builder" />
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/GUI/Controller/CGenerator.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="374">
-              <caret line="91" column="108" selection-start-line="91" selection-start-column="108" selection-end-line="91" selection-end-column="108" />
+            <state relative-caret-position="238">
+              <caret line="14" column="71" selection-start-line="14" selection-start-column="71" selection-end-line="14" selection-end-column="71" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/GUI/Controller/C10PridanieTrvalehoPobytu.java">
+        <entry file="file://$PROJECT_DIR$/.idea/workspace.xml">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="364">
-              <caret line="100" column="50" lean-forward="true" selection-start-line="100" selection-start-column="50" selection-end-line="100" selection-end-column="50" />
+            <state relative-caret-position="337">
+              <caret line="260" column="42" selection-start-line="260" selection-start-column="42" selection-end-line="260" selection-end-column="42" />
+              <folding>
+                <element signature="e#11304#11308#0" expanded="true" />
+                <element signature="e#11668#11672#0" expanded="true" />
+                <element signature="e#11672#11676#0" expanded="true" />
+                <element signature="e#11687#11691#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/GUI/View/6vyhladanieLVPodlaNazvuKU.fxml">
+        <entry file="file://$PROJECT_DIR$/src/GUI/Controller/C20OdstranenieNehnutelnosti.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="224">
-              <caret line="21" column="107" selection-start-line="21" selection-start-column="107" selection-end-line="21" selection-end-column="107" />
+            <state relative-caret-position="136">
+              <caret line="8" column="24" selection-start-line="8" selection-start-column="24" selection-end-line="8" selection-end-column="24" />
             </state>
           </provider>
-          <provider editor-type-id="JavaFX-Scene-Builder" />
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/GUI/Controller/ControllerBase.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="102">
+              <caret line="6" column="37" selection-start-line="6" selection-start-column="37" selection-end-line="6" selection-end-column="37" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/.idea/libraries/jfoenix_8_0_7.xml">
+          <provider selected="true" editor-type-id="text-editor" />
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/GUI/Controller/C3VypisOsobSTrvalymPobytom.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="153">
+              <caret line="9" column="38" selection-start-line="9" selection-start-column="38" selection-end-line="9" selection-end-column="38" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/GUI/Controller/C8VypisNehnutelnostiMajitelaVKU.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="900">
+              <caret line="87" column="12" selection-start-line="87" selection-start-column="12" selection-end-line="87" selection-end-column="12" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/GUI/View/4vyhladanieLVPodlaCislaKU.fxml">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="515">
-              <caret line="69" column="36" lean-forward="true" selection-start-line="59" selection-start-column="24" selection-end-line="69" selection-end-column="36" />
+            <state relative-caret-position="1173">
+              <caret line="69" column="36" selection-start-line="59" selection-start-column="24" selection-end-line="69" selection-end-column="36" />
             </state>
           </provider>
           <provider editor-type-id="JavaFX-Scene-Builder" />
@@ -195,7 +204,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/GUI/Aplikacia.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="202">
+            <state relative-caret-position="391">
               <caret line="32" column="66" selection-start-line="32" selection-start-column="66" selection-end-line="32" selection-end-column="66" />
             </state>
           </provider>
@@ -213,7 +222,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>validate</find>
       <find>textFieldCisloKatastralnehoUzemia</find>
       <find>setButtonPridajDisabled</find>
       <find>isSpravyKatastra</find>
@@ -243,6 +251,7 @@
       <find>buttonHladaj</find>
       <find>najdi</find>
       <find>installCopyPasteHandler</find>
+      <find>jfoenix-8.0.7</find>
     </findStrings>
     <replaceStrings>
       <replace>AvlTreeNode</replace>
@@ -256,8 +265,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/src/GUI/View/10pridanieTrvalehoPobytu.fxml" />
-        <option value="$PROJECT_DIR$/src/GUI/Controller/C10PridanieTrvalejoPobytu.java" />
         <option value="$PROJECT_DIR$/src/GUI/Controller/C12ZapisZmenaMahetkovehoPodielu.java" />
         <option value="$PROJECT_DIR$/src/GUI/View/ViewItems/TableItemNehnutelnost.java" />
         <option value="$PROJECT_DIR$/src/GUI/View/ViewItems/EditCell.java" />
@@ -307,6 +314,8 @@
         <option value="$PROJECT_DIR$/src/GUI/Controller/CGenerator.java" />
         <option value="$PROJECT_DIR$/src/InformacnySystem/ISSpravyKatastra.java" />
         <option value="$PROJECT_DIR$/src/GUI/Controller/C3VypisOsobSTrvalymPobytom.java" />
+        <option value="$PROJECT_DIR$/AuS2Semestralka1.iml" />
+        <option value="$PROJECT_DIR$/.idea/workspace.xml" />
       </list>
     </option>
   </component>
@@ -317,7 +326,7 @@
     <sorting>DEFINITION_ORDER</sorting>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="-1928" />
+    <option name="x" value="-8" />
     <option name="y" value="-8" />
     <option name="width" value="1936" />
     <option name="height" value="1056" />
@@ -327,14 +336,28 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="AndroidView" />
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
             <path>
               <item name="AuS2Semestralka1" type="b2602c69:ProjectViewProjectNode" />
               <item name="AuS2Semestralka1" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="AuS2Semestralka1" type="b2602c69:ProjectViewProjectNode" />
+              <item name="AuS2Semestralka1" type="462c0819:PsiDirectoryNode" />
+              <item name=".idea" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="AuS2Semestralka1" type="b2602c69:ProjectViewProjectNode" />
+              <item name="AuS2Semestralka1" type="462c0819:PsiDirectoryNode" />
+              <item name=".idea" type="462c0819:PsiDirectoryNode" />
+              <item name="libraries" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="AuS2Semestralka1" type="b2602c69:ProjectViewProjectNode" />
+              <item name="AuS2Semestralka1" type="462c0819:PsiDirectoryNode" />
+              <item name="lib" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="AuS2Semestralka1" type="b2602c69:ProjectViewProjectNode" />
@@ -356,47 +379,15 @@
             </path>
             <path>
               <item name="AuS2Semestralka1" type="b2602c69:ProjectViewProjectNode" />
-              <item name="AuS2Semestralka1" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="GUI" type="462c0819:PsiDirectoryNode" />
-              <item name="View" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="AuS2Semestralka1" type="b2602c69:ProjectViewProjectNode" />
-              <item name="AuS2Semestralka1" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="GUI" type="462c0819:PsiDirectoryNode" />
-              <item name="View" type="462c0819:PsiDirectoryNode" />
-              <item name="ViewItems" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="AuS2Semestralka1" type="b2602c69:ProjectViewProjectNode" />
-              <item name="AuS2Semestralka1" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="InformacnySystem" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="AuS2Semestralka1" type="b2602c69:ProjectViewProjectNode" />
-              <item name="AuS2Semestralka1" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="Model" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="AuS2Semestralka1" type="b2602c69:ProjectViewProjectNode" />
-              <item name="AuS2Semestralka1" type="462c0819:PsiDirectoryNode" />
-              <item name="Tests" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="AuS2Semestralka1" type="b2602c69:ProjectViewProjectNode" />
-              <item name="AuS2Semestralka1" type="462c0819:PsiDirectoryNode" />
-              <item name="Tests" type="462c0819:PsiDirectoryNode" />
-              <item name="structures" type="462c0819:PsiDirectoryNode" />
+              <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
             </path>
           </expand>
           <select />
         </subPane>
       </pane>
       <pane id="PackagesPane" />
+      <pane id="Scope" />
+      <pane id="AndroidView" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -406,8 +397,8 @@
     <property name="SearchEverywhereHistoryKey" value="isS&#9;FILE&#9;file://C:/Users/Andrej Beliančin/IdeaProjects/AuS2Semestralka1/src/InformacnySystem/ISSpravyKatastra.java&#10;avltre&#9;FILE&#9;file://C:/Users/Andrej Beliančin/IdeaProjects/AuS2Semestralka1/src/structures/AvlTree.java&#10;controllerba&#9;FILE&#9;file://C:/Users/Andrej Beliančin/IdeaProjects/AuS2Semestralka1/src/GUI/Controller/ControllerBase.java&#10;apli&#9;FILE&#9;file://C:/Users/Andrej Beliančin/IdeaProjects/AuS2Semestralka1/src/GUI/Aplikacia.java&#10;is&#9;FILE&#9;file://C:/Users/Andrej Beliančin/IdeaProjects/AuS2Semestralka1/src/InformacnySystem/ISSpravyKatastra.java&#10;ControllerB&#9;PSI&#9;JAVA://GUI.Controller.ControllerBase&#10;C12&#9;PSI&#9;JAVA://GUI.Controller.C12ZapisZmenaMajetkovehoPodielu&#10;Apli&#9;FILE&#9;file://C:/Users/Andrej Beliančin/IdeaProjects/AuS2Semestralka1/src/GUI/Aplikacia.java&#10;getNa&#9;PSI&#9;JAVA://Utils.Helper#GetNahodnaAdresa&#10;Helpe&#9;FILE&#9;file://C:/Users/Andrej Beliančin/IdeaProjects/AuS2Semestralka1/src/Utils/Helper.java" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1539031233371" />
-    <property name="last_opened_file_path" value="$USER_HOME$/Desktop/fontawesomefx-8.9.jar!/" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1539077845260" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/lib/fontawesomefx-8.9.jar!/" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
     <property name="project.structure.last.edited" value="Modules" />
@@ -577,10 +568,9 @@
     <option name="totallyTimeSpent" value="178736000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-1928" y="-8" width="1936" height="1056" extended-state="6" />
-    <editor active="true" />
+    <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.21588486" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.22014925" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Designer" order="2" />
       <window_info id="Image Layers" order="3" />
@@ -588,7 +578,7 @@
       <window_info id="UI Designer" order="5" />
       <window_info id="Learn" order="6" />
       <window_info id="Favorites" order="7" side_tool="true" />
-      <window_info anchor="bottom" id="Messages" order="0" weight="0.329718" />
+      <window_info anchor="bottom" id="Messages" order="0" visible="true" weight="0.329718" />
       <window_info anchor="bottom" id="Message" order="1" />
       <window_info anchor="bottom" id="Find" order="2" weight="0.329718" />
       <window_info anchor="bottom" id="Run" order="3" weight="0.6529284" />
@@ -655,28 +645,6 @@
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="jar://$PROJECT_DIR$/lib/fontawesomefx-8.9.jar!/de/jensd/fx/glyphs/materialdesignicons/MaterialDesignIcon.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-3060">
-          <caret line="9" column="12" selection-start-line="9" selection-start-column="12" selection-end-line="9" selection-end-column="12" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/GUI/View/21pridanieKatastralnehoUzemia.fxml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="595">
-          <caret line="35" column="21" lean-forward="true" selection-end-line="48" selection-end-column="12" />
-        </state>
-      </provider>
-      <provider editor-type-id="JavaFX-Scene-Builder" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/GUI/SimpleTask.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="204">
-          <caret line="12" selection-start-line="12" selection-end-line="12" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/Utils/MyDoubleStringConverter.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-34">
@@ -748,16 +716,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/GUI/Controller/C8VypisNehnutelnostiMajitelaVKU.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="441">
-          <caret line="87" column="12" selection-start-line="87" selection-start-column="12" selection-end-line="87" selection-end-column="12" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/GUI/Controller/C15VypisKatastralnychUzemi.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="272">
@@ -779,30 +737,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="jar://$USER_HOME$/Desktop/jfoenix-8.0.7.jar!/com/jfoenix/controls/JFXDialog.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="301">
-          <caret line="220" column="30" selection-start-line="220" selection-start-column="30" selection-end-line="220" selection-end-column="30" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/GUI/Controller/C17PridanieListuVlastnictva.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="799">
           <caret line="60" column="43" selection-start-line="60" selection-start-column="43" selection-end-line="60" selection-end-column="43" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/GUI/Controller/C20OdstranenieNehnutelnosti.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="901">
-          <caret line="66" column="41" selection-start-line="66" selection-start-column="41" selection-end-line="66" selection-end-column="41" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -810,19 +748,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="867">
           <caret line="64" column="13" selection-start-line="64" selection-start-column="13" selection-end-line="64" selection-end-column="13" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/GUI/Controller/ControllerBase.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1105">
-          <caret line="91" column="44" selection-start-line="91" selection-start-column="44" selection-end-line="91" selection-end-column="44" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -830,31 +755,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="272">
           <caret line="22" column="51" selection-start-line="22" selection-start-column="51" selection-end-line="22" selection-end-column="51" />
-          <folding>
-            <element signature="e#140#141#0" expanded="true" />
-            <element signature="e#184#185#0" expanded="true" />
-            <element signature="e#304#305#0" expanded="true" />
-            <element signature="e#368#369#0" expanded="true" />
-            <element signature="e#394#395#0" expanded="true" />
-            <element signature="e#445#446#0" expanded="true" />
-            <element signature="e#538#539#0" expanded="true" />
-            <element signature="e#581#582#0" expanded="true" />
-            <element signature="e#659#660#0" expanded="true" />
-            <element signature="e#690#691#0" expanded="true" />
-            <element signature="e#727#728#0" expanded="true" />
-            <element signature="e#756#757#0" expanded="true" />
-            <element signature="e#799#800#0" expanded="true" />
-            <element signature="e#843#844#0" expanded="true" />
-            <element signature="e#918#919#0" expanded="true" />
-            <element signature="e#970#971#0" expanded="true" />
-            <element signature="e#1034#1035#0" expanded="true" />
-            <element signature="e#1349#1350#0" expanded="true" />
-            <element signature="e#1377#1378#0" expanded="true" />
-            <element signature="e#1406#1407#0" expanded="true" />
-            <element signature="e#1434#1435#0" expanded="true" />
-            <element signature="e#14574#14575#0" expanded="true" />
-            <element signature="e#14647#14648#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -892,21 +792,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1241">
           <caret line="99" column="50" selection-start-line="99" selection-start-column="50" selection-end-line="99" selection-end-column="50" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#2271#2272#0" expanded="true" />
-            <element signature="e#2313#2314#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/GUI/Controller/C9VypisNehnutelnostimajitela.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1139">
-          <caret line="88" column="28" selection-start-line="88" selection-start-column="16" selection-end-line="88" selection-end-column="28" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -921,9 +806,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="204">
           <caret line="12" column="57" lean-forward="true" selection-start-line="12" selection-start-column="57" selection-end-line="12" selection-end-column="57" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -947,27 +829,8 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="398">
           <caret line="156" column="62" selection-start-line="156" selection-start-column="62" selection-end-line="156" selection-end-column="62" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
         </state>
       </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/GUI/View/6vyhladanieLVPodlaNazvuKU.fxml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="224">
-          <caret line="21" column="107" selection-start-line="21" selection-start-column="107" selection-end-line="21" selection-end-column="107" />
-        </state>
-      </provider>
-      <provider editor-type-id="JavaFX-Scene-Builder" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/GUI/View/4vyhladanieLVPodlaCislaKU.fxml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="515">
-          <caret line="69" column="36" lean-forward="true" selection-start-line="59" selection-start-column="24" selection-end-line="69" selection-end-column="36" />
-        </state>
-      </provider>
-      <provider editor-type-id="JavaFX-Scene-Builder" />
     </entry>
     <entry file="file://$PROJECT_DIR$/src/GUI/View/3.vypisOsTrvPobytomVNe.fxml">
       <provider selected="true" editor-type-id="text-editor">
@@ -981,70 +844,13 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="68">
           <caret line="6" column="13" selection-start-line="6" selection-start-column="13" selection-end-line="6" selection-end-column="13" />
-          <folding>
-            <element signature="e#1378#1379#0" expanded="true" />
-            <element signature="e#1425#1426#0" expanded="true" />
-          </folding>
         </state>
       </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/GUI/View/ViewItems/TableItemObcan.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="34">
-          <caret line="2" column="22" selection-start-line="2" selection-start-column="22" selection-end-line="2" selection-end-column="22" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/GUI/Controller/C4VyhladanieLVPodlaCislaKU.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="355">
-          <caret line="184" column="37" selection-start-line="184" selection-start-column="37" selection-end-line="184" selection-end-column="37" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/GUI/Aplikacia.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="202">
-          <caret line="32" column="66" selection-start-line="32" selection-start-column="66" selection-end-line="32" selection-end-column="66" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/GUI/View/18pridanieNehnutelnosti.fxml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-82">
-          <caret line="24" column="64" selection-end-line="63" selection-end-column="12" />
-        </state>
-      </provider>
-      <provider editor-type-id="JavaFX-Scene-Builder" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/GUI/Controller/C18PridanieNehnutelnosti.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="222">
-          <caret line="119" column="12" lean-forward="true" selection-start-line="119" selection-start-column="12" selection-end-line="119" selection-end-column="42" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/GUI/View/generator.fxml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="380">
-          <caret line="38" column="78" selection-start-line="38" selection-start-column="42" selection-end-line="38" selection-end-column="78" />
-        </state>
-      </provider>
-      <provider editor-type-id="JavaFX-Scene-Builder" />
     </entry>
     <entry file="file://$PROJECT_DIR$/src/InformacnySystem/ISSpravyKatastra.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="5032">
           <caret line="298" column="22" selection-start-line="298" selection-start-column="22" selection-end-line="298" selection-end-column="22" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1052,22 +858,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="408">
           <caret line="84" column="54" lean-forward="true" selection-start-line="84" selection-start-column="54" selection-end-line="84" selection-end-column="54" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#292#293#0" expanded="true" />
-            <element signature="e#322#323#0" expanded="true" />
-            <element signature="e#4577#4578#0" expanded="true" />
-            <element signature="e#4632#4633#0" expanded="true" />
-            <element signature="e#281#282#0" expanded="true" />
-            <element signature="e#308#309#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/GUI/Controller/CGenerator.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="374">
-          <caret line="91" column="108" selection-start-line="91" selection-start-column="108" selection-end-line="91" selection-end-column="108" />
         </state>
       </provider>
     </entry>
@@ -1075,9 +865,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="612">
           <caret line="157" column="62" selection-start-line="157" selection-start-column="62" selection-end-line="157" selection-end-column="62" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1088,30 +875,147 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/GUI/Controller/C3VypisOsobSTrvalymPobytom.java">
+    <entry file="file://$PROJECT_DIR$/src/GUI/Controller/C4VyhladanieLVPodlaCislaKU.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="374">
-          <caret line="92" column="44" lean-forward="true" selection-start-line="92" selection-start-column="44" selection-end-line="92" selection-end-column="44" />
+        <state relative-caret-position="2635">
+          <caret line="184" column="37" selection-start-line="184" selection-start-column="37" selection-end-line="184" selection-end-column="37" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/GUI/View/ViewItems/TableItemObcan.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="34">
+          <caret line="2" column="22" selection-start-line="2" selection-start-column="22" selection-end-line="2" selection-end-column="22" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/GUI/View/18pridanieNehnutelnosti.fxml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="408">
+          <caret line="24" column="64" selection-end-line="63" selection-end-column="12" />
+        </state>
+      </provider>
+      <provider editor-type-id="JavaFX-Scene-Builder" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/GUI/Controller/C18PridanieNehnutelnosti.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1717">
+          <caret line="119" column="12" selection-start-line="119" selection-start-column="12" selection-end-line="119" selection-end-column="42" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#4515#4516#0" expanded="true" />
-            <element signature="e#4560#4561#0" expanded="true" />
-            <element signature="e#4607#4608#0" expanded="true" />
-            <element signature="e#4633#4634#0" expanded="true" />
-            <element signature="e#4689#4690#0" expanded="true" />
-            <element signature="e#4741#4742#0" expanded="true" />
-            <element signature="e#4790#4791#0" expanded="true" />
-            <element signature="e#4857#4858#0" expanded="true" />
-            <element signature="e#4235#4236#0" expanded="true" />
-            <element signature="e#4307#4308#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/GUI/View/generator.fxml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="646">
+          <caret line="38" column="78" selection-start-line="38" selection-start-column="42" selection-end-line="38" selection-end-column="78" />
+        </state>
+      </provider>
+      <provider editor-type-id="JavaFX-Scene-Builder" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/GUI/Controller/CGenerator.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1292">
+          <caret line="91" column="108" selection-start-line="91" selection-start-column="108" selection-end-line="91" selection-end-column="108" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/GUI/Controller/C10PridanieTrvalehoPobytu.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="364">
-          <caret line="100" column="50" lean-forward="true" selection-start-line="100" selection-start-column="50" selection-end-line="100" selection-end-column="50" />
+        <state relative-caret-position="68">
+          <caret line="14" column="13" selection-start-line="14" selection-start-column="13" selection-end-line="14" selection-end-column="13" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/GUI/View/6vyhladanieLVPodlaNazvuKU.fxml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="357">
+          <caret line="21" column="107" selection-start-line="21" selection-start-column="107" selection-end-line="21" selection-end-column="107" />
+        </state>
+      </provider>
+      <provider editor-type-id="JavaFX-Scene-Builder" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/GUI/View/4vyhladanieLVPodlaCislaKU.fxml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1173">
+          <caret line="69" column="36" selection-start-line="59" selection-start-column="24" selection-end-line="69" selection-end-column="36" />
+        </state>
+      </provider>
+      <provider editor-type-id="JavaFX-Scene-Builder" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/GUI/Aplikacia.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="391">
+          <caret line="32" column="66" selection-start-line="32" selection-start-column="66" selection-end-line="32" selection-end-column="66" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/GUI/Controller/C8VypisNehnutelnostiMajitelaVKU.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="900">
+          <caret line="87" column="12" selection-start-line="87" selection-start-column="12" selection-end-line="87" selection-end-column="12" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/GUI/Controller/C9VypisNehnutelnostimajitela.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="442">
+          <caret line="26" column="13" selection-start-line="26" selection-start-column="13" selection-end-line="26" selection-end-column="13" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/AuS2Semestralka1.iml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="238">
+          <caret line="14" column="71" selection-start-line="14" selection-start-column="71" selection-end-line="14" selection-end-column="71" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/GUI/Controller/C3VypisOsobSTrvalymPobytom.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="153">
+          <caret line="9" column="38" selection-start-line="9" selection-start-column="38" selection-end-line="9" selection-end-column="38" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/GUI/Controller/C20OdstranenieNehnutelnosti.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="136">
+          <caret line="8" column="24" selection-start-line="8" selection-start-column="24" selection-end-line="8" selection-end-column="24" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/GUI/Controller/ControllerBase.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="102">
+          <caret line="6" column="37" selection-start-line="6" selection-start-column="37" selection-end-line="6" selection-end-column="37" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.idea/libraries/jfoenix_8_0_7.xml">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.idea/workspace.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="337">
+          <caret line="260" column="42" selection-start-line="260" selection-start-column="42" selection-end-line="260" selection-end-column="42" />
+          <folding>
+            <element signature="e#11304#11308#0" expanded="true" />
+            <element signature="e#11668#11672#0" expanded="true" />
+            <element signature="e#11672#11676#0" expanded="true" />
+            <element signature="e#11687#11691#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -1169,6 +1073,18 @@
       <state key="ModuleStructureConfigurable.UI">
         <settings>
           <last-edited>AuS2Semestralka1</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="ProjectJDKs.UI">
+        <settings>
+          <last-edited>1.8</last-edited>
           <splitter-proportions>
             <option name="proportions">
               <list>

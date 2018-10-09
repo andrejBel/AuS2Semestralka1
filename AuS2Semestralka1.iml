@@ -19,6 +19,14 @@
       </library>
     </orderEntry>
     <orderEntry type="library" name="jfoenix-8.0.7" level="project" />
-    <orderEntry type="library" name="fontawesomefx-8.9" level="application" />
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/lib/fontawesomefx-8.9.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
   </component>
 </module>
