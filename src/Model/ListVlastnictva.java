@@ -50,6 +50,7 @@ public class ListVlastnictva {
     private AvlTree<ObcanSPodielom> vlastniciSPodielom_;
 
     private static final ObcanSPodielom dummyObcanSPodielom = new ObcanSPodielom();
+    private static final Nehnutelnost dummyNehnutelnost = new Nehnutelnost();
 
     public ListVlastnictva(KatastralneUzemie katastralneUzemie, long cisloListuVlastnictva) {
         this.katastralneUzemie_ = katastralneUzemie;
@@ -99,7 +100,12 @@ public class ListVlastnictva {
 
     public boolean odstranVlastnika(Obcan obcan) {
         dummyObcanSPodielom.setObcan(obcan);
-        return vlastniciSPodielom_.remove(dummyObcanSPodielom);
+        return vlastniciSPodielom_.remove(dummyObcanSPodielom) != null;
+    }
+
+    public Nehnutelnost odstranNehnutelnostZListuVlastnictva(long supisneCisloNehnutelnosti) {
+        dummyNehnutelnost.setSupisneCislo(supisneCisloNehnutelnosti);
+        return nehnutelnostiNaListeVlastnictva_.remove(dummyNehnutelnost);
     }
 
 }

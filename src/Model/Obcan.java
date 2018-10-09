@@ -51,7 +51,7 @@ public class Obcan {
         dummyPair.setKey(cisloKatastralnehoUzemia);
         Pair< Long, AvlTree<ListVlastnictva> > listyVlastnictvaVKatastralnomUzemi = listyVlatnictva_.findData(dummyPair);
         if (listyVlastnictvaVKatastralnomUzemi != null) {
-            boolean removed = listyVlastnictvaVKatastralnomUzemi.getValue().remove(listVlastnictva);
+            boolean removed = listyVlastnictvaVKatastralnomUzemi.getValue().remove(listVlastnictva) != null;
             if (removed && listyVlastnictvaVKatastralnomUzemi.getValue().getSize() == 0) {
                 listyVlatnictva_.remove(listyVlastnictvaVKatastralnomUzemi);
             }

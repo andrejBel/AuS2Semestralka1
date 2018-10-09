@@ -178,7 +178,7 @@ public class AvlTreeTest {
         testAvlTreeAscendant_.insert(11);
         testAvlTreeAscendant_.insert(9);
 
-        Assert.assertTrue(testAvlTreeAscendant_.remove(10)); ;
+        Assert.assertNotNull(testAvlTreeAscendant_.remove(10)); ;
         Assert.assertNull(testAvlTreeAscendant_.findData(10));
         printLevelOrder(testAvlTreeAscendant_);
         testAvlTreeAscendant_.clear();
@@ -186,7 +186,7 @@ public class AvlTreeTest {
         testAvlTreeAscendant_.insert(10);
         testAvlTreeAscendant_.insert(11);
         testAvlTreeAscendant_.insert(9);
-        Assert.assertTrue(testAvlTreeAscendant_.remove(11));
+        Assert.assertNotNull(testAvlTreeAscendant_.remove(11));
         Assert.assertNull(testAvlTreeAscendant_.findData(11));
         printLevelOrder(testAvlTreeAscendant_);
         Assert.assertTrue(testAvlTreeAscendant_.checkAvlTreeConditions());
@@ -195,7 +195,7 @@ public class AvlTreeTest {
         testAvlTreeAscendant_.insert(10);
         testAvlTreeAscendant_.insert(11);
         testAvlTreeAscendant_.insert(9);
-        Assert.assertTrue(testAvlTreeAscendant_.remove(9));
+        Assert.assertNotNull(testAvlTreeAscendant_.remove(9));
         Assert.assertNull(testAvlTreeAscendant_.findData(9));
         printLevelOrder(testAvlTreeAscendant_);
         Assert.assertTrue(testAvlTreeAscendant_.checkAvlTreeConditions());
@@ -207,7 +207,7 @@ public class AvlTreeTest {
         testAvlTreeAscendant_.insert(12);
         testAvlTreeAscendant_.insert(8);
         testAvlTreeAscendant_.insert(9);
-        Assert.assertTrue(testAvlTreeAscendant_.remove(12));
+        Assert.assertNotNull(testAvlTreeAscendant_.remove(12));
         Assert.assertNull(testAvlTreeAscendant_.findData(12));
         printLevelOrder(testAvlTreeAscendant_);
         Assert.assertTrue(testAvlTreeAscendant_.checkAvlTreeConditions());
@@ -218,7 +218,7 @@ public class AvlTreeTest {
         testAvlTreeAscendant_.insert(12);
         testAvlTreeAscendant_.insert(8);
         testAvlTreeAscendant_.insert(7);
-        Assert.assertTrue(testAvlTreeAscendant_.remove(12));
+        Assert.assertNotNull(testAvlTreeAscendant_.remove(12));
         Assert.assertNull(testAvlTreeAscendant_.findData(12));
         printLevelOrder(testAvlTreeAscendant_);
         Assert.assertTrue(testAvlTreeAscendant_.checkAvlTreeConditions());
@@ -229,7 +229,7 @@ public class AvlTreeTest {
         testAvlTreeAscendant_.insert(12);
         testAvlTreeAscendant_.insert(9);
         testAvlTreeAscendant_.insert(11);
-        Assert.assertTrue(testAvlTreeAscendant_.remove(9));
+        Assert.assertNotNull(testAvlTreeAscendant_.remove(9));
         Assert.assertNull(testAvlTreeAscendant_.findData(9));
         printLevelOrder(testAvlTreeAscendant_);
         Assert.assertTrue(testAvlTreeAscendant_.checkAvlTreeConditions());
@@ -240,7 +240,7 @@ public class AvlTreeTest {
         testAvlTreeAscendant_.insert(12);
         testAvlTreeAscendant_.insert(9);
         testAvlTreeAscendant_.insert(14);
-        Assert.assertTrue(testAvlTreeAscendant_.remove(9));
+        Assert.assertNotNull(testAvlTreeAscendant_.remove(9));
         Assert.assertNull(testAvlTreeAscendant_.findData(9));
         printLevelOrder(testAvlTreeAscendant_);
         Assert.assertTrue(testAvlTreeAscendant_.checkAvlTreeConditions());
@@ -281,7 +281,7 @@ public class AvlTreeTest {
         Map<Integer, Integer> insertedTreeMap = new TreeMap<>();
 
         Random generator = new Random();
-        int iterations = 100000;
+        int iterations = 10;
 
         for (int i = 0; i < iterations; i++) {
             int generated = generator.nextInt(iterations * 3);
@@ -296,6 +296,7 @@ public class AvlTreeTest {
                 boolean inserted = testAvlTreeAscendant_.insert(generated);
                 Assert.assertTrue("Nepodarilo a vlozit", inserted);
                 Assert.assertNotNull("Nepodarilo a vlozit", testAvlTreeAscendant_.findData(generated));
+                Assert.assertTrue(testAvlTreeAscendant_.checkAvlTreeConditions());
             }
         }
         //insertedValues.sort((o1, o2) -> o1 - o2);
@@ -307,7 +308,7 @@ public class AvlTreeTest {
             Integer numberToRemove = (Integer) keys[indexToRemove];
             insertedTreeMap.remove(numberToRemove);
 
-            Assert.assertTrue(testAvlTreeAscendant_.remove(numberToRemove));
+            Assert.assertNotNull(testAvlTreeAscendant_.remove(numberToRemove));
             Assert.assertNull(testAvlTreeAscendant_.findData(numberToRemove));
             Assert.assertTrue(testAvlTreeAscendant_.checkAvlTreeConditions());
 
@@ -320,8 +321,8 @@ public class AvlTreeTest {
             for (Object num: keyAfterRemove) {
                 Assert.assertEquals( (Integer)num , resultList.get(index++));
             }
-            /*
-                if (indexToRemove % 317 == 1 && insertedTreeMap.size() < iterations) {
+
+                if (indexToRemove % 17 == 1 && insertedTreeMap.size() < iterations) {
                 int toInsert = -numberToRemove - 1;
                 if (toInsert < 0)
                 {
@@ -331,7 +332,7 @@ public class AvlTreeTest {
                     Assert.assertNotNull("Nepodarilo a vlozit", testAvlTreeAscendant_.findData(toInsert));
                 }
             }
-            */
+
 
         }
 
@@ -363,49 +364,49 @@ public class AvlTreeTest {
         while (insertedValues.size() > iterations / 2) {
             int position = Math.abs(generator.nextInt(iterations / 2));
             Integer dataAtPosition = insertedValues.remove(position);
-            boolean removed =  testAvlTreeAscendant_.remove(dataAtPosition);
+            boolean removed =  testAvlTreeAscendant_.remove(dataAtPosition) != null;
             Assert.assertTrue("nepodarilo sa vymazat prvok", removed);
         }
         while (insertedValues.size() > iterations / 2) {
             int position = 1;
             Integer dataAtPosition = insertedValues.remove(position);
-            boolean removed =  testAvlTreeAscendant_.remove(dataAtPosition);
+            boolean removed =  testAvlTreeAscendant_.remove(dataAtPosition) != null;
             Assert.assertTrue("nepodarilo sa vymazat prvok", removed);
         }
         while (insertedValues.size() > iterations / 3) {
             int position = 2;
             Integer dataAtPosition = insertedValues.remove(position);
-            boolean removed =  testAvlTreeAscendant_.remove(dataAtPosition);
+            boolean removed =  testAvlTreeAscendant_.remove(dataAtPosition) != null;
             Assert.assertTrue("nepodarilo sa vymazat prvok", removed);
         }
         while (insertedValues.size() > iterations / 4) {
             int position = 3;
             Integer dataAtPosition = insertedValues.remove(position);
-            boolean removed =  testAvlTreeAscendant_.remove(dataAtPosition);
+            boolean removed =  testAvlTreeAscendant_.remove(dataAtPosition) != null;
             Assert.assertTrue("nepodarilo sa vymazat prvok", removed);
         }
         while (insertedValues.size() > iterations / 5) {
             int position = 4;
             Integer dataAtPosition = insertedValues.remove(position);
-            boolean removed =  testAvlTreeAscendant_.remove(dataAtPosition);
+            boolean removed =  testAvlTreeAscendant_.remove(dataAtPosition) != null;
             Assert.assertTrue("nepodarilo sa vymazat prvok", removed);
         }
         while (insertedValues.size() > iterations / 6) {
             int position = insertedValues.size() - 1;
             Integer dataAtPosition = insertedValues.remove(position);
-            boolean removed =  testAvlTreeAscendant_.remove(dataAtPosition);
+            boolean removed =  testAvlTreeAscendant_.remove(dataAtPosition) != null;
             Assert.assertTrue("nepodarilo sa vymazat prvok", removed);
         }
         while (insertedValues.size() > iterations / 7) {
             int position = insertedValues.size() - 2;
             Integer dataAtPosition = insertedValues.remove(position);
-            boolean removed =  testAvlTreeAscendant_.remove(dataAtPosition);
+            boolean removed =  testAvlTreeAscendant_.remove(dataAtPosition) != null;
             Assert.assertTrue("nepodarilo sa vymazat prvok", removed);
         }
         while (insertedValues.size() > 0) {
             int position = 0;
             Integer dataAtPosition = insertedValues.remove(position);
-            boolean removed =  testAvlTreeAscendant_.remove(dataAtPosition);
+            boolean removed =  testAvlTreeAscendant_.remove(dataAtPosition) != null;
             Assert.assertTrue("nepodarilo sa vymazat prvok", removed);
         }
         Assert.assertEquals(0, testAvlTreeAscendant_.getSize());

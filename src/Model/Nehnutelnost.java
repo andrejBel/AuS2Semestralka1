@@ -3,6 +3,7 @@ package Model;
 import structures.AvlTree;
 
 import java.util.Comparator;
+import java.util.Iterator;
 
 public class Nehnutelnost {
 
@@ -29,7 +30,14 @@ public class Nehnutelnost {
     }
 
     public boolean odstranObcanaSTrvalymPobytom(Obcan obcan) {
-        return obcaniaSTravalymPobytom_.remove(obcan);
+        return obcaniaSTravalymPobytom_.remove(obcan) != null;
+    }
+
+    public void odstranObcanomTrvalyPobytVNehnutelnosti() {
+        Iterator<Obcan> iterable = obcaniaSTravalymPobytom_.iterator();
+        for (Obcan obcan: obcaniaSTravalymPobytom_) {
+            obcan.setTrvalyPobyt(null);
+        }
     }
 
     public long getSupisneCislo() {

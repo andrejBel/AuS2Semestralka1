@@ -43,7 +43,7 @@ public class Aplikacia {
                 new C16PridanieObcana(isSpravyKatastra_),
                 new C17PridanieListuVlastnictva(isSpravyKatastra_),
                 new C18PridanieNehnutelnosti(isSpravyKatastra_),
-                //new C20OdstranenieNehnutelnosti(isSpravyKatastra_),
+                new C20OdstranenieNehnutelnosti(isSpravyKatastra_),
                 new C21PridanieKatastralnehoUzemia(isSpravyKatastra_)
         );
 

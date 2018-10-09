@@ -118,7 +118,8 @@ public class C20OdstranenieNehnutelnosti extends ControllerBase {
             }catch (NumberFormatException e) {
                 return false;
             }
-            return true;
+
+            return isSpravyKatastra_.odstranNehnutelnost(cisloKatastralnehoUzemia, cisloListuVlastnictva, supisneCisloNehnutelnosti);
         }
 
         @Override

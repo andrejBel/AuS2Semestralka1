@@ -246,23 +246,24 @@ public class AvlTree<T> implements Iterable<T> {
         return rotateRight(parent, rootAfterLeftRotation);
     }
 
-    public boolean remove(T data)
+    public T remove(T data)
     {
-        boolean removed = removeElementFromTree(data);
-        size_ -= removed ? 1 : 0;
-        return removed;
+        T removedData = removeElementFromTree(data);
+        size_ -= removedData != null ? 1 : 0;
+        return removedData;
     }
 
-
-    private boolean removeElementFromTree(T data) {
+    private T removeElementFromTree(T data) {
         boolean found = getPathToElement(data);
         // ak ho najdem, tak mazem
 
         if (found) {
+            T elementToRemove = stack_.<T>peek().getData();
             extractNode();
+            return elementToRemove;
         }
 
-        return found;
+        return null;
     }
 
     // metoda pracujuca s obsahom stacku
@@ -421,8 +422,8 @@ public class AvlTree<T> implements Iterable<T> {
         }
         while (stack2.size() > 0) {
             currentNode = stack2.pop();
-            currentNode.updateHeight();
-            byte balance = currentNode.getBalance();
+
+            byte balance = currentNode.getBalanceRecursively();
             if (balance > 1 || balance < -1) {
                 return false;
             }

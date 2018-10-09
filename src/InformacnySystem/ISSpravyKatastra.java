@@ -238,6 +238,24 @@ public class ISSpravyKatastra {
         return false;
     }
 
+    // 20
+    public boolean odstranNehnutelnost(long cisloKatastralnehoUzemia, long cisloListuVlastnictva,long supisneCisloNehnutelnosti) {
+        dummyKatastralneUzemie.setCisloKatastralnehoUzemia(cisloKatastralnehoUzemia);
+        KatastralneUzemie katastralneUzemie = katastralneUzemieCislo_.findData(dummyKatastralneUzemie);
+        if (katastralneUzemie != null) {
+            ListVlastnictva listVlastnictva = katastralneUzemie.najdiListVlastnictva(cisloListuVlastnictva);
+            if (listVlastnictva != null) {
+                Nehnutelnost nehnutelnost = listVlastnictva.odstranNehnutelnostZListuVlastnictva(supisneCisloNehnutelnosti);
+                if (nehnutelnost != null) {
+                    nehnutelnost.odstranObcanomTrvalyPobytVNehnutelnosti();
+                    return true;
+                }
+            }
+        }
+
+        return false;
+    }
+
     // 21
     public boolean pridajKatastralneUzemie(long cisloKatastralnehoUzemia, String nazovKatastralnehoUzemia) {
         return pridajKatastralneUzemie(cisloKatastralnehoUzemia, nazovKatastralnehoUzemia, Optional.empty());
