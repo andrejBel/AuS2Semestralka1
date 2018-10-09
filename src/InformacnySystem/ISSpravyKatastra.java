@@ -10,21 +10,24 @@ import Utils.Status;
 import structures.AvlTree;
 
 import javax.xml.ws.Holder;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.Iterator;
 import java.util.Optional;
 
 
 public class ISSpravyKatastra {
 
-    AvlTree<Obcan> obcania_;
-    AvlTree<KatastralneUzemie> katastralneUzemieCislo_;
-    AvlTree<KatastralneUzemie> katastralneUzemieNazov_;
+    private AvlTree<Obcan> obcania_;
+    private AvlTree<KatastralneUzemie> katastralneUzemieCislo_;
+    private AvlTree<KatastralneUzemie> katastralneUzemieNazov_;
 
+    private Obcan dummyObcan = new Obcan();
+    private KatastralneUzemie dummyKatastralneUzemie = new KatastralneUzemie();
+    private Nehnutelnost dummyNehnutelnost = new Nehnutelnost();
 
-    Obcan dummyObcan = new Obcan();
-    KatastralneUzemie dummyKatastralneUzemie = new KatastralneUzemie();
-    Nehnutelnost dummyNehnutelnost = new Nehnutelnost();
+    private static final char DEFAULT_SEPARATOR = ';';
 
     public ISSpravyKatastra() {
         this.obcania_ = new AvlTree<>((o1, o2) -> o1.getRodneCislo().compareTo(o2.getRodneCislo()));
@@ -136,17 +139,22 @@ public class ISSpravyKatastra {
             if (katastralneUzemie != null) {
                 Nehnutelnost nehnutelnost = katastralneUzemie.getNehnutelnostVKatastralnomUzemi(supisneCisloNehnutelnosti);
                 if (nehnutelnost != null) {
-                    Nehnutelnost aktualnyTrvalyPobytObcana = obcan.getTrvalyPobyt();
-                    if (aktualnyTrvalyPobytObcana != null) {
-                        aktualnyTrvalyPobytObcana.odstranObcanaSTrvalymPobytom(obcan);
-                    }
-                    nehnutelnost.pridajObcanaSTrvalymPobytom(obcan);
-                    obcan.setTrvalyPobyt(nehnutelnost);
-                    return true;
+                    return zapisObcanoviTrvalyPobyt(obcan, nehnutelnost);
                 }
             }
         }
         return false;
+    }
+
+    private boolean zapisObcanoviTrvalyPobyt(Obcan obcan, Nehnutelnost nehnutelnost)
+    {
+        Nehnutelnost aktualnyTrvalyPobytObcana = obcan.getTrvalyPobyt();
+        if (aktualnyTrvalyPobytObcana != null) {
+            aktualnyTrvalyPobytObcana.odstranObcanaSTrvalymPobytom(obcan);
+        }
+        nehnutelnost.pridajObcanaSTrvalymPobytom(obcan);
+        obcan.setTrvalyPobyt(nehnutelnost);
+        return true;
     }
 
     // 12
@@ -277,13 +285,17 @@ public class ISSpravyKatastra {
         return true;
     }
 
-    public boolean generujData(int pocetKatastralnychUzemi, int celkovyPocetObcanov, int pocetObyvatelovStrvalymPobytom, int pocetListovVlastnictvaVKatastralnomUzemi, int pocetVlastnikovNaListeVlastnictva, int pocetNehnutelnostiNaListeVlastnictva) {
-        boolean inserted = false;
-        ArrayList<Obcan> vlozeniObcania = new ArrayList<>(celkovyPocetObcanov);
-        ArrayList<Nehnutelnost> vlozeneNehnutelnosti = new ArrayList<>(pocetObyvatelovStrvalymPobytom);
+    private void vycistiData() {
         this.obcania_.clear();
         this.katastralneUzemieNazov_.clear();
         this.katastralneUzemieCislo_.clear();
+    }
+
+    public boolean generujData(int pocetKatastralnychUzemi, int celkovyPocetObcanov, int pocetObyvatelovStrvalymPobytom, int pocetListovVlastnictvaVKatastralnomUzemi, int pocetVlastnikovNaListeVlastnictva, int pocetNehnutelnostiNaListeVlastnictva) {
+        boolean inserted = false;
+        vycistiData();
+        ArrayList<Obcan> vlozeniObcania = new ArrayList<>(celkovyPocetObcanov);
+        ArrayList<Nehnutelnost> vlozeneNehnutelnosti = new ArrayList<>(pocetObyvatelovStrvalymPobytom);
         Optional<Holder<KatastralneUzemie>> katastralneUzemieHolder = Optional.of(new Holder<>());
         Optional<Holder<Nehnutelnost>> nehnutelnostHolder = Optional.of(new Holder<>());
         Optional<Holder<ListVlastnictva>> listVlastnictvaHolder = Optional.of(new Holder<>());
@@ -349,6 +361,228 @@ public class ISSpravyKatastra {
         return true;
     }
 
+
+    public boolean exportujData(String cestaKSuboru) {
+
+        try (PrintWriter writer = new PrintWriter(cestaKSuboru)) {
+            StringBuilder stringBuilder = new StringBuilder();
+            writer.println("Pocet obcannov: " + DEFAULT_SEPARATOR + obcania_.getSize() + DEFAULT_SEPARATOR);
+            Iterator<Obcan> obcanLevelOrderIterator = obcania_.levelOrderIterator();
+            while (obcanLevelOrderIterator.hasNext()) {
+                Obcan obcan = obcanLevelOrderIterator.next();
+                stringBuilder.append(obcan.getRodneCislo());
+                stringBuilder.append(DEFAULT_SEPARATOR);
+                stringBuilder.append(obcan.getMenoPriezvisko());
+                stringBuilder.append(DEFAULT_SEPARATOR);
+                stringBuilder.append(obcan.getDatumNarodenia());
+                stringBuilder.append(DEFAULT_SEPARATOR);
+                writer.println(stringBuilder.toString());
+                stringBuilder.setLength(0); // vycistenie
+            }
+
+            writer.println("Pocet katastralnych uzemi: " + DEFAULT_SEPARATOR + katastralneUzemieCislo_.getSize() + DEFAULT_SEPARATOR);
+
+            Iterator<KatastralneUzemie> katastralneUzemieLevelOrderIterator = katastralneUzemieCislo_.levelOrderIterator();
+            while (katastralneUzemieLevelOrderIterator.hasNext()) {
+                KatastralneUzemie katastralneUzemie = katastralneUzemieLevelOrderIterator.next();
+
+                stringBuilder.append(katastralneUzemie.getCisloKatastralnehoUzemia());
+                stringBuilder.append(DEFAULT_SEPARATOR);
+                stringBuilder.append(katastralneUzemie.getNazov());
+                stringBuilder.append(DEFAULT_SEPARATOR);
+                writer.println(stringBuilder.toString());
+                stringBuilder.setLength(0);
+                AvlTree<ListVlastnictva> listyVlastnictva = katastralneUzemie.getListyVlastnictvaVKatastralnomUzemi();
+                writer.println("Pocet listov vlastnictva v KU: " + DEFAULT_SEPARATOR + listyVlastnictva.getSize() + DEFAULT_SEPARATOR);
+                Iterator<ListVlastnictva> listyVlastnictvaIterator = listyVlastnictva.levelOrderIterator();
+                while (listyVlastnictvaIterator.hasNext()) {
+                    ListVlastnictva listVlastnictva = listyVlastnictvaIterator.next();
+                    stringBuilder.append(listVlastnictva.getCisloListuVlastnictva());
+                    stringBuilder.append(DEFAULT_SEPARATOR);
+                    writer.println(stringBuilder.toString());
+                    stringBuilder.setLength(0);
+                    writer.println("Pocet majitelov na LV: " + DEFAULT_SEPARATOR + listVlastnictva.getVlastniciSPodielom().getSize() + DEFAULT_SEPARATOR);
+                    Iterator<ListVlastnictva.ObcanSPodielom> obcanSPodielomLevelOrderIterator = listVlastnictva.getVlastniciSPodielom().levelOrderIterator();
+                    while (obcanSPodielomLevelOrderIterator.hasNext()) {
+                        ListVlastnictva.ObcanSPodielom obcanSPodielom = obcanSPodielomLevelOrderIterator.next();
+                        stringBuilder.append(obcanSPodielom.getObcan().getRodneCislo());
+                        stringBuilder.append(DEFAULT_SEPARATOR);
+                        stringBuilder.append(obcanSPodielom.getPodiel());
+                        stringBuilder.append(DEFAULT_SEPARATOR);
+                        writer.println(stringBuilder.toString());
+                        stringBuilder.setLength(0);
+                    }
+
+                    writer.println("Pocet nehnutelnosti na LV: " + DEFAULT_SEPARATOR + listVlastnictva.getNehnutelnostiNaListeVlastnictva().getSize() + DEFAULT_SEPARATOR);
+                    Iterator<Nehnutelnost> nehnutelnostLevelOrderIterator = listVlastnictva.getNehnutelnostiNaListeVlastnictva().levelOrderIterator();
+                    while (nehnutelnostLevelOrderIterator.hasNext()) {
+                        Nehnutelnost nehnutelnost = nehnutelnostLevelOrderIterator.next();
+                        stringBuilder.append(nehnutelnost.getSupisneCislo());
+                        stringBuilder.append(DEFAULT_SEPARATOR);
+                        stringBuilder.append(nehnutelnost.getAdresa());
+                        stringBuilder.append(DEFAULT_SEPARATOR);
+                        stringBuilder.append(nehnutelnost.getPopis());
+                        stringBuilder.append(DEFAULT_SEPARATOR);
+                        writer.println(stringBuilder.toString());
+                        stringBuilder.setLength(0);
+                        writer.println("Pocet obcanov s trvalym pobytom v NEH: " + DEFAULT_SEPARATOR + nehnutelnost.getObcaniaSTravalymPobytom().getSize() + DEFAULT_SEPARATOR);
+                        Iterator<Obcan> iteratorObcaniaSTrvalymPobytom = nehnutelnost.getObcaniaSTravalymPobytom().levelOrderIterator();
+                        while (iteratorObcaniaSTrvalymPobytom.hasNext()) {
+                            Obcan obcan = iteratorObcaniaSTrvalymPobytom.next();
+                            stringBuilder.append(obcan.getRodneCislo());
+                            stringBuilder.append(DEFAULT_SEPARATOR);
+                            writer.println(stringBuilder.toString());
+                            stringBuilder.setLength(0);
+                        }
+                    }
+                }
+            }
+
+
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+            return false;
+        }
+        return true;
+    }
+
+    public boolean importujData(String cestaKSuboru) {
+        try(BufferedReader br = new BufferedReader(new FileReader(cestaKSuboru))) {
+            vycistiData();
+            Optional<Holder<KatastralneUzemie>> katastralneUzemieHolder = Optional.of(new Holder<>());
+            Optional<Holder<Nehnutelnost>> nehnutelnostHolder = Optional.of(new Holder<>());
+            Optional<Holder<ListVlastnictva>> listVlastnictvaHolder = Optional.of(new Holder<>());
+            Optional<Holder<Obcan>> obcanHolder = Optional.of(new Holder<>());
+
+            boolean inserted = false;
+
+            ArrayList<String> parsedLine = new ArrayList<>();
+            for(String line; (line = br.readLine()) != null; ) {
+                System.out.println("tu iba raz");
+                parseLine(line, parsedLine);
+                int pocetObcanov = Integer.parseInt(parsedLine.get(1));
+                for (int indexObcania = 0; indexObcania < pocetObcanov; ++indexObcania) {
+                    line = br.readLine();
+                    parseLine(line, parsedLine);
+                    inserted = pridajObcana(parsedLine.get(0), parsedLine.get(1), Long.parseLong(parsedLine.get(2)));
+                    if (!inserted) {
+                        return false;
+                    }
+                }
+                line = br.readLine();
+                parseLine(line, parsedLine);
+                int pocetKatastralnychUzemi = Integer.parseInt(parsedLine.get(1));
+                for (int indexKatastralneUzemie = 0; indexKatastralneUzemie < pocetKatastralnychUzemi; indexKatastralneUzemie++) {
+                    line = br.readLine();
+                    parseLine(line, parsedLine);
+                    inserted = pridajKatastralneUzemie(Long.parseLong(parsedLine.get(0)), parsedLine.get(1), katastralneUzemieHolder);
+                    if (!inserted) {
+                        return false;
+                    }
+                    KatastralneUzemie katastralneUzemie = katastralneUzemieHolder.get().value;
+                    line = br.readLine();
+                    parseLine(line, parsedLine);
+                    int pocetListovVlastnictvaVKU = Integer.parseInt(parsedLine.get(1));
+                    for (int indexListVlastnictva = 0; indexListVlastnictva < pocetListovVlastnictvaVKU; indexListVlastnictva++) {
+                        line = br.readLine();
+                        parseLine(line, parsedLine);
+                        long cisloListuVlastnictva = Long.parseLong(parsedLine.get(0));
+                        inserted = katastralneUzemie.vlozListVlastnictva(cisloListuVlastnictva, listVlastnictvaHolder);
+                        if (!inserted) {
+                            return false;
+                        }
+                        ListVlastnictva listVlastnictva = listVlastnictvaHolder.get().value;
+                        line = br.readLine();
+                        parseLine(line, parsedLine);
+                        int pocetMajitelovNaListeVlastnictva = Integer.parseInt(parsedLine.get(1));
+                        for (int indexPocetMajitelovNaLV = 0; indexPocetMajitelovNaLV < pocetMajitelovNaListeVlastnictva; indexPocetMajitelovNaLV++) {
+                            line = br.readLine();
+                            parseLine(line, parsedLine);
+                            String rodneCislo = parsedLine.get(0);
+                            double podiel = Double.parseDouble(parsedLine.get(1));
+                            Obcan obcan = najdiObcana(rodneCislo);
+                            if (obcan == null) {
+                                return false;
+                            }
+
+                            inserted = listVlastnictva.pridajAleboPonechajVlastnika(obcan, podiel);
+                            if (!inserted) {
+                                return false;
+                            }
+                            inserted = obcan.pridajAleboPonechajListVlastnictva(listVlastnictva);
+                            if (!inserted) {
+                                return false;
+                            }
+                        }
+                        line = br.readLine();
+                        parseLine(line, parsedLine);
+                        int pocetNehnutelnostiNaListeVlastnictva = Integer.parseInt(parsedLine.get(1));
+                        for (int indexNehnutelnostiNaLV = 0; indexNehnutelnostiNaLV < pocetNehnutelnostiNaListeVlastnictva; indexNehnutelnostiNaLV++) {
+                            line = br.readLine();
+                            parseLine(line, parsedLine);
+                            katastralneUzemie.vlozNehnutelnostNaListVlastnictva(listVlastnictva, Long.parseLong(parsedLine.get(0)), parsedLine.get(1), parsedLine.get(2), nehnutelnostHolder);
+                            Nehnutelnost nehnutelnost = nehnutelnostHolder.get().value;
+                            line = br.readLine();
+                            parseLine(line, parsedLine);
+                            int pocetObcanovSTrvalymPobytomVNe = Integer.parseInt(parsedLine.get(1));
+                            for (int indexPocetObcanovSTrPoVNe = 0; indexPocetObcanovSTrPoVNe < pocetObcanovSTrvalymPobytomVNe; indexPocetObcanovSTrPoVNe++) {
+                                line = br.readLine();
+                                parseLine(line, parsedLine);
+                                String rodneCislo = parsedLine.get(0);
+                                Obcan obcan = najdiObcana(rodneCislo);
+                                if (obcan == null) {
+                                    return false;
+                                }
+                                zapisObcanoviTrvalyPobyt(obcan, nehnutelnost);
+                            }
+                        }
+                    }
+
+                }
+
+            }
+
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+            return false;
+        } catch (IOException e) {
+            e.printStackTrace();
+            return false;
+        } catch (Exception e) {
+            return false;
+        }
+        return true;
+    }
+
+    private void parseLine(String cvsLine,ArrayList<String> result) {
+
+        result.clear();
+        //if empty, return!
+        if (cvsLine == null && cvsLine.isEmpty()) {
+            return;
+        }
+        char separator = DEFAULT_SEPARATOR;
+        StringBuffer curVal = new StringBuffer();
+        char[] chars = cvsLine.toCharArray();
+        for (char ch : chars) {
+            if (ch == separator) {
+                result.add(curVal.toString());
+                curVal = new StringBuffer();
+            } else if (ch == '\r') {
+                //ignore LF characters
+                continue;
+            } else if (ch == '\n') {
+                //the end, break!
+                break;
+            } else {
+                curVal.append(ch);
+            }
+        }
+        if (curVal.length() > 0) {
+            result.add(curVal.toString());
+        }
+
+    }
 
 
     private boolean skontrolujVkladanieKatastralnehoUzemia(Optional<Status> status, KatastralneUzemie katastralneUzemie, boolean result) {

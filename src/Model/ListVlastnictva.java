@@ -93,7 +93,11 @@ public class ListVlastnictva {
     }
 
     public boolean pridajAleboPonechajVlastnika(Obcan obcan) {
-        ObcanSPodielom obcanNaPridanie = new ObcanSPodielom(obcan, 0.0);
+        return pridajAleboPonechajVlastnika(obcan, 0.0);
+    }
+
+    public boolean pridajAleboPonechajVlastnika(Obcan obcan, double podiel) {
+        ObcanSPodielom obcanNaPridanie = new ObcanSPodielom(obcan, podiel);
         boolean inserted = vlastniciSPodielom_.insert(obcanNaPridanie);
         return true;
     }

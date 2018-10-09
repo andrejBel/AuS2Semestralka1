@@ -44,6 +44,9 @@ public class KatastralneUzemie {
         return nehnutelnostiVkatastralnomUzemi_.findData(dummyNehnutelnost);
     }
 
+    public AvlTree<ListVlastnictva> getListyVlastnictvaVKatastralnomUzemi() {
+        return listyVlastnictvaVKatastralnomUzemi_;
+    }
 
     public boolean vlozListVlastnictva(long cisloListuVlastnictva, Optional<Holder<ListVlastnictva>> vlozenyListVlastnictva) {
         ListVlastnictva listVlastnictva = new ListVlastnictva(this, cisloListuVlastnictva);

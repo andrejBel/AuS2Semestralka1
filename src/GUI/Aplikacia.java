@@ -3,6 +3,7 @@ package GUI;
 import GUI.Controller.*;
 import InformacnySystem.ISSpravyKatastra;
 import com.jfoenix.controls.JFXTabPane;
+import javafx.application.Platform;
 import javafx.scene.Scene;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
@@ -30,6 +31,7 @@ public class Aplikacia {
         tabPane_.setTabClosingPolicy(TabPane.TabClosingPolicy.UNAVAILABLE);
         controllers = Arrays.asList(
                 new CGenerator(isSpravyKatastra_),
+                new CImportExportDat(isSpravyKatastra_, stage),
                 new C3VypisOsobSTrvalymPobytom(isSpravyKatastra_),
                 new C4VyhladanieLVPodlaCislaKU(isSpravyKatastra_),
                 new C6VyhladanieLVPodlaNazvuKU(isSpravyKatastra_),
@@ -64,7 +66,18 @@ public class Aplikacia {
         stage.setTitle("Algoritmy a údajové štruktúry 2- Semestrálna práca 1");
         stage.setScene(scene);
         stage.setMaximized(true);
+
+        Thread.setDefaultUncaughtExceptionHandler((t, e) -> {
+            System.err.println("***Default exception handler***");
+            if (Platform.isFxApplicationThread()) {
+                controllers.get(tabPane_.getSelectionModel().getSelectedIndex()).showWarningDialog("Neznáma chyba");
+            } else {
+                System.err.println("An unexpected error occurred in "+t);
+
+            }
+        });
     }
+
 
     public void run() {
         stage_.show();

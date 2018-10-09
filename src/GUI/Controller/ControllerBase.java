@@ -4,6 +4,7 @@ import InformacnySystem.ISSpravyKatastra;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXDialog;
 import com.jfoenix.controls.JFXDialogLayout;
+import com.jfoenix.controls.JFXSpinner;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 import de.jensd.fx.glyphs.materialdesignicons.MaterialDesignIcon;
@@ -112,7 +113,7 @@ public abstract class ControllerBase {
     }
 
 
-    protected void showSuccessDialog(String message) {
+    protected void showSuccessDialog(String message, boolean showDialog) {
         MaterialDesignIconView materialDesignIconView =
                 new MaterialDesignIconView(MaterialDesignIcon.CHECK);
         materialDesignIconView.setFill( Color.GREEN);
@@ -127,10 +128,17 @@ public abstract class ControllerBase {
         dialogLayout.setActions(button);
         messageLabel_.setTextFill(Color.GREEN);
         messageLabel_.setText(message);
-        dialog.show();
+        if (showDialog) {
+            dialog.show();
+        }
+
     }
 
-    protected void showWarningDialog(String message) {
+    protected void showSuccessDialog(String message) {
+        showSuccessDialog(message, true);
+    }
+
+    public void showWarningDialog(String message, boolean showDialog) {
         MaterialDesignIconView materialDesignIconView =
                 new MaterialDesignIconView(MaterialDesignIcon.ALERT_CIRCLE);
         materialDesignIconView.setFill( Color.RED);
@@ -144,6 +152,23 @@ public abstract class ControllerBase {
         });
         dialogLayout.setActions(button);
         messageLabel_.setTextFill(Color.RED);
+        messageLabel_.setText(message);
+        if (showDialog) {
+            dialog.show();
+        }
+    }
+
+    public void showWarningDialog(String message) {
+        showWarningDialog(message, true);
+    }
+
+    protected void showSpinner(String message) {
+        JFXSpinner spinner = new JFXSpinner();
+        dialogVBox.setSpacing(5);
+        dialogVBox.getChildren().clear();
+        dialogVBox.getChildren().addAll(messageLabel_, spinner);
+        dialogLayout.getActions().clear();
+        messageLabel_.setTextFill(Color.BLACK);
         messageLabel_.setText(message);
         dialog.show();
     }

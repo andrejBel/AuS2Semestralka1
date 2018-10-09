@@ -18,6 +18,7 @@ public class CGenerator extends ControllerBase {
 
     @FXML
     private JFXSlider sliderObcania_;
+
     @FXML
     private JFXSlider sliderPocetObyvatelovSTrvalymPobytom;
 
@@ -67,13 +68,7 @@ public class CGenerator extends ControllerBase {
 
         @Override
         public void onPreExecute() {
-            Label label = new Label("Generovanie dát");
-            label.setAlignment(Pos.CENTER);
-            JFXSpinner spinner = new JFXSpinner();
-            dialogVBox.getChildren().clear();
-            dialogVBox.getChildren().addAll(label, spinner);
-            dialogLayout.getActions().clear();
-            dialog.show();
+            showSpinner("Generovanie dát");
         }
 
         @Override
@@ -95,22 +90,12 @@ public class CGenerator extends ControllerBase {
         @Override
         public void onPostExecute(Object params) {
             boolean generateResult = (Boolean) params;
-            Label label = new Label();
-            label.setStyle("-fx-font-weight: bold");
-            label.setAlignment(Pos.CENTER);
-            dialogVBox.getChildren().clear();
-            dialogVBox.getChildren().addAll(label);
-            JFXButton button = new JFXButton("Zavrieť");
-            button.setOnAction(event1 -> {
-                dialog.close();
-            });
-            dialogLayout.setActions(button);
             if (generateResult) {
-                label.setTextFill(Color.GREEN);
-                label.setText("Generovanie dát úspešné");
+
+                showSuccessDialog("Generovanie dát úspešné", false);
             } else {
-                label.setTextFill(Color.RED);
-                label.setText("Generovanie dát neúspešné");
+
+                showWarningDialog("Generovanie dát neúspešné", false);
             }
         }
 
@@ -121,17 +106,7 @@ public class CGenerator extends ControllerBase {
 
         @Override
         public void onFail(Exception e) {
-            Label label = new Label("Generovanie dát neúspešné - vážna chyba");
-            label.setStyle("-fx-font-weight: bold");
-            label.setTextFill(Color.RED);
-            label.setAlignment(Pos.CENTER);
-            dialogVBox.getChildren().clear();
-            dialogVBox.getChildren().addAll(label);
-            JFXButton button = new JFXButton("Zavrieť");
-            button.setOnAction(event1 -> {
-                dialog.close();
-            });
-            dialogLayout.setActions(button);
+            showWarningDialog("Generovanie dát neúspešné - vážna chyba");
         }
     }
 

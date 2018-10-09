@@ -47,13 +47,11 @@ public class AvlTreeNode<T> {
 
         byte leftSonHeight = getHeightRecursively(leftSon_);
         byte rightSonHeight = getHeightRecursively(rightSon_);
-        System.out.println(" leftSon = " + leftSonHeight);
-        System.out.println(" rightSon = " + rightSonHeight);
         return (byte) (leftSonHeight - rightSonHeight);
     }
 
     public byte getHeightRecursively(AvlTreeNode<T> node) {
-        return (byte) (node == null ? 0 : (1 + Math.max(getHeightRecursively(node.rightSon_), getHeightRecursively(node.leftSon_))));
+        return (byte) (node == null ? -1 : (1 + Math.max(getHeightRecursively(node.rightSon_), getHeightRecursively(node.leftSon_))));
     }
 
 

@@ -9,8 +9,10 @@ public class AvlTree<T> implements Iterable<T> {
         return new InOrderIterator();
     }
 
-    private static class Stack {
-        private ArrayList<Object> list_;
+    public  Iterator<T> levelOrderIterator() { return new LevelOrderIterator(); }
+
+    private static class Stack<T> {
+        private ArrayList<T> list_;
 
         public Stack(int initialCapacity) {
             list_ = new ArrayList<>(initialCapacity);
@@ -20,12 +22,12 @@ public class AvlTree<T> implements Iterable<T> {
             list_ = new ArrayList<>(10);
         }
 
-        public <T> void  push(AvlTreeNode<T> data) {
+        public void push(T data) {
             list_.add(data);
         }
 
-        public <T> AvlTreeNode<T> pop() {
-            return (AvlTreeNode<T>) list_.remove(list_.size() - 1);
+        public T pop() {
+            return list_.remove(list_.size() - 1);
         }
 
         public void clear() {
@@ -36,12 +38,12 @@ public class AvlTree<T> implements Iterable<T> {
             return list_.size();
         }
 
-        public <T> AvlTreeNode<T> peek() {
-            return (AvlTreeNode<T>) list_.get(list_.size() - 1);
+        public T peek() {
+            return list_.get(list_.size() - 1);
         }
 
-        public <T> AvlTreeNode<T> get(int index) {
-            return (AvlTreeNode<T>) list_.get(index);
+        public T get(int index) {
+            return list_.get(index);
         }
 
     }
@@ -49,11 +51,12 @@ public class AvlTree<T> implements Iterable<T> {
     private AvlTreeNode<T> root_;
     private Comparator<T> comparator_;
     private long size_;
-    private static Stack stack_ = new Stack(Byte.MAX_VALUE);
+    private Stack<AvlTreeNode<T>> stack_;
 
     public AvlTree(Comparator<T> comparator) {
         root_ = null;
         comparator_ = comparator;
+        stack_ = new Stack();
     }
 
     public AvlTreeNode<T> getRoot() {
@@ -348,8 +351,9 @@ public class AvlTree<T> implements Iterable<T> {
     }
 
     private void traverseInOrderStack(AvlTreeNode<T> root, List<T> storageList) {
-        if (root == null)
+        if (root == null) {
             return;
+        }
         stack_.clear();
         AvlTreeNode<T> current = root;
 
@@ -404,36 +408,28 @@ public class AvlTree<T> implements Iterable<T> {
         if (root_ == null) {
             return true;
         }
-        Stack stack1 = new Stack(Byte.MAX_VALUE);
-        Stack stack2 = new Stack(Byte.MAX_VALUE);
+        stack_.clear();
+        AvlTreeNode<T> current = root_;
 
-        AvlTreeNode<T> currentNode = null;
-
-        stack1.push(root_);
-        while (stack1.size() > 0) {
-            currentNode = stack1.pop();
-            stack2.push(currentNode);
-            if (currentNode.hasLeftSon()) {
-                stack1.push(currentNode.getLeftSon());
+        while (current != null || stack_.size() > 0) {
+            while (current != null) {
+                stack_.push(current);
+                current = current.getLeftSon();
             }
-            if (currentNode.hasRightSon()) {
-                stack1.push(currentNode.getRightSon());
-            }
-        }
-        while (stack2.size() > 0) {
-            currentNode = stack2.pop();
 
-            byte balance = currentNode.getBalanceRecursively();
+            current = stack_.pop();
+            byte balance = current.getBalanceRecursively();
             if (balance > 1 || balance < -1) {
                 return false;
             }
+            current = current.getRightSon();
         }
         return true;
     }
 
     private class InOrderIterator implements Iterator<T> {
 
-        private final Stack stack_;
+        private final Stack<AvlTreeNode<T>> stack_;
 
         public InOrderIterator() {
             stack_ = new Stack();
@@ -458,6 +454,34 @@ public class AvlTree<T> implements Iterable<T> {
                 stack_.push(current.getRightSon());
             }
             return current.getData();
+        }
+    }
+
+    private class LevelOrderIterator implements  Iterator<T> {
+
+        private final LinkedList<AvlTreeNode<T>> queue;
+
+        public LevelOrderIterator() {
+            this.queue = new LinkedList<>();
+            queue.push(root_);
+        }
+
+        @Override
+        public boolean hasNext() {
+            return queue.size() > 1 || queue.peek() != null;
+        }
+
+        @Override
+        public T next() {
+            if (!hasNext()) throw new NoSuchElementException("No more nodes remain to iterate");
+            AvlTreeNode<T> node = queue.pop();
+            if (node.hasLeftSon()) {
+                queue.add(node.getLeftSon());
+            }
+            if (node.hasRightSon()) {
+                queue.add(node.getRightSon());
+            }
+            return node.getData();
         }
     }
 
