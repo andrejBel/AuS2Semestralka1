@@ -73,12 +73,7 @@ public class C18PridanieNehnutelnosti extends ControllerBase {
 
             new PridajNehnutelnost().execute();
         });
-        textFields.forEach(jfxTextField -> jfxTextField.setOnKeyPressed(event -> {
-            if (event.getCode().equals(KeyCode.ENTER))
-            {
-                buttonPridajNehnutelnost.fire();
-            }
-        }));
+        Helper.SetActionOnEnter(textFields, () -> buttonPridajNehnutelnost.fire());
 
     }
 

@@ -112,4 +112,24 @@ public class ListVlastnictva {
         return nehnutelnostiNaListeVlastnictva_.remove(dummyNehnutelnost);
     }
 
+    public boolean zmenVlastnikaNaListeVlastnictva(Obcan povodnyMajitel, Obcan novyMajitel) {
+        dummyObcanSPodielom.setObcan(povodnyMajitel);
+        ObcanSPodielom povodnyMajitelPodiel = vlastniciSPodielom_.findData(dummyObcanSPodielom);
+        if (povodnyMajitelPodiel != null) {
+            dummyObcanSPodielom.setObcan(novyMajitel);
+            ObcanSPodielom novyObcanSPodielom = vlastniciSPodielom_.findData(dummyObcanSPodielom);
+            boolean removedStaryMajitel = vlastniciSPodielom_.remove(povodnyMajitelPodiel) != null;
+            if (removedStaryMajitel) {
+                if (novyObcanSPodielom == null) { // ked este novy majitel nema podiel na LV
+                    novyObcanSPodielom = new ObcanSPodielom(novyMajitel, povodnyMajitelPodiel.getPodiel());
+                    return vlastniciSPodielom_.insert(novyObcanSPodielom);
+                } else {
+                    novyObcanSPodielom.setPodiel(novyObcanSPodielom.getPodiel() + povodnyMajitelPodiel.getPodiel());
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
 }

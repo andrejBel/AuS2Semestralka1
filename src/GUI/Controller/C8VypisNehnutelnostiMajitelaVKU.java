@@ -72,7 +72,7 @@ public class C8VypisNehnutelnostiMajitelaVKU extends ControllerBase {
         );
 
         Helper.DecorateNumberTextFieldWithValidator( textFieldCisloKatastralnehoUzemia, isCisloKUOk);
-        Helper.DecorateTextFieldWithValidator(textFieldRodneCislo, isRodneCisloOk, 16, "Rodné číslo");
+        Helper.DecorateTextFieldWithValidator(textFieldRodneCislo, isRodneCisloOk, Obcan.RODNE_CISLO_LENGTH, "Rodné číslo");
 
         buttonHladaj.setOnAction(event -> {
             if (Helper.DisableButton(buttonHladaj, simpleBooleanProperties, () -> textFields.forEach(JFXTextField::validate))) {
@@ -80,12 +80,8 @@ public class C8VypisNehnutelnostiMajitelaVKU extends ControllerBase {
             }
             nacitajData();
         });
-        textFields.forEach(jfxTextField -> jfxTextField.setOnKeyPressed(event -> {
-            if (event.getCode().equals(KeyCode.ENTER))
-            {
-                buttonHladaj.fire();
-            }
-        }));
+        Helper.SetActionOnEnter(textFields, () -> buttonHladaj.fire());
+
 
         tableColumnSupisneCislo.setCellValueFactory(param -> new SimpleLongProperty(param.getValue().getSupisneCislo()));
         tableColumnAdresa.setCellValueFactory(param -> new SimpleStringProperty(param.getValue().getAdresa()));

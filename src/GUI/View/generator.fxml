@@ -39,10 +39,10 @@
                         <JFXSlider fx:id="sliderPocetObyvatelovSTrvalymPobytom" blockIncrement="100.0" majorTickUnit="250.0" max="100000.0" showTickLabels="true" value="0" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" />
                         <Label text="Počet listov vlastníctva v katastrálnom území" GridPane.rowIndex="3" />
                         <JFXSlider fx:id="sliderListVlastnictva_" blockIncrement="1.0" majorTickUnit="10.0" showTickLabels="true" value="0" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="3" />
-                        <Label text="Počet vlastníkov na liste vlastníctva" GridPane.rowIndex="4" />
-                        <JFXSlider fx:id="sliderPocetObyvatelovVListeVl_" blockIncrement="1.0" majorTickUnit="10.0" showTickLabels="true" value="0" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="4" />
+                        <Label text="Max. počet vlastníkov na liste vlastníctva" GridPane.rowIndex="4" />
+                        <JFXSlider fx:id="sliderPocetObyvatelovVListeVl_" blockIncrement="1.0" majorTickUnit="2.0" max="20.0" showTickLabels="true" value="0" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="4" />
                         <Label text="Počet nehnuteľností na liste vlastníctva" GridPane.rowIndex="5" />
-                        <JFXSlider fx:id="sliderPocetNehnutelnostiVListeVl_" blockIncrement="1.0" majorTickUnit="10.0" showTickLabels="true" value="0" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="5" />
+                        <JFXSlider fx:id="sliderPocetNehnutelnostiVListeVl_" blockIncrement="1.0" majorTickUnit="2.0" max="20.0" showTickLabels="true" value="0" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="5" />
                     </children>
                     <VBox.margin>
                         <Insets top="36.0" />

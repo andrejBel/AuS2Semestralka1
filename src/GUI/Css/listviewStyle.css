@@ -1,0 +1,50 @@
+.jfx-list-view {
+    -fx-background-insets: 0;
+    -fx-cell-vertical-margin: 10.0;
+    -fx-vertical-gap: 10;
+    -fx-pref-width: 150;
+    -fx-background-color: transparent;
+}
+
+.jfx-list-cell:selected {
+    -fx-background-color: #3D8C91;
+}
+
+.jfx-list-cell {
+    -fx-background-insets: 0.0;
+}
+
+.jfx-list-cell.jfx-rippler {
+    fx-rippler-fill: BLUE;
+}
+
+
+
+.jfx-list-view .scroll-bar {
+    -fx-background-color: transparent;
+}
+
+.jfx-list-view .scroll-bar:horizontal .increment-button ,
+.jfx-list-view .scroll-bar:horizontal .decrement-button {
+    -fx-background-color:transparent;
+    -fx-background-radius: 0em;
+    -fx-padding:0 0 10 0;
+}
+
+
+.jfx-list-view .scroll-bar .increment-arrow,
+.jfx-list-view .scroll-bar .decrement-arrow{
+    -fx-shape:" ";
+    -fx-padding:0;
+}
+
+
+.jfx-list-view .scroll-bar:horizontal .thumb {
+    -fx-background-color:derive(black,90%);
+    -fx-background-insets: 2, 0, 0;
+    -fx-background-radius: 2em;
+}
+
+.jfx-list-cell:hover {
+    -fx-background-color: #00BCD4;
+}

@@ -35,6 +35,7 @@ public class ISSpravyKatastra {
         this.katastralneUzemieNazov_ = new AvlTree<>((o1, o2) -> o1.getNazov().compareTo(o2.getNazov()));
         pridajObcana("Andrej Beliancin", "1111111111111111", Helper.GetNahodnyDatumNarodenia());
         pridajObcana("Gabriela Beliancinova", "1111111111111112", Helper.GetNahodnyDatumNarodenia());
+        pridajObcana("Mirka Beliancinova", "1111111111111113", Helper.GetNahodnyDatumNarodenia());
 
 
         pridajKatastralneUzemie(1, "Terchova");
@@ -68,6 +69,16 @@ public class ISSpravyKatastra {
         upravMajetkovyPodielNaListeVlastnictva(1,2, "1111111111111111");
     }
 
+    // 1
+    public Nehnutelnost najdiNehnutelnostVKU(long cisloKatastralnehoUzemia, long supisneCisloNehnutelnosti) {
+        dummyKatastralneUzemie.setCisloKatastralnehoUzemia(cisloKatastralnehoUzemia);
+        KatastralneUzemie katastralneUzemie = katastralneUzemieCislo_.findData(dummyKatastralneUzemie);
+        if (katastralneUzemie != null) {
+            return katastralneUzemie.najdiNehnutelnostVkatastralnomUzemi(supisneCisloNehnutelnosti);
+        }
+        return null;
+    }
+
     // 3
     public Nehnutelnost najdiNehnutelnost(long cisloKatastralnehoUzemia, long cisloListuVlastnictva, long supisneCisloNehnutelnosti) {
         dummyKatastralneUzemie.setCisloKatastralnehoUzemia(cisloKatastralnehoUzemia);
@@ -88,6 +99,16 @@ public class ISSpravyKatastra {
         KatastralneUzemie katastralneUzemie = katastralneUzemieCislo_.findData(dummyKatastralneUzemie);
         if (katastralneUzemie != null) {
             return katastralneUzemie.najdiListVlastnictva(cisloListuVlastnictva);
+        }
+        return null;
+    }
+
+    // 5
+    public Nehnutelnost najdiNehnutelnostVKU(String nazovKatastralnehoUzemia, long supisneCisloNehnutelnosti) {
+        dummyKatastralneUzemie.setNazov(nazovKatastralnehoUzemia);
+        KatastralneUzemie katastralneUzemie = katastralneUzemieNazov_.findData(dummyKatastralneUzemie);
+        if (katastralneUzemie != null) {
+            return katastralneUzemie.najdiNehnutelnostVkatastralnomUzemi(supisneCisloNehnutelnosti);
         }
         return null;
     }
@@ -129,7 +150,7 @@ public class ISSpravyKatastra {
         return obcania_.findData(dummyObcan);
     }
 
-    // C10
+    // 10
     public boolean zapisObcanoviTrvalyPobyt(String nazovKatastralnehoUzemia, long supisneCisloNehnutelnosti, String rodneCislo) {
         dummyKatastralneUzemie.setNazov(nazovKatastralnehoUzemia);
         dummyObcan.setRodneCislo(rodneCislo);
@@ -155,6 +176,28 @@ public class ISSpravyKatastra {
         nehnutelnost.pridajObcanaSTrvalymPobytom(obcan);
         obcan.setTrvalyPobyt(nehnutelnost);
         return true;
+    }
+
+    // 11
+    public boolean zmenaMajitelaNehnutelnosti(long cisloKatastralnehoUzemia, long supisneCisloNehnutelnosti, String povodnymajitelRC, String novyMajitelRC) {
+        if (!povodnymajitelRC.equals(novyMajitelRC)) {
+            Obcan povodnyMajitel = najdiObcana(povodnymajitelRC);
+            if (povodnyMajitel != null) {
+                Obcan novyMajitel = najdiObcana(novyMajitelRC);
+                if (novyMajitel != null) {
+                    dummyKatastralneUzemie.setCisloKatastralnehoUzemia(cisloKatastralnehoUzemia);
+                    KatastralneUzemie katastralneUzemie = katastralneUzemieCislo_.findData(dummyKatastralneUzemie);
+                    if (katastralneUzemie != null) {
+                        Nehnutelnost nehnutelnost = katastralneUzemie.najdiNehnutelnostVkatastralnomUzemi(supisneCisloNehnutelnosti);
+                        if (nehnutelnost != null) {
+                            ListVlastnictva listVlastnictva = nehnutelnost.getListVlastnictva();
+                            return listVlastnictva.zmenVlastnikaNaListeVlastnictva(povodnyMajitel, novyMajitel);
+                        }
+                    }
+                }
+            }
+        }
+        return false;
     }
 
     // 12
@@ -336,9 +379,21 @@ public class ISSpravyKatastra {
                     }
 
                 }
-                if (vlozeniObcania.size() > 0) {
-                    for (int ndexPocetVlastnikovNaListeVlastnictva = 1; ndexPocetVlastnikovNaListeVlastnictva <= pocetVlastnikovNaListeVlastnictva ; ndexPocetVlastnikovNaListeVlastnictva++) {
-                        listVlastnictva.pridajAleboPonechajVlastnika(vlozeniObcania.get(Helper.GetNahodneCislo(celkovyPocetObcanov -1)));
+                if (vlozeniObcania.size() > 0 && pocetVlastnikovNaListeVlastnictva > 0) {
+                    int randomPocetVlastnikovNaListeVlastnictva = 1 + Helper.GetNahodneCislo(pocetVlastnikovNaListeVlastnictva);
+                    int priemernyPodiel = 100 / randomPocetVlastnikovNaListeVlastnictva;
+                    int celkovyPodiel = 100;
+                    for (int ndexPocetVlastnikovNaListeVlastnictva = 1; ndexPocetVlastnikovNaListeVlastnictva <= randomPocetVlastnikovNaListeVlastnictva ; ndexPocetVlastnikovNaListeVlastnictva++) {
+                        int diferencia =  Helper.GetNahodneCislo( priemernyPodiel / 2);
+                        diferencia *= Helper.GetNahodneCislo() % 2 == 0 ? -1 : 1;
+                        int vyslednyPodiel = priemernyPodiel + diferencia;
+
+                        if (ndexPocetVlastnikovNaListeVlastnictva == randomPocetVlastnikovNaListeVlastnictva) {
+                            vyslednyPodiel = celkovyPodiel;
+                        } else {
+                            celkovyPodiel -= vyslednyPodiel;
+                        }
+                        listVlastnictva.pridajAleboPonechajVlastnika(vlozeniObcania.get(Helper.GetNahodneCislo(celkovyPocetObcanov -1)), vyslednyPodiel);
                     }
                 }
             }
@@ -464,7 +519,7 @@ public class ISSpravyKatastra {
                 for (int indexObcania = 0; indexObcania < pocetObcanov; ++indexObcania) {
                     line = br.readLine();
                     parseLine(line, parsedLine);
-                    inserted = pridajObcana(parsedLine.get(0), parsedLine.get(1), Long.parseLong(parsedLine.get(2)));
+                    inserted = pridajObcana(parsedLine.get(1), parsedLine.get(0), Long.parseLong(parsedLine.get(2)));
                     if (!inserted) {
                         return false;
                     }
@@ -583,6 +638,7 @@ public class ISSpravyKatastra {
         }
 
     }
+
 
 
     private boolean skontrolujVkladanieKatastralnehoUzemia(Optional<Status> status, KatastralneUzemie katastralneUzemie, boolean result) {

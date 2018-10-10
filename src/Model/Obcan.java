@@ -7,6 +7,7 @@ import java.util.Comparator;
 
 public class Obcan {
 
+    public static int RODNE_CISLO_LENGTH = 16;
     private String menoPriezvisko_;
     private String rodneCislo_;
     long datumNarodenia_;

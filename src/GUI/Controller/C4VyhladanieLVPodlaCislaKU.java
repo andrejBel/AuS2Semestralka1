@@ -79,22 +79,13 @@ public class C4VyhladanieLVPodlaCislaKU extends ControllerBase {
                 textFieldCisloListuVlastnictva
         );
 
-        textFields.forEach(jfxTextField -> jfxTextField.setOnKeyPressed(event -> {
-            if (event.getCode().equals(KeyCode.ENTER))
-            {
-                buttonHladaj.fire();
-            }
-        }));
+        Helper.SetActionOnEnter(textFields, () -> buttonHladaj.fire());
 
         Helper.DecorateNumberTextFieldWithValidator( textFieldCisloKatastralnehoUzemia, isCisloKUOk);
         Helper.DecorateNumberTextFieldWithValidator( textFieldCisloListuVlastnictva, isCisloLVOk);
 
-        textFields.forEach(jfxTextField -> jfxTextField.setOnKeyPressed(event -> {
-            if (event.getCode().equals(KeyCode.ENTER))
-            {
-                buttonHladaj.fire();
-            }
-        }));
+        Helper.SetActionOnEnter(textFields, () -> buttonHladaj.fire());
+
 
         buttonHladaj.setOnAction(event -> {
             if (Helper.DisableButton(buttonHladaj, simpleBooleanProperties, () -> textFields.forEach(JFXTextField::validate))) {
@@ -173,22 +164,9 @@ public class C4VyhladanieLVPodlaCislaKU extends ControllerBase {
 
         @Override
         public void onSuccess() {
-            ObservableList<TableItemNehnutelnost> tableViewItemsNehnutelnosti = tableViewNehnutelnosti.getItems();
-            tableViewItemsNehnutelnosti.clear();
-            AvlTree<Nehnutelnost> nehnutelnosti = listVlastnictva.getNehnutelnostiNaListeVlastnictva();
-            TableItemNehnutelnost tableItemNehnutelnost = null;
-            for (Nehnutelnost nehnutelnost: nehnutelnosti) {
-                tableItemNehnutelnost = new TableItemNehnutelnost(nehnutelnost.getSupisneCislo(), nehnutelnost.getAdresa(), nehnutelnost.getPopis());
-                tableViewItemsNehnutelnosti.add(tableItemNehnutelnost);
-            }
-            ObservableList<TableItemObcanPodiel> tableViewItemObcanSPodielmi = tableViewObcanPodiely.getItems();
-            tableViewItemObcanSPodielmi.clear();
-            AvlTree<ListVlastnictva.ObcanSPodielom> obcaniaSPodielom = listVlastnictva.getVlastniciSPodielom();
-            TableItemObcanPodiel tableItemObcanPodiel = null;
-            for (ListVlastnictva.ObcanSPodielom obcanSPodielom: obcaniaSPodielom ) {
-                tableItemObcanPodiel = new TableItemObcanPodiel(obcanSPodielom);
-                tableViewItemObcanSPodielmi.add(tableItemObcanPodiel);
-            }
+            Helper.naplnTabulkuNehnutelnosti(tableViewNehnutelnosti, listVlastnictva.getNehnutelnostiNaListeVlastnictva());
+            Helper.naplnTabulkuVlastnikov(tableViewObcanPodiely, listVlastnictva.getVlastniciSPodielom());
+
             showSuccessDialog("List vlastníctva bol úspešne načítaný");
         }
 

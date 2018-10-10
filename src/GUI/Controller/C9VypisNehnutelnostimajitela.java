@@ -68,7 +68,7 @@ public class C9VypisNehnutelnostimajitela extends ControllerBase {
                 textFieldRodneCislo
         );
 
-        Helper.DecorateTextFieldWithValidator(textFieldRodneCislo, isRodneCisloOk, 16, "Rodné číslo");
+        Helper.DecorateTextFieldWithValidator(textFieldRodneCislo, isRodneCisloOk, Obcan.RODNE_CISLO_LENGTH, "Rodné číslo");
         buttonHladaj.setOnAction(event -> {
             if (Helper.DisableButton(buttonHladaj, simpleBooleanProperties, () -> textFields.forEach(JFXTextField::validate))) {
                 return;
@@ -83,12 +83,7 @@ public class C9VypisNehnutelnostimajitela extends ControllerBase {
         tableColumnCisloLV.setCellValueFactory(param -> new SimpleLongProperty(param.getValue().getCisloListuVlastnictva()));
         tableColumnCisloKU.setCellValueFactory(param -> new SimpleLongProperty(param.getValue().getCisloKatastralnehoUzemia()));
 
-        textFields.forEach(jfxTextField -> jfxTextField.setOnKeyPressed(event -> {
-            if (event.getCode().equals(KeyCode.ENTER))
-            {
-                buttonHladaj.fire();
-            }
-        }));
+        Helper.SetActionOnEnter(textFields, () -> buttonHladaj.fire());
     }
 
     private void nacitajData() {

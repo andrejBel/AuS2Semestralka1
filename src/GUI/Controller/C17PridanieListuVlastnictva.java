@@ -52,12 +52,8 @@ public class C17PridanieListuVlastnictva extends ControllerBase {
             }
             new PridanieListuVlastnictva().execute();
         });
-        textFields.forEach(jfxTextField -> jfxTextField.setOnKeyPressed(event -> {
-            if (event.getCode().equals(KeyCode.ENTER))
-            {
-                buttonPridajListVlastnictva.fire();
-            }
-        }));
+        Helper.SetActionOnEnter(textFields, () -> buttonPridajListVlastnictva.fire());
+
 
     }
 

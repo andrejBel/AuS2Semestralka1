@@ -6,6 +6,7 @@ import GUI.View.ViewItems.TableItemObcanPodiel;
 import InformacnySystem.ISSpravyKatastra;
 import Model.ListVlastnictva;
 import Model.Nehnutelnost;
+import Model.Obcan;
 import Utils.Helper;
 import Utils.MyDoubleStringConverter;
 import com.jfoenix.controls.JFXButton;
@@ -96,7 +97,7 @@ public class C13OdstranenieMajetkovehoPodielu extends ControllerBase {
 
         Helper.DecorateNumberTextFieldWithValidator( textFieldCisloKatastralnehoUzemia, isCisloKUOk);
         Helper.DecorateNumberTextFieldWithValidator( textFieldCisloListuVlastnictva, isCisloLVOk);
-        Helper.DecorateTextFieldWithValidator(textFieldRodneCislo, isRodneCisloOk, 16, "Rodné číslo");
+        Helper.DecorateTextFieldWithValidator(textFieldRodneCislo, isRodneCisloOk, Obcan.RODNE_CISLO_LENGTH, "Rodné číslo");
 
         buttonOdstranMajetkovyPodiel.setOnAction(event -> {
             if (Helper.DisableButton(buttonOdstranMajetkovyPodiel, simpleBooleanProperties, () -> textFields.forEach(JFXTextField::validate))) {
@@ -104,12 +105,7 @@ public class C13OdstranenieMajetkovehoPodielu extends ControllerBase {
             }
             new OdstranMajetkovyPodiel().execute();
         });
-        textFields.forEach(jfxTextField -> jfxTextField.setOnKeyPressed(event -> {
-            if (event.getCode().equals(KeyCode.ENTER))
-            {
-                buttonOdstranMajetkovyPodiel.fire();
-            }
-        }));
+        Helper.SetActionOnEnter(textFields, () -> buttonOdstranMajetkovyPodiel.fire());
 
         tableColumnSupisneCislo.setCellValueFactory(param -> new SimpleLongProperty(param.getValue().getSupisneCislo()));
         tableColumnAdresa.setCellValueFactory(param -> new SimpleStringProperty(param.getValue().getAdresa()));

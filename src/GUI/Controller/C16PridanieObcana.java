@@ -2,6 +2,7 @@ package GUI.Controller;
 
 import GUI.AsyncTask;
 import InformacnySystem.ISSpravyKatastra;
+import Model.Obcan;
 import Utils.Helper;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXDatePicker;
@@ -55,7 +56,7 @@ public class C16PridanieObcana extends ControllerBase {
         );
 
         Helper.DecorateTextFieldWithValidator(textFieldMenoAPriezvisko, isMenoPriezviskoOk);
-        Helper.DecorateTextFieldWithValidator(textFieldRodneCislo, isRodneCisloOk, 16, "Rodné číslo");
+        Helper.DecorateTextFieldWithValidator(textFieldRodneCislo, isRodneCisloOk, Obcan.RODNE_CISLO_LENGTH, "Rodné číslo");
 
         datePicker.getValidators().add(new RequiredFieldValidator() {
             {
@@ -78,12 +79,7 @@ public class C16PridanieObcana extends ControllerBase {
             }
             new PridajObcana().execute();
         });
-        textFields.forEach(jfxTextField -> jfxTextField.setOnKeyPressed(event -> {
-            if (event.getCode().equals(KeyCode.ENTER))
-            {
-                buttonPridajObcana.fire();
-            }
-        }));
+        Helper.SetActionOnEnter(textFields, () -> buttonPridajObcana.fire());
 
     }
 

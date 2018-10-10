@@ -1,5 +1,6 @@
 package GUI.Controller;
 
+import GUI.AsyncTask;
 import InformacnySystem.ISSpravyKatastra;
 import Utils.Helper;
 import com.jfoenix.controls.JFXButton;
@@ -60,13 +61,7 @@ public class CImportExportDat extends ControllerBase {
                     File file = fileChooser_.showOpenDialog(stage);
                     if (file != null) {
                         String filePath = file.getAbsolutePath();
-                        System.out.println(file.getAbsolutePath());
-                        if (isSpravyKatastra_.importujData(filePath)) {
-                            showSuccessDialog("uspesne");
-                        } else {
-                            showWarningDialog("neuspech");
-                        }
-
+                        new ImportDat(filePath).execute();
                     }
                 });
         buttonExportuj.setOnAction(event -> {
@@ -82,7 +77,7 @@ public class CImportExportDat extends ControllerBase {
                 }
                 String path = directoryPath + File.separator + fileName;
                 System.out.println(path);
-                isSpravyKatastra_.exportujData(path);
+                new ExportDat(path).execute();
             }
 
         });
@@ -118,4 +113,83 @@ public class CImportExportDat extends ControllerBase {
     public String getViewName() {
         return "Import/Export dát";
     }
+
+    private class ImportDat extends AsyncTask {
+
+        String cestaKSuboru_;
+
+        public ImportDat(String cestakSuboru) {
+            cestaKSuboru_ = cestakSuboru;
+        }
+
+        @Override
+        public void onPreExecute() {
+            showSpinner("Import dát");
+        }
+
+        @Override
+        public Object doInBackground(Object[] params) {
+            return new Boolean(isSpravyKatastra_.importujData(cestaKSuboru_));
+        }
+
+        @Override
+        public void onPostExecute(Object params) {
+            boolean importResult = (Boolean) params;
+            if (importResult) {
+                showSuccessDialog("Import dát úspešný", false);
+            } else {
+                showWarningDialog("Import dát neúspešný", false);
+            }
+        }
+
+        @Override
+        public void progressCallback(Object[] params) {
+
+        }
+
+        @Override
+        public void onFail(Exception e) {
+            showWarningDialog("Import dát neúspešný - vážna chyba");
+        }
+    }
+
+    private class ExportDat extends AsyncTask {
+
+        String cestaKSuboru_;
+
+        public ExportDat(String cestakSuboru) {
+            cestaKSuboru_ = cestakSuboru;
+        }
+
+        @Override
+        public void onPreExecute() {
+            showSpinner("Export dát");
+        }
+
+        @Override
+        public Object doInBackground(Object[] params) {
+            return new Boolean(isSpravyKatastra_.exportujData(cestaKSuboru_));
+        }
+
+        @Override
+        public void onPostExecute(Object params) {
+            boolean exportResult = (Boolean) params;
+            if (exportResult) {
+                showSuccessDialog("Export dát úspešný", false);
+            } else {
+                showWarningDialog("Export dát neúspešný", false);
+            }
+        }
+
+        @Override
+        public void progressCallback(Object[] params) {
+
+        }
+
+        @Override
+        public void onFail(Exception e) {
+            showWarningDialog("Export dát neúspešný - vážna chyba");
+        }
+    }
+
 }

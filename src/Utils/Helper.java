@@ -1,5 +1,11 @@
 package Utils;
 
+import GUI.View.ViewItems.TableItemNehnutelnost;
+import GUI.View.ViewItems.TableItemObcan;
+import GUI.View.ViewItems.TableItemObcanPodiel;
+import Model.ListVlastnictva;
+import Model.Nehnutelnost;
+import Model.Obcan;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextField;
 import com.jfoenix.validation.RequiredFieldValidator;
@@ -13,6 +19,7 @@ import javafx.scene.control.TablePosition;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextInputControl;
 import javafx.scene.input.*;
+import structures.AvlTree;
 
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
@@ -51,6 +58,10 @@ public class Helper {
     public static int GetNahodneCislo(int max) {
         int generated = GENERATOR.nextInt(max);
         return generated;
+    }
+
+    public static int GetNahodneCislo() {
+        return GENERATOR.nextInt();
     }
 
     public static String GetNahodneRodneCislo() {
@@ -185,6 +196,43 @@ public class Helper {
         table.getSelectionModel().setCellSelectionEnabled(true);
         table.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
         table.setOnKeyPressed(new TableKeyEventHandler());
+    }
+
+    public static void SetActionOnEnter(List<JFXTextField> jfxTextFields, Runnable action) {
+        jfxTextFields.forEach(jfxTextField -> jfxTextField.setOnKeyPressed(event -> {
+            if (event.getCode().equals(KeyCode.ENTER))
+            {
+                action.run();
+            }
+        }));
+    }
+
+    public static void naplnTabulkuObcaniaSTravlymPobytom(TableView<TableItemObcan> table, AvlTree<Obcan> obcaniaStrvalymPobytom) {
+        ObservableList<TableItemObcan> tableItems = table.getItems();
+        tableItems.clear();
+        for (Obcan obcan: obcaniaStrvalymPobytom) {
+            tableItems.add(new TableItemObcan(obcan.getMenoPriezvisko(), obcan.getRodneCislo(), obcan.getDatumNarodenia()));
+        }
+    }
+
+    public static void naplnTabulkuNehnutelnosti(TableView<TableItemNehnutelnost> table, AvlTree<Nehnutelnost> nehnutelnosti) {
+        ObservableList<TableItemNehnutelnost> tableViewItemsNehnutelnosti = table.getItems();
+        tableViewItemsNehnutelnosti.clear();
+        TableItemNehnutelnost tableItemNehnutelnost = null;
+        for (Nehnutelnost nehnutelnost: nehnutelnosti) {
+            tableItemNehnutelnost = new TableItemNehnutelnost(nehnutelnost.getSupisneCislo(), nehnutelnost.getAdresa(), nehnutelnost.getPopis());
+            tableViewItemsNehnutelnosti.add(tableItemNehnutelnost);
+        }
+    }
+
+    public static void naplnTabulkuVlastnikov(TableView<TableItemObcanPodiel> table, AvlTree<ListVlastnictva.ObcanSPodielom> obcaniaSPodielom) {
+        ObservableList<TableItemObcanPodiel> tableViewItemObcanSPodielmi = table.getItems();
+        tableViewItemObcanSPodielmi.clear();
+        TableItemObcanPodiel tableItemObcanPodiel = null;
+        for (ListVlastnictva.ObcanSPodielom obcanSPodielom: obcaniaSPodielom ) {
+            tableItemObcanPodiel = new TableItemObcanPodiel(obcanSPodielom);
+            tableViewItemObcanSPodielmi.add(tableItemObcanPodiel);
+        }
     }
 
     /**

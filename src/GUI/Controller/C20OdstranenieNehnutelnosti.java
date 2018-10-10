@@ -58,12 +58,9 @@ public class C20OdstranenieNehnutelnosti extends ControllerBase {
             new OdstranNehnutelnost().execute();
 
         });
-        textFields.forEach(jfxTextField -> jfxTextField.setOnKeyPressed(event -> {
-            if (event.getCode().equals(KeyCode.ENTER))
-            {
-                buttonOdstranNehnutelnost.fire();
-            }
-        }));
+
+        Helper.SetActionOnEnter(textFields, () -> buttonOdstranNehnutelnost.fire());
+
     }
 
     private void clearFormulars() {

@@ -30,15 +30,19 @@ public class Aplikacia {
         tabPane_ = new JFXTabPane();
         tabPane_.setTabClosingPolicy(TabPane.TabClosingPolicy.UNAVAILABLE);
         controllers = Arrays.asList(
+                new CHome(isSpravyKatastra_),
                 new CGenerator(isSpravyKatastra_),
                 new CImportExportDat(isSpravyKatastra_, stage),
+                new C1VyhladanieNehnutelnostPodlaCislaKU(isSpravyKatastra_),
                 new C3VypisOsobSTrvalymPobytom(isSpravyKatastra_),
                 new C4VyhladanieLVPodlaCislaKU(isSpravyKatastra_),
+                new C5VyhladanieNehnutelnostPodlaNazvuKU(isSpravyKatastra_),
                 new C6VyhladanieLVPodlaNazvuKU(isSpravyKatastra_),
                 new C7VypisNehnutelnosti(isSpravyKatastra_),
                 new C8VypisNehnutelnostiMajitelaVKU(isSpravyKatastra_),
                 new C9VypisNehnutelnostimajitela(isSpravyKatastra_),
                 new C10PridanieTrvalehoPobytu(isSpravyKatastra_),
+                new C11ZmenaMajitelaNehnutelnosti(isSpravyKatastra_),
                 new C12ZapisZmenaMajetkovehoPodielu(isSpravyKatastra_),
                 new C13OdstranenieMajetkovehoPodielu(isSpravyKatastra_),
                 new C15VypisKatastralnychUzemi(isSpravyKatastra_),
@@ -61,6 +65,7 @@ public class Aplikacia {
             }
             tabPane_.getTabs().add(tab);
         }
+        ((CHome)controllers.get(0)).init(tabPane_);
 
         Scene scene = new Scene(tabPane_, 600, 800);
         stage.setTitle("Algoritmy a údajové štruktúry 2- Semestrálna práca 1");
@@ -76,6 +81,7 @@ public class Aplikacia {
 
             }
         });
+
     }
 
 

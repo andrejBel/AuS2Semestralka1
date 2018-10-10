@@ -69,7 +69,7 @@ public class C3VypisOsobSTrvalymPobytom extends ControllerBase {
 
     public C3VypisOsobSTrvalymPobytom(ISSpravyKatastra isSpravyKatastra) {
         super(isSpravyKatastra);
-        loadView();
+        initView();
         textFields = Arrays.asList(
                 textFieldCisloKatastralnehoUzemia,
                 textFieldCisloListuVlastnictva,
@@ -84,12 +84,7 @@ public class C3VypisOsobSTrvalymPobytom extends ControllerBase {
             }
             new nacitajOsobyStravalymPobytomVnehnutelnosti().execute();
         });
-        textFields.forEach(jfxTextField -> jfxTextField.setOnKeyPressed(event -> {
-            if (event.getCode().equals(KeyCode.ENTER))
-            {
-                buttonHladaj.fire();
-            }
-        }));
+        Helper.SetActionOnEnter(textFields, () -> buttonHladaj.fire());
         tableViewObcan.setRowFactory(tv -> {
             System.out.println();
             TableRow<TableItemObcan> row = new TableRow<>();
@@ -178,11 +173,7 @@ public class C3VypisOsobSTrvalymPobytom extends ControllerBase {
         public void onSuccess() {
             AvlTree<Obcan> obcaniaStrvalymPobytom = nehnutelnost_.getObcaniaSTravalymPobytom();
             showSuccessDialog("Nehnuteľnosť bola nájdená. " + obcaniaStrvalymPobytom.getSize() + " obyvateľov má v nej trvalý pobyt");
-            ObservableList<TableItemObcan> tableItems = tableViewObcan.getItems();
-            tableItems.clear();
-            for (Obcan obcan: obcaniaStrvalymPobytom) {
-                tableItems.add(new TableItemObcan(obcan.getMenoPriezvisko(), obcan.getRodneCislo(), obcan.getDatumNarodenia()));
-            }
+            Helper.naplnTabulkuObcaniaSTravlymPobytom(tableViewObcan, obcaniaStrvalymPobytom);
         }
 
         @Override

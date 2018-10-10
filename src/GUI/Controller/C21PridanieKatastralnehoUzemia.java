@@ -55,12 +55,7 @@ public class C21PridanieKatastralnehoUzemia extends ControllerBase {
             new PridajKatastralneUzemie().execute();
 
         });
-        textFields.forEach(jfxTextField -> jfxTextField.setOnKeyPressed(event -> {
-            if (event.getCode().equals(KeyCode.ENTER))
-            {
-                buttonPridajUzemie.fire();
-            }
-        }));
+        Helper.SetActionOnEnter(textFields, () -> buttonPridajUzemie.fire());
     }
 
     @Override

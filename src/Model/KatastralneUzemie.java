@@ -90,6 +90,10 @@ public class KatastralneUzemie {
         return inserted;
     }
 
+    public Nehnutelnost najdiNehnutelnostVkatastralnomUzemi(long supisneCisloNehnutelnosti) {
+        dummyNehnutelnost.setSupisneCislo(supisneCisloNehnutelnosti);
+        return nehnutelnostiVkatastralnomUzemi_.findData(dummyNehnutelnost);
+    }
 
     public void setCisloKatastralnehoUzemia(long cisloKatastralnehoUzemia) {
         this.cisloKatastralnehoUzemia_ = cisloKatastralnehoUzemia;

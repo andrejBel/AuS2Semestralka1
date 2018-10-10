@@ -64,12 +64,8 @@ public class C7VypisNehnutelnosti extends ControllerBase {
             nacitajNehnutelnosti();
 
         });
-        textFields.forEach(jfxTextField -> jfxTextField.setOnKeyPressed(event -> {
-            if (event.getCode().equals(KeyCode.ENTER))
-            {
-                buttonHladaj.fire();
-            }
-        }));
+        Helper.SetActionOnEnter(textFields, () -> buttonHladaj.fire());
+
         tableColumnSupisneCislo.setCellValueFactory(param -> new SimpleLongProperty(param.getValue().getSupisneCislo()));
         tableColumnAdresa.setCellValueFactory(param -> new SimpleStringProperty(param.getValue().getAdresa()));
         tableColumnPopis.setCellValueFactory(param -> new SimpleStringProperty(param.getValue().getPopis()));

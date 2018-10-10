@@ -2,6 +2,7 @@ package GUI.Controller;
 
 import GUI.SimpleTask;
 import InformacnySystem.ISSpravyKatastra;
+import Model.Obcan;
 import Utils.Helper;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextField;
@@ -51,7 +52,7 @@ public class C10PridanieTrvalehoPobytu extends ControllerBase {
         );
         Helper.DecorateTextFieldWithValidator(textFieldNazovKatastralnehoUzemia, isNazovKUOk);
         Helper.DecorateNumberTextFieldWithValidator( textFieldSupisneCisloNehnutelnosti, isSupisneCisloOk);
-        Helper.DecorateTextFieldWithValidator(textFieldRodneCislo, isRodneCisloOk, 16, "Rodné číslo");
+        Helper.DecorateTextFieldWithValidator(textFieldRodneCislo, isRodneCisloOk, Obcan.RODNE_CISLO_LENGTH, "Rodné číslo");
 
         buttonPridajTrvalyPobyt.setOnAction(event -> {
             if (Helper.DisableButton(buttonPridajTrvalyPobyt, simpleBooleanProperties, () -> textFields.forEach(JFXTextField::validate))) {
@@ -59,12 +60,8 @@ public class C10PridanieTrvalehoPobytu extends ControllerBase {
             }
             new PridajTrvalyPobyt().execute();
         });
-        textFields.forEach(jfxTextField -> jfxTextField.setOnKeyPressed(event -> {
-            if (event.getCode().equals(KeyCode.ENTER))
-            {
-                buttonPridajTrvalyPobyt.fire();
-            }
-        }));
+        Helper.SetActionOnEnter(textFields, () -> buttonPridajTrvalyPobyt.fire());
+
     }
 
     @Override
