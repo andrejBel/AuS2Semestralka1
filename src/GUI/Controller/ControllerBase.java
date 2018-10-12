@@ -91,8 +91,9 @@ public abstract class ControllerBase {
         dialog.setOnDialogOpened(event -> contentVBox.setEffect(new BoxBlur(3,3,3)));
         dialog.setOnDialogClosed(event -> contentVBox.setEffect(null));
         dialogVBox.setAlignment(Pos.CENTER);
+        rootStackPane_.getStylesheets().add("/GUI/Css/generalStyle.css");
         //rootStackPane_.getStylesheets().add("/GUI/Css/tableView.css");
-
+        rootStackPane_.getStyleClass().add("pane");
     }
 
     protected void showInfoDialog(String message) {

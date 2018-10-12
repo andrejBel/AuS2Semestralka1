@@ -6,19 +6,24 @@
     <children>
         <VBox fx:id="contentVBox" prefHeight="800.0" prefWidth="800.0">
             <children>
-                <JFXTextField fx:id="textFieldCisloKatastralnehoUzemia" labelFloat="true" promptText="Číslo katastrálneho územia" VBox.vgrow="ALWAYS">
+                <JFXTextField fx:id="textFieldCisloKatastralnehoUzemiaOdstrovaneho" labelFloat="true" promptText="Číslo odstraňovaného katastrálneho územia" VBox.vgrow="ALWAYS">
                     <VBox.margin>
                         <Insets bottom="36.0" top="8.0" />
                     </VBox.margin>
                 </JFXTextField>
-                <JFXTextField fx:id="textFieldNazovKatastralnehoUzemia" labelFloat="true" promptText="Názov katastrálneho územia" VBox.vgrow="ALWAYS">
+                <JFXTextField fx:id="textFieldCisloKatastralnehoUzemiaNoveho" labelFloat="true" promptText="Číslo nového/existujúceho katastrálneho územia" VBox.vgrow="ALWAYS">
+                    <VBox.margin>
+                        <Insets bottom="36.0" top="8.0" />
+                    </VBox.margin>
+                </JFXTextField>
+                <JFXTextField fx:id="textFieldNazovKatastralnehoUzemiaNove" labelFloat="true" promptText="Názov nového katastrálneho územia" VBox.vgrow="ALWAYS">
                     <VBox.margin>
                         <Insets bottom="36.0" />
                     </VBox.margin>
                 </JFXTextField>
                 <BorderPane prefHeight="100.0" prefWidth="768.0">
                     <center>
-                        <JFXButton fx:id="buttonPridajUzemie" buttonType="RAISED" text="Pridaj katastrálne územia" BorderPane.alignment="CENTER" />
+                        <JFXButton fx:id="buttonOdstranUzemie" buttonType="RAISED" text="Odstráň katastrálne územia" BorderPane.alignment="CENTER" />
                     </center>
                 </BorderPane>
             </children>

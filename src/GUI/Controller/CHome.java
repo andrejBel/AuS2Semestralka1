@@ -25,6 +25,9 @@ public class CHome extends ControllerBase {
 
     public void init( JFXTabPane tabPane) {
         for (Tab tab: tabPane.getTabs()) {
+            if (tab.getText().equals(this.getViewName())) {
+                continue;
+            }
             listViewTabs.getItems().add(tab);
         }
 

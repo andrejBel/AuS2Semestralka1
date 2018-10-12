@@ -72,15 +72,9 @@ public class C7VypisNehnutelnosti extends ControllerBase {
     }
 
     private void nacitajNehnutelnosti() {
-        ObservableList<TableItemNehnutelnost> tableItems = tableViewNehnutelnosti.getItems();
-        tableItems.clear();
         AvlTree<Nehnutelnost> nehnutelnosti = isSpravyKatastra_.getNehnutelnostiKatastralnehoUzemia(textFieldNazovKatastralnehoUzemia.getText());
         if (nehnutelnosti != null) {
-            TableItemNehnutelnost tableItemNehnutelnost = null;
-            for (Nehnutelnost nehnutelnost: nehnutelnosti) {
-                tableItemNehnutelnost = new TableItemNehnutelnost(nehnutelnost.getSupisneCislo(), nehnutelnost.getAdresa(), nehnutelnost.getPopis());
-                tableItems.add(tableItemNehnutelnost);
-            }
+            Helper.naplnTabulkuNehnutelnosti(tableViewNehnutelnosti, nehnutelnosti);
         } else {
             showWarningDialog("Katastrálne územie nebolo nájdené");
         }

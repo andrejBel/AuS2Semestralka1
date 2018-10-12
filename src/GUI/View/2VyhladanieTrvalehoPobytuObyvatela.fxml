@@ -19,23 +19,19 @@
     <children>
         <VBox fx:id="contentVBox" prefHeight="800.0" prefWidth="800.0">
             <children>
-                <JFXTextField fx:id="textFieldCisloKatastralnehoUzemia" labelFloat="true" promptText="Číslo katastrálneho územia" VBox.vgrow="ALWAYS">
+                <JFXTextField fx:id="textFieldRodneCislo" labelFloat="true" promptText="Rodné číslo" VBox.vgrow="ALWAYS">
                     <VBox.margin>
                         <Insets bottom="36.0" top="8.0" />
                     </VBox.margin>
                 </JFXTextField>
-                <JFXTextField fx:id="textFieldCisloListuVlastnictva" labelFloat="true" promptText="Číslo listu vlastníctva" VBox.vgrow="ALWAYS">
-                    <VBox.margin>
-                        <Insets bottom="36.0" />
-                    </VBox.margin>
-                </JFXTextField>
                 <BorderPane prefHeight="40.0" prefWidth="768.0">
                     <center>
-                        <JFXButton fx:id="buttonHladaj" buttonType="RAISED" text="Hľadaj" BorderPane.alignment="CENTER" />
+                        <JFXButton fx:id="buttonHladaj" buttonType="RAISED" text="Hľadaj trvalý pobyt" BorderPane.alignment="CENTER" />
                     </center>
                 </BorderPane>
                 <GridPane hgap="16.0" vgap="16.0" VBox.vgrow="ALWAYS">
                     <columnConstraints>
+                        <ColumnConstraints hgrow="ALWAYS" minWidth="10.0" prefWidth="100.0" />
                         <ColumnConstraints hgrow="ALWAYS" minWidth="10.0" prefWidth="100.0" />
                         <ColumnConstraints hgrow="ALWAYS" minWidth="10.0" prefWidth="100.0" />
                     </columnConstraints>
@@ -44,40 +40,48 @@
                         <RowConstraints prefHeight="477.0" vgrow="ALWAYS" />
                     </rowConstraints>
                     <VBox.margin>
-                        <Insets top="16.0" />
+                        <Insets top="8.0" />
                     </VBox.margin>
                     <children>
-                        <TableView fx:id="tableViewNehnutelnosti" prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="1">
+                        <TableView fx:id="tableViewObcaniaSTrvalymPobytom" prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="1">
                             <columns>
-                                <TableColumn fx:id="tableColumnSupisneCislo" maxWidth="80.0" minWidth="80.0" text="Súpisné číslo" />
-                                <TableColumn fx:id="tableColumnAdresa" prefWidth="173.0" text="Adresa" />
-                                <TableColumn fx:id="tableColumnPopis" prefWidth="126.0" text="Popis" />
+                                <TableColumn fx:id="tableColumnMenoPriezviskoTP" text="Meno a priezvisko" />
+                                <TableColumn fx:id="tableColumnRodneCisloTP" text="Rodné číslo" />
+                                <TableColumn fx:id="tableColumnDatumNarodeniaTP" maxWidth="130.0" minWidth="130.0" text="Dátum narodenia" />
                             </columns>
                             <columnResizePolicy>
                                 <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
                             </columnResizePolicy>
                         </TableView>
-                        <TableView fx:id="tableViewObcanPodiely" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                        <TableView fx:id="tableViewNehnutelnosti" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
                             <columns>
-                                <TableColumn fx:id="tableColumnMenoPriezvisko" text="Meno a priezvisko" />
-                                <TableColumn fx:id="tableColumnRodneCislo" text="Rodné číslo" />
-                                <TableColumn fx:id="tableColumnDatumNarodenia" maxWidth="130.0" minWidth="130.0" text="Dátum narodenia" />
+                                <TableColumn fx:id="tableColumnSupisneCislo" maxWidth="80.0" minWidth="80.0" text="Súpisné číslo" />
+                                <TableColumn fx:id="tableColumnAdresa" prefWidth="173.0" text="Adresa" />
+                                <TableColumn fx:id="tableColumnPopis" prefWidth="126.0" text="Popis" />
+                                <TableColumn fx:id="tableColumnCisloListuVlastnictva" prefWidth="126.0" text="Č. listu vlastníctva" />
+                            </columns>
+                            <columnResizePolicy>
+                                <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                            </columnResizePolicy>
+                        </TableView>
+                        <TableView fx:id="tableViewObcanPodiely" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="1">
+                            <columns>
+                                <TableColumn fx:id="tableColumnMenoPriezviskoVL" editable="false" prefWidth="117.0" text="Meno a priezvisko" />
+                                <TableColumn fx:id="tableColumnRodneCisloVL" editable="false" text="Rodné číslo" />
+                                <TableColumn fx:id="tableColumnDatumNarodeniaVL" maxWidth="110.0" minWidth="110.0" text="Dátum narodenia" />
                                 <TableColumn fx:id="tableColumnPodiel" maxWidth="80.0" minWidth="80.0" text="Podiel[%]" />
                             </columns>
                             <columnResizePolicy>
                                 <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
                             </columnResizePolicy>
                         </TableView>
-                        <Label text="Nehnuteľnosti" />
-                        <BorderPane GridPane.columnIndex="1">
-                            <left>
-                                <Label text="Majitelia a percentuálne podiely" BorderPane.alignment="CENTER" />
-                            </left>
-                        </BorderPane>
+                        <Label text="Nehnuteľnosti na liste vlastníctva" GridPane.columnIndex="1" />
+                        <Label text="Občania s trvalým pobytom v nehnuteľnosti" />
+                        <Label layoutX="10.0" layoutY="16.0" text="Vlastníci a ich podiely" GridPane.columnIndex="2" />
                     </children>
                 </GridPane>
-
             </children>
+
             <padding>
                 <Insets bottom="16.0" left="16.0" right="16.0" top="16.0" />
             </padding>

@@ -67,6 +67,13 @@ public class ISSpravyKatastra {
 
         upravMajetkovyPodielNaListeVlastnictva(1,1, "1111111111111111");
         upravMajetkovyPodielNaListeVlastnictva(1,2, "1111111111111111");
+        upravMajetkovyPodielNaListeVlastnictva(1,2, "1111111111111112");
+
+        exportujData("exportPred.csv");
+        //boolean presun = odstranAPresunKatastralneUzemie(1, 2, "Ide to");
+
+        //System.out.println(presun ? " presun ok" : "presun nie OK!!!!!!");
+        importujData("Export/skutocnetest.csv");
     }
 
     // 1
@@ -78,6 +85,9 @@ public class ISSpravyKatastra {
         }
         return null;
     }
+
+    // 2
+    // pouziva najdi obcana a obcan ma atribut nehnutelnost
 
     // 3
     public Nehnutelnost najdiNehnutelnost(long cisloKatastralnehoUzemia, long cisloListuVlastnictva, long supisneCisloNehnutelnosti) {
@@ -289,21 +299,51 @@ public class ISSpravyKatastra {
         return false;
     }
 
+    // 19
+    public ListVlastnictva odstranAPresunListVlatnictva(long cisloKatastralnehoUzemia, long cisloListuVlastnictvaOdstraneneho, long cisloListuVlastnictvaNoveho) {
+        if (cisloListuVlastnictvaOdstraneneho != cisloListuVlastnictvaNoveho) {
+            dummyKatastralneUzemie.setCisloKatastralnehoUzemia(cisloKatastralnehoUzemia);
+            KatastralneUzemie katastralneUzemie = katastralneUzemieCislo_.findData(dummyKatastralneUzemie);
+            if (katastralneUzemie != null) {
+                ListVlastnictva listVlastnictvaNaOdstranenie = katastralneUzemie.najdiListVlastnictva(cisloListuVlastnictvaOdstraneneho);
+                if (listVlastnictvaNaOdstranenie != null) {
+                    ListVlastnictva listVlastnictvaNove = katastralneUzemie.najdiListVlastnictva(cisloListuVlastnictvaNoveho);
+                    if (listVlastnictvaNove == null) {
+                        Optional<Holder<ListVlastnictva>> listVlastnictvaHolder = Optional.of(new Holder<>());
+                        boolean inserted = katastralneUzemie.vlozListVlastnictva(cisloListuVlastnictvaNoveho, listVlastnictvaHolder);
+                        listVlastnictvaNove = listVlastnictvaHolder.get().value;
+                        if (!inserted) {
+                            return null;
+                        }
+                    }
+                    boolean status = listVlastnictvaNaOdstranenie.presunVsetokObsahNaInyListVlastnictva(listVlastnictvaNove);
+                    if (status) {
+                        status = katastralneUzemie.odstranListVlastnictva(listVlastnictvaNaOdstranenie);
+                        if (status) {
+                            return listVlastnictvaNove;
+                        }
+                    }
+                }
+            }
+        }
+        return null;
+    }
+
     // 20
     public boolean odstranNehnutelnost(long cisloKatastralnehoUzemia, long cisloListuVlastnictva,long supisneCisloNehnutelnosti) {
         dummyKatastralneUzemie.setCisloKatastralnehoUzemia(cisloKatastralnehoUzemia);
         KatastralneUzemie katastralneUzemie = katastralneUzemieCislo_.findData(dummyKatastralneUzemie);
         if (katastralneUzemie != null) {
-            ListVlastnictva listVlastnictva = katastralneUzemie.najdiListVlastnictva(cisloListuVlastnictva);
-            if (listVlastnictva != null) {
-                Nehnutelnost nehnutelnost = listVlastnictva.odstranNehnutelnostZListuVlastnictva(supisneCisloNehnutelnosti);
-                if (nehnutelnost != null) {
+            Nehnutelnost nehnutelnost = katastralneUzemie.najdiNehnutelnostVkatastralnomUzemi(supisneCisloNehnutelnosti);
+            if (nehnutelnost != null) {
+                ListVlastnictva listVlastnictva = nehnutelnost.getListVlastnictva();
+                if (listVlastnictva.getCisloListuVlastnictva() == cisloListuVlastnictva) {
+                    listVlastnictva.odstranNehnutelnostZListuVlastnictva(supisneCisloNehnutelnosti);
                     nehnutelnost.odstranObcanomTrvalyPobytVNehnutelnosti();
-                    return true;
+                    return katastralneUzemie.odstranNehnutelnostZKU(nehnutelnost) != null;
                 }
             }
         }
-
         return false;
     }
 
@@ -326,6 +366,32 @@ public class ISSpravyKatastra {
         }
         vlozeneKatastralneUzemie.ifPresent(katastralneUzemieHolder -> katastralneUzemieHolder.value = katastralneUzemie);
         return true;
+    }
+
+    // 22
+    public boolean odstranAPresunKatastralneUzemie(long cisloKatastralnehoUzemiaOdstraneneho, long cisloKatastralnehoUzemiaNoveho, String nazovNovehoKatastralnehoUzemia) {
+        if (cisloKatastralnehoUzemiaOdstraneneho != cisloKatastralnehoUzemiaNoveho) {
+            dummyKatastralneUzemie.setCisloKatastralnehoUzemia(cisloKatastralnehoUzemiaOdstraneneho);
+            KatastralneUzemie katastralneUzemienaOdstranenie = katastralneUzemieCislo_.findData(dummyKatastralneUzemie);
+            if (katastralneUzemienaOdstranenie != null) {
+                dummyKatastralneUzemie.setCisloKatastralnehoUzemia(cisloKatastralnehoUzemiaNoveho);
+                KatastralneUzemie katastralneUzemieNove = katastralneUzemieCislo_.findData(dummyKatastralneUzemie);
+                if (katastralneUzemieNove == null) {
+                    Optional<Holder<KatastralneUzemie>> katastralneUzemieHolder = Optional.of(new Holder<>());
+                    boolean inserted = pridajKatastralneUzemie(cisloKatastralnehoUzemiaNoveho, nazovNovehoKatastralnehoUzemia, katastralneUzemieHolder);
+                    if (!inserted) {
+                        return false;
+                    }
+                    katastralneUzemieNove = katastralneUzemieHolder.get().value;
+                }
+                // metoda na presun
+                boolean moved = katastralneUzemienaOdstranenie.presunVsetkoDoInehoKatastralnehoUzemia(katastralneUzemieNove);
+                if (moved) {
+                    return katastralneUzemieCislo_.remove(katastralneUzemienaOdstranenie) != null && katastralneUzemieNazov_.remove(katastralneUzemienaOdstranenie) != null;
+                }
+            }
+        }
+        return false;
     }
 
     private void vycistiData() {
@@ -380,7 +446,8 @@ public class ISSpravyKatastra {
 
                 }
                 if (vlozeniObcania.size() > 0 && pocetVlastnikovNaListeVlastnictva > 0) {
-                    int randomPocetVlastnikovNaListeVlastnictva = 1 + Helper.GetNahodneCislo(pocetVlastnikovNaListeVlastnictva);
+                    //int randomPocetVlastnikovNaListeVlastnictva = 1 + Helper.GetNahodneCislo(pocetVlastnikovNaListeVlastnictva);
+                    int randomPocetVlastnikovNaListeVlastnictva = pocetVlastnikovNaListeVlastnictva;
                     int priemernyPodiel = 100 / randomPocetVlastnikovNaListeVlastnictva;
                     int celkovyPodiel = 100;
                     for (int ndexPocetVlastnikovNaListeVlastnictva = 1; ndexPocetVlastnikovNaListeVlastnictva <= randomPocetVlastnikovNaListeVlastnictva ; ndexPocetVlastnikovNaListeVlastnictva++) {
@@ -393,7 +460,9 @@ public class ISSpravyKatastra {
                         } else {
                             celkovyPodiel -= vyslednyPodiel;
                         }
-                        listVlastnictva.pridajAleboPonechajVlastnika(vlozeniObcania.get(Helper.GetNahodneCislo(celkovyPocetObcanov -1)), vyslednyPodiel);
+                        int nahodnyIndexObcan = Helper.GetNahodneCislo(celkovyPocetObcanov -1);
+                        vlozeniObcania.get(nahodnyIndexObcan).pridajAleboPonechajListVlastnictva(listVlastnictva);
+                        listVlastnictva.pridajAleboPonechajVlastnika(vlozeniObcania.get(nahodnyIndexObcan), vyslednyPodiel);
                     }
                 }
             }
@@ -639,7 +708,13 @@ public class ISSpravyKatastra {
 
     }
 
+    public AvlTree<Obcan> getObcania() {
+        return obcania_;
+    }
 
+    public AvlTree<KatastralneUzemie> getKatastralneUzemia() {
+        return katastralneUzemieCislo_;
+    }
 
     private boolean skontrolujVkladanieKatastralnehoUzemia(Optional<Status> status, KatastralneUzemie katastralneUzemie, boolean result) {
         if (!result) {

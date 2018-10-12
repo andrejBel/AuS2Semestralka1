@@ -31,7 +31,7 @@
                 </JFXTextField>
                 <BorderPane prefHeight="40.0" prefWidth="768.0">
                     <center>
-                        <JFXButton fx:id="buttonHladaj" buttonType="RAISED" style="-fx-background-color: #FFFFFF;" text="Hľadaj nehnuteľnosť" BorderPane.alignment="CENTER" />
+                        <JFXButton fx:id="buttonHladaj" buttonType="RAISED" text="Hľadaj nehnuteľnosť" BorderPane.alignment="CENTER" />
                     </center>
                 </BorderPane>
                 <GridPane hgap="16.0" vgap="16.0" VBox.vgrow="ALWAYS">
@@ -63,6 +63,7 @@
                                 <TableColumn fx:id="tableColumnSupisneCislo" maxWidth="80.0" minWidth="80.0" text="Súpisné číslo" />
                                 <TableColumn fx:id="tableColumnAdresa" prefWidth="173.0" text="Adresa" />
                                 <TableColumn fx:id="tableColumnPopis" prefWidth="126.0" text="Popis" />
+                                <TableColumn fx:id="tableColumnCisloListuVlastnictva" prefWidth="126.0" text="Č. listu vlastníctva" />
                             </columns>
                             <columnResizePolicy>
                                 <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />

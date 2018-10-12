@@ -39,7 +39,7 @@
             <JFXDatePicker fx:id="datePicker" defaultColor="#35c2ff" promptText="Dátum narodenia" />
             <BorderPane prefHeight="100.0" prefWidth="768.0">
                <center>
-                  <JFXButton fx:id="buttonPridajObcana" buttonType="RAISED" style="-fx-background-color: #FFFFFF;" text="Pridaj občana" BorderPane.alignment="CENTER" />
+                  <JFXButton fx:id="buttonPridajObcana" buttonType="RAISED" text="Pridaj občana" BorderPane.alignment="CENTER" />
                </center>
             </BorderPane>
          </children>

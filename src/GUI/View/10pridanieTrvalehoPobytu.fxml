@@ -23,7 +23,7 @@
                 </JFXTextField>
                 <BorderPane prefHeight="100.0" prefWidth="768.0">
                     <center>
-                        <JFXButton fx:id="buttonPridajTrvalyPobyt" buttonType="RAISED" style="-fx-background-color: #FFFFFF;" text="Zapíš trvalý pobyt" BorderPane.alignment="CENTER" />
+                        <JFXButton fx:id="buttonPridajTrvalyPobyt" buttonType="RAISED" text="Zapíš trvalý pobyt" BorderPane.alignment="CENTER" />
                     </center>
                 </BorderPane>
             </children>

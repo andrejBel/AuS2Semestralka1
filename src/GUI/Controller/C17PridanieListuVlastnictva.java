@@ -99,7 +99,6 @@ public class C17PridanieListuVlastnictva extends ControllerBase {
             } catch (NumberFormatException e) {
                 return false;
             }
-            boolean added = false;
             return isSpravyKatastra_.pridajListVlastnictva(textFieldNazovKatastralnehoUzemia.getText(), cisloListuVlastnictva);
         }
 

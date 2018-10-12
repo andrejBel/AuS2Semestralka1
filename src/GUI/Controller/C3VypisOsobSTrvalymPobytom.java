@@ -85,24 +85,6 @@ public class C3VypisOsobSTrvalymPobytom extends ControllerBase {
             new nacitajOsobyStravalymPobytomVnehnutelnosti().execute();
         });
         Helper.SetActionOnEnter(textFields, () -> buttonHladaj.fire());
-        tableViewObcan.setRowFactory(tv -> {
-            System.out.println();
-            TableRow<TableItemObcan> row = new TableRow<>();
-            BooleanBinding binding = row.itemProperty().isNotNull();
-
-            StringBinding stringBinding = Bindings.createStringBinding(() -> {
-                if (row.itemProperty().isNotNull().get()) {
-                    TableItemObcan tableItemObcan = row.getItem();
-                    if (tableItemObcan.getMenoPriezvisko().equals("Andrej Beliancin")) {
-                        return "-fx-background-color: red ;";
-                    }
-                }
-                return "";
-            }, row.itemProperty());
-            row.styleProperty().bind(stringBinding);
-
-            return row ;
-        });
 
         tableColumnMenoPriezvisko.setCellValueFactory(param -> new SimpleStringProperty(param.getValue().getMenoPriezvisko()));
         tableColumnRodneCislo.setCellValueFactory(param -> new SimpleStringProperty(param.getValue().getRodneCislo()));

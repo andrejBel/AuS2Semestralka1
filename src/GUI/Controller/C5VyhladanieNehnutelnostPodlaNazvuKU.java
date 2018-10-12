@@ -1,7 +1,7 @@
 package GUI.Controller;
 
 import GUI.SimpleTask;
-import GUI.View.ViewItems.TableItemNehnutelnost;
+import GUI.View.ViewItems.TableItemNehnutelnostListVlastnictva;
 import GUI.View.ViewItems.TableItemObcan;
 import GUI.View.ViewItems.TableItemObcanPodiel;
 import InformacnySystem.ISSpravyKatastra;
@@ -48,16 +48,19 @@ public class C5VyhladanieNehnutelnostPodlaNazvuKU extends ControllerBase {
     private TableColumn<TableItemObcan, String> tableColumnDatumNarodeniaTP;
 
     @FXML
-    private TableView<TableItemNehnutelnost> tableViewNehnutelnosti;
+    private TableView<TableItemNehnutelnostListVlastnictva> tableViewNehnutelnosti;
 
     @FXML
-    private TableColumn<TableItemNehnutelnost, Number> tableColumnSupisneCislo;
+    private TableColumn<TableItemNehnutelnostListVlastnictva, Number> tableColumnSupisneCislo;
 
     @FXML
-    private TableColumn<TableItemNehnutelnost, String> tableColumnAdresa;
+    private TableColumn<TableItemNehnutelnostListVlastnictva, String> tableColumnAdresa;
 
     @FXML
-    private TableColumn<TableItemNehnutelnost, String> tableColumnPopis;
+    private TableColumn<TableItemNehnutelnostListVlastnictva, String> tableColumnPopis;
+
+    @FXML
+    private TableColumn<TableItemNehnutelnostListVlastnictva, Number> tableColumnCisloListuVlastnictva;
 
     @FXML
     private TableView<TableItemObcanPodiel> tableViewObcanPodiely;
@@ -109,6 +112,7 @@ public class C5VyhladanieNehnutelnostPodlaNazvuKU extends ControllerBase {
         tableColumnSupisneCislo.setCellValueFactory(param -> new SimpleLongProperty(param.getValue().getSupisneCislo()));
         tableColumnAdresa.setCellValueFactory(param -> new SimpleStringProperty(param.getValue().getAdresa()));
         tableColumnPopis.setCellValueFactory(param -> new SimpleStringProperty(param.getValue().getPopis()));
+        tableColumnCisloListuVlastnictva.setCellValueFactory(param -> new SimpleLongProperty(param.getValue().getCisloListuVlastnictva()));
 
         tableColumnMenoPriezviskoVL.setCellValueFactory(param -> new SimpleStringProperty(param.getValue().getMenoPriezvisko()));
         tableColumnRodneCisloVL.setCellValueFactory(param -> new SimpleStringProperty(param.getValue().getRodneCislo()));
@@ -174,12 +178,12 @@ public class C5VyhladanieNehnutelnostPodlaNazvuKU extends ControllerBase {
 
         @Override
         public void onSuccess() {
-            tableViewNehnutelnosti.setRowFactory(new Callback<TableView<TableItemNehnutelnost>, TableRow<TableItemNehnutelnost>>() {
+            tableViewNehnutelnosti.setRowFactory(new Callback<TableView<TableItemNehnutelnostListVlastnictva>, TableRow<TableItemNehnutelnostListVlastnictva>>() {
                 @Override
-                public TableRow<TableItemNehnutelnost> call(TableView<TableItemNehnutelnost> param) {
-                    return new TableRow<TableItemNehnutelnost>() {
+                public TableRow<TableItemNehnutelnostListVlastnictva> call(TableView<TableItemNehnutelnostListVlastnictva> param) {
+                    return new TableRow<TableItemNehnutelnostListVlastnictva>() {
                         @Override
-                        protected void updateItem(TableItemNehnutelnost item, boolean empty) {
+                        protected void updateItem(TableItemNehnutelnostListVlastnictva item, boolean empty) {
                             super.updateItem(item, empty);
                             if (item == null || empty) {
                                 return;
@@ -199,7 +203,7 @@ public class C5VyhladanieNehnutelnostPodlaNazvuKU extends ControllerBase {
 
             ListVlastnictva listVlastnictva = nehnutelnost.getListVlastnictva();
             Helper.naplnTabulkuObcaniaSTravlymPobytom(tableViewObcaniaSTrvalymPobytom, nehnutelnost.getObcaniaSTravalymPobytom());
-            Helper.naplnTabulkuNehnutelnosti(tableViewNehnutelnosti, listVlastnictva.getNehnutelnostiNaListeVlastnictva());
+            Helper.naplnTabulkuNehnutelnostiSListomVlastnictva(tableViewNehnutelnosti, listVlastnictva.getNehnutelnostiNaListeVlastnictva());
             Helper.naplnTabulkuVlastnikov(tableViewObcanPodiely, listVlastnictva.getVlastniciSPodielom());
 
 

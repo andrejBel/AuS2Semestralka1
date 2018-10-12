@@ -221,25 +221,9 @@ public class C12ZapisZmenaMajetkovehoPodielu extends ControllerBase {
 
         @Override
         public void onSuccess() {
+            Helper.naplnTabulkuNehnutelnosti(tableViewNehnutelnosti, listVlastnictva.getNehnutelnostiNaListeVlastnictva());
+            Helper.naplnTabulkuVlastnikov(tableViewObcanPodiely, listVlastnictva.getVlastniciSPodielom());
 
-            ObservableList<TableItemNehnutelnost> tableViewItemsNehnutelnosti = tableViewNehnutelnosti.getItems();
-            tableViewItemsNehnutelnosti.clear();
-            AvlTree<Nehnutelnost> nehnutelnosti = listVlastnictva.getNehnutelnostiNaListeVlastnictva();
-            TableItemNehnutelnost tableItemNehnutelnost = null;
-            for (Nehnutelnost nehnutelnost: nehnutelnosti) {
-                tableItemNehnutelnost = new TableItemNehnutelnost(nehnutelnost.getSupisneCislo(), nehnutelnost.getAdresa(), nehnutelnost.getPopis());
-                tableViewItemsNehnutelnosti.add(tableItemNehnutelnost);
-            }
-
-
-            ObservableList<TableItemObcanPodiel> tableViewItemObcanSPodielmi = tableViewObcanPodiely.getItems();
-            tableViewItemObcanSPodielmi.clear();
-            AvlTree<ListVlastnictva.ObcanSPodielom> obcaniaSPodielom = listVlastnictva.getVlastniciSPodielom();
-            TableItemObcanPodiel tableItemObcanPodiel = null;
-            for (ListVlastnictva.ObcanSPodielom obcanSPodielom: obcaniaSPodielom ) {
-                tableItemObcanPodiel = new TableItemObcanPodiel(obcanSPodielom);
-                tableViewItemObcanSPodielmi.add(tableItemObcanPodiel);
-            }
             showSuccessDialog("Údaje boli úspešne načítané. Môžete upraviť podiely vlastníkov.");
         }
 

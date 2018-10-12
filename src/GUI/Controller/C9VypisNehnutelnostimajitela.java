@@ -93,7 +93,7 @@ public class C9VypisNehnutelnostimajitela extends ControllerBase {
         if (obcan != null) {
             AvlTree< Pair<Long, AvlTree<ListVlastnictva>> > obcanoveListyVlastnictva = obcan.getListyVlatnictva();
             if (obcanoveListyVlastnictva.getSize() == 0) {
-                showSuccessDialog("Oban nemá žiadne nehnuteľnosti");
+                showSuccessDialog("Občan nemá žiadne nehnuteľnosti");
             } else {
                 showSuccessDialog("Nehnuteľnosti boli úspešne načítané");
             }

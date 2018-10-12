@@ -34,7 +34,7 @@
                 </JFXTextField>
                 <BorderPane prefHeight="100.0" prefWidth="768.0">
                     <center>
-                        <JFXButton fx:id="buttonOdstranNehnutelnost" buttonType="RAISED" style="-fx-background-color: #FFFFFF;" text="Odstráň nehnuteľnosť" BorderPane.alignment="CENTER" />
+                        <JFXButton fx:id="buttonOdstranNehnutelnost" buttonType="RAISED" text="Odstráň nehnuteľnosť" BorderPane.alignment="CENTER" />
                     </center>
                 </BorderPane>
             </children>

@@ -1,0 +1,12 @@
+
+.pane {
+    -fx-background-color: #99ffff;
+}
+
+.jfx-button:hover {
+    -fx-background-color: #D9D9D9;
+}
+
+.jfx-button {
+    -fx-background-color: white;
+}

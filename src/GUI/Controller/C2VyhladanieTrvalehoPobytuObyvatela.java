@@ -1,12 +1,14 @@
 package GUI.Controller;
 
 import GUI.SimpleTask;
+import GUI.View.ViewItems.TableItemNehnutelnost;
 import GUI.View.ViewItems.TableItemNehnutelnostListVlastnictva;
 import GUI.View.ViewItems.TableItemObcan;
 import GUI.View.ViewItems.TableItemObcanPodiel;
 import InformacnySystem.ISSpravyKatastra;
 import Model.ListVlastnictva;
 import Model.Nehnutelnost;
+import Model.Obcan;
 import Utils.Helper;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextField;
@@ -16,21 +18,16 @@ import javafx.beans.property.SimpleLongProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.fxml.FXML;
 import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
-import javafx.util.Callback;
 
 import javax.xml.ws.Holder;
 import java.util.Arrays;
 import java.util.List;
 
-public class C1VyhladanieNehnutelnostPodlaCislaKU extends ControllerBase {
+public class C2VyhladanieTrvalehoPobytuObyvatela extends ControllerBase {
 
     @FXML
-    private JFXTextField textFieldCisloKatastralnehoUzemia;
-
-    @FXML
-    private JFXTextField textFieldSupisneCisloNehnutelnosti;
+    private JFXTextField textFieldRodneCislo;
 
     @FXML
     private JFXButton buttonHladaj;
@@ -66,43 +63,41 @@ public class C1VyhladanieNehnutelnostPodlaCislaKU extends ControllerBase {
     private TableView<TableItemObcanPodiel> tableViewObcanPodiely;
 
     @FXML
-    private TableColumn<TableItemObcanPodiel, String>  tableColumnMenoPriezviskoVL;
+    private TableColumn<TableItemObcanPodiel, String> tableColumnMenoPriezviskoVL;
 
     @FXML
-    private TableColumn<TableItemObcanPodiel, String>  tableColumnRodneCisloVL;
+    private TableColumn<TableItemObcanPodiel, String> tableColumnRodneCisloVL;
 
     @FXML
-    private TableColumn<TableItemObcanPodiel, String>  tableColumnDatumNarodeniaVL;
+    private TableColumn<TableItemObcanPodiel, String> tableColumnDatumNarodeniaVL;
 
     @FXML
-    private TableColumn<TableItemObcanPodiel, Number>  tableColumnPodiel;
+    private TableColumn<TableItemObcanPodiel, Number> tableColumnPodiel;
 
-    private SimpleBooleanProperty isCisloKUOk = new SimpleBooleanProperty(false);
-    private SimpleBooleanProperty isSupisneCisloOk = new SimpleBooleanProperty(false);
+    private SimpleBooleanProperty isRodneCisloOk = new SimpleBooleanProperty(false);
+
 
     private List<SimpleBooleanProperty> simpleBooleanProperties = Arrays.asList(
-            isCisloKUOk,
-            isSupisneCisloOk
+        isRodneCisloOk
     );
 
     private List<JFXTextField> textFields;
 
-    public C1VyhladanieNehnutelnostPodlaCislaKU(ISSpravyKatastra isSpravyKatastra) {
+    public C2VyhladanieTrvalehoPobytuObyvatela(ISSpravyKatastra isSpravyKatastra) {
         super(isSpravyKatastra);
         initView();
         textFields = Arrays.asList(
-                textFieldCisloKatastralnehoUzemia,
-                textFieldSupisneCisloNehnutelnosti
+                textFieldRodneCislo
         );
-        Helper.DecorateNumberTextFieldWithValidator(textFieldCisloKatastralnehoUzemia, isCisloKUOk);
-        Helper.DecorateNumberTextFieldWithValidator(textFieldSupisneCisloNehnutelnosti, isSupisneCisloOk);
+        Helper.DecorateTextFieldWithValidator(textFieldRodneCislo, isRodneCisloOk, Obcan.RODNE_CISLO_LENGTH, "Rodné číslo");
+
         Helper.SetActionOnEnter(textFields, () -> buttonHladaj.fire());
 
         buttonHladaj.setOnAction(event -> {
             if (Helper.DisableButton(buttonHladaj, simpleBooleanProperties, () -> textFields.forEach(JFXTextField::validate))) {
                 return;
             }
-            new NacitajNehnutelnostPodlaCislaKU().execute();
+            new NacitajTrvalyPobytObcana().execute();
         });
 
         tableColumnMenoPriezviskoTP.setCellValueFactory(param -> new SimpleStringProperty(param.getValue().getMenoPriezvisko()));
@@ -114,7 +109,6 @@ public class C1VyhladanieNehnutelnostPodlaCislaKU extends ControllerBase {
         tableColumnPopis.setCellValueFactory(param -> new SimpleStringProperty(param.getValue().getPopis()));
         tableColumnCisloListuVlastnictva.setCellValueFactory(param -> new SimpleLongProperty(param.getValue().getCisloListuVlastnictva()));
 
-
         tableColumnMenoPriezviskoVL.setCellValueFactory(param -> new SimpleStringProperty(param.getValue().getMenoPriezvisko()));
         tableColumnRodneCisloVL.setCellValueFactory(param -> new SimpleStringProperty(param.getValue().getRodneCislo()));
         tableColumnDatumNarodeniaVL.setCellValueFactory(param -> new SimpleStringProperty(Helper.FormatujDatum(param.getValue().getDatumNarodenia())));
@@ -125,10 +119,15 @@ public class C1VyhladanieNehnutelnostPodlaCislaKU extends ControllerBase {
         Helper.InstallCopyPasteHandler(tableViewNehnutelnosti);
         Helper.InstallCopyPasteHandler(tableViewObcanPodiely);
 
-        Helper.SetRowFactory(tableViewNehnutelnosti, TableItemNehnutelnostListVlastnictva -> {
+        Helper.SetRowFactory(tableViewNehnutelnosti, tableItemNehnutelnost -> {
             Nehnutelnost nehnutelnost = holderNehnutelnost_.value;
-            return nehnutelnost != null && TableItemNehnutelnostListVlastnictva.getSupisneCislo() == nehnutelnost.getSupisneCislo();
+            return nehnutelnost != null && tableItemNehnutelnost.getSupisneCislo() == nehnutelnost.getSupisneCislo();
         });
+        Helper.SetRowFactory(tableViewObcaniaSTrvalymPobytom, tableItemObcan -> {
+            Obcan obcan = holderObcan_.value;
+            return obcan != null && tableItemObcan.getRodneCislo().equals(obcan.getRodneCislo());
+        });
+
     }
 
     private void clearFormulars() {
@@ -155,55 +154,52 @@ public class C1VyhladanieNehnutelnostPodlaCislaKU extends ControllerBase {
 
     @Override
     protected String getViewFileName() {
-        return "1vyhladaniaNehnutelnostiPodlaCislaKU.fxml";
+        return "2VyhladanieTrvalehoPobytuObyvatela.fxml";
     }
 
     @Override
     public String getViewName() {
-        return "1. Vyhľadanie nehnuteľnosti podľa čísla KU";
+        return "2. Vyhľadanie trvalého pobytu obyvateľa";
     }
 
     private Holder<Nehnutelnost> holderNehnutelnost_ = new Holder<>();
+    private Holder<Obcan> holderObcan_ = new Holder<>();
 
-    private class NacitajNehnutelnostPodlaCislaKU extends SimpleTask {
+    private class NacitajTrvalyPobytObcana extends SimpleTask {
 
 
         @Override
         public boolean compute() {
 
-            long cisloKatastralnehoUzemia = 0;
-            try {
-                cisloKatastralnehoUzemia = Long.valueOf(textFieldCisloKatastralnehoUzemia.getText());
-            } catch (NumberFormatException e) {
-                return false;
-            }
-            long supisneCisloNehnutelonosti = 0;
-            try {
-                supisneCisloNehnutelonosti = Long.valueOf(textFieldSupisneCisloNehnutelnosti.getText());
-            } catch (NumberFormatException e) {
-                return false;
-            }
-            Nehnutelnost nehnutelnost = isSpravyKatastra_.najdiNehnutelnostVKU(cisloKatastralnehoUzemia, supisneCisloNehnutelonosti);
-            holderNehnutelnost_.value = nehnutelnost;
-            return nehnutelnost != null;
+            Obcan obcan = isSpravyKatastra_.najdiObcana(textFieldRodneCislo.getText());
+            holderObcan_.value = obcan;
+            holderNehnutelnost_.value = obcan.getTrvalyPobyt();
+            return obcan != null;
         }
 
         @Override
         public void onSuccess() {
+            Obcan obcan = holderObcan_.value;
+
             Nehnutelnost nehnutelnost = holderNehnutelnost_.value;
+            if (nehnutelnost != null) {
+                showSuccessDialog("Trvalý pobyt občana nájdený");
+                ListVlastnictva listVlastnictva = nehnutelnost.getListVlastnictva();
+                Helper.naplnTabulkuObcaniaSTravlymPobytom(tableViewObcaniaSTrvalymPobytom, nehnutelnost.getObcaniaSTravalymPobytom());
+                Helper.naplnTabulkuNehnutelnostiSListomVlastnictva(tableViewNehnutelnosti, listVlastnictva.getNehnutelnostiNaListeVlastnictva());
+                Helper.naplnTabulkuVlastnikov(tableViewObcanPodiely, listVlastnictva.getVlastniciSPodielom());
+            } else {
+                showSuccessDialog("Občan nemá trvalý pobyt");
+            }
 
-            ListVlastnictva listVlastnictva = nehnutelnost.getListVlastnictva();
-            Helper.naplnTabulkuObcaniaSTravlymPobytom(tableViewObcaniaSTrvalymPobytom, nehnutelnost.getObcaniaSTravalymPobytom());
-            Helper.naplnTabulkuNehnutelnostiSListomVlastnictva(tableViewNehnutelnosti, listVlastnictva.getNehnutelnostiNaListeVlastnictva());
-            Helper.naplnTabulkuVlastnikov(tableViewObcanPodiely, listVlastnictva.getVlastniciSPodielom());
 
 
-            showSuccessDialog("Nehnuteľnosť bola úspešne nájdená");
+
         }
 
         @Override
         public void onFail() {
-            showWarningDialog("Nepodarilo sa nájsť nehnuteľnosť");
+            showWarningDialog("Nepodarilo sa nájsť občana");
         }
     }
 

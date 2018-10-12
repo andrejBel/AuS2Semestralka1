@@ -41,7 +41,7 @@
                 </JFXTextField>
                 <BorderPane prefHeight="40.0" prefWidth="768.0">
                     <center>
-                        <JFXButton fx:id="buttonZmenMajitela" buttonType="RAISED" style="-fx-background-color: #FFFFFF;" text="Zmeň majiteľa" BorderPane.alignment="CENTER" />
+                        <JFXButton fx:id="buttonZmenMajitela" buttonType="RAISED" text="Zmeň majiteľa" BorderPane.alignment="CENTER" />
                     </center>
                 </BorderPane>
             </children>

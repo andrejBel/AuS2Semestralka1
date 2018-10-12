@@ -36,7 +36,7 @@
                 </JFXTextField>
                 <BorderPane prefHeight="40.0" prefWidth="768.0">
                     <center>
-                        <JFXButton fx:id="buttonUpravMajetkovyPodiel" buttonType="RAISED" style="-fx-background-color: #FFFFFF;" text="Upraviť majetkový podiel" BorderPane.alignment="CENTER" />
+                        <JFXButton fx:id="buttonUpravMajetkovyPodiel" buttonType="RAISED" text="Upraviť majetkový podiel" BorderPane.alignment="CENTER" />
                     </center>
                 </BorderPane>
             <GridPane hgap="16.0" vgap="16.0" VBox.vgrow="ALWAYS">
@@ -80,7 +80,7 @@
                         <Label text="Majitelia a percentuálne podiely" BorderPane.alignment="CENTER" />
                      </left>
                      <right>
-                        <JFXButton fx:id="buttonUlozMajetkovePodiely" style="-fx-background-color: #FFFFFF;" text="Ulož podiely" BorderPane.alignment="CENTER" />
+                        <JFXButton fx:id="buttonUlozMajetkovePodiely" text="Ulož podiely" BorderPane.alignment="CENTER" />
                      </right>
                   </BorderPane>
                </children>

@@ -1,6 +1,6 @@
 package GUI.View.ViewItems;
 
-public class TableItemNehnutelnostListVlastnictvaKU extends  TableItemNehnutelnostListVlastnictva {
+public class TableItemNehnutelnostListVlastnictvaKU extends TableItemNehnutelnostListVlastnictvaPodiel {
 
     private long cisloKatastralnehoUzemia_;
 

@@ -29,8 +29,8 @@
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                        <JFXButton fx:id="buttonExportuj" buttonType="RAISED" style="-fx-background-color: #FFFFFF;" text="Ulož dáta" />
-                        <JFXButton fx:id="buttonNacitaj" buttonType="RAISED" style="-fx-background-color: #FFFFFF;" text="Načítaj dáta" GridPane.columnIndex="1" />
+                        <JFXButton fx:id="buttonExportuj" buttonType="RAISED" text="Ulož dáta" />
+                        <JFXButton fx:id="buttonNacitaj" buttonType="RAISED" text="Načítaj dáta" GridPane.columnIndex="1" />
                </children>
                <VBox.margin>
                   <Insets top="8.0" />

@@ -28,7 +28,7 @@
                 </JFXTextField>
                 <BorderPane prefHeight="40.0" prefWidth="768.0">
                     <center>
-                        <JFXButton fx:id="buttonHladaj" buttonType="RAISED" style="-fx-background-color: #FFFFFF;" text="Hľadaj" BorderPane.alignment="CENTER" />
+                        <JFXButton fx:id="buttonHladaj" buttonType="RAISED" text="Hľadaj" BorderPane.alignment="CENTER" />
                     </center>
                 </BorderPane>
             <Label text="Nehnuteľnosti a majetkové podiely na nich" />

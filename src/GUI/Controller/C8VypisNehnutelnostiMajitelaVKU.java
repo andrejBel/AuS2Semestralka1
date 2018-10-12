@@ -1,6 +1,6 @@
 package GUI.Controller;
 
-import GUI.View.ViewItems.TableItemNehnutelnostListVlastnictva;
+import GUI.View.ViewItems.TableItemNehnutelnostListVlastnictvaPodiel;
 import InformacnySystem.ISSpravyKatastra;
 import Model.ListVlastnictva;
 import Model.Nehnutelnost;
@@ -17,7 +17,6 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-import javafx.scene.input.KeyCode;
 import structures.AvlTree;
 
 import java.util.Arrays;
@@ -35,22 +34,22 @@ public class C8VypisNehnutelnostiMajitelaVKU extends ControllerBase {
     private JFXButton buttonHladaj;
 
     @FXML
-    private TableView<TableItemNehnutelnostListVlastnictva> tableViewNehnutelnostiListVlastnictva;
+    private TableView<TableItemNehnutelnostListVlastnictvaPodiel> tableViewNehnutelnostiListVlastnictva;
 
     @FXML
-    private TableColumn<TableItemNehnutelnostListVlastnictva, Number> tableColumnSupisneCislo;
+    private TableColumn<TableItemNehnutelnostListVlastnictvaPodiel, Number> tableColumnSupisneCislo;
 
     @FXML
-    private TableColumn<TableItemNehnutelnostListVlastnictva, String> tableColumnAdresa;
+    private TableColumn<TableItemNehnutelnostListVlastnictvaPodiel, String> tableColumnAdresa;
 
     @FXML
-    private TableColumn<TableItemNehnutelnostListVlastnictva, String> tableColumnPopis;
+    private TableColumn<TableItemNehnutelnostListVlastnictvaPodiel, String> tableColumnPopis;
 
     @FXML
-    private TableColumn<TableItemNehnutelnostListVlastnictva, Number> tableColumnPodiel;
+    private TableColumn<TableItemNehnutelnostListVlastnictvaPodiel, Number> tableColumnPodiel;
 
     @FXML
-    private TableColumn<TableItemNehnutelnostListVlastnictva, Number> tableColumnCisloLV;
+    private TableColumn<TableItemNehnutelnostListVlastnictvaPodiel, Number> tableColumnCisloLV;
 
     private SimpleBooleanProperty isCisloKUOk = new SimpleBooleanProperty(false);
     private SimpleBooleanProperty isRodneCisloOk = new SimpleBooleanProperty(false);
@@ -93,7 +92,7 @@ public class C8VypisNehnutelnostiMajitelaVKU extends ControllerBase {
     }
 
     private void nacitajData() {
-        ObservableList<TableItemNehnutelnostListVlastnictva> tableViewNehnutelnostiListVlastnictvaItems = tableViewNehnutelnostiListVlastnictva.getItems();
+        ObservableList<TableItemNehnutelnostListVlastnictvaPodiel> tableViewNehnutelnostiListVlastnictvaItems = tableViewNehnutelnostiListVlastnictva.getItems();
         tableViewNehnutelnostiListVlastnictvaItems.clear();
         long cisloKatastralnhoUzemia = 0;
         try {
@@ -111,7 +110,7 @@ public class C8VypisNehnutelnostiMajitelaVKU extends ControllerBase {
                 for (ListVlastnictva listVlastnictva: listyVlastnictva) {
                     ListVlastnictva.ObcanSPodielom obcanSPodielom = listVlastnictva.getObcanSPodielom(obcan);
                     for (Nehnutelnost nehnutelnost: listVlastnictva.getNehnutelnostiNaListeVlastnictva()) {
-                        TableItemNehnutelnostListVlastnictva tableItemNehnutelnostListVlastnictva = new TableItemNehnutelnostListVlastnictva(
+                        TableItemNehnutelnostListVlastnictvaPodiel tableItemNehnutelnostListVlastnictva = new TableItemNehnutelnostListVlastnictvaPodiel(
                                 nehnutelnost.getSupisneCislo(),
                                 nehnutelnost.getAdresa(),
                                 nehnutelnost.getPopis(),
@@ -125,7 +124,7 @@ public class C8VypisNehnutelnostiMajitelaVKU extends ControllerBase {
                 showSuccessDialog("Vlastník nemá v danom katastrálnom území žiadnu nehnuteľnosť");
             }
         } else {
-            showWarningDialog("Nepodarilo sa načítať nehnuteľnosti");
+            showWarningDialog("Nepodarilo sa nájsť majiteľa");
         }
     }
 

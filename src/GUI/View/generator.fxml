@@ -50,7 +50,7 @@
                 </GridPane>
                 <BorderPane prefHeight="105.0" prefWidth="768.0">
                     <center>
-                        <JFXButton fx:id="buttonGeneruj" buttonType="RAISED" style="-fx-background-color: #FFFFFF;" text="Generuj" BorderPane.alignment="CENTER" />
+                        <JFXButton fx:id="buttonGeneruj" buttonType="RAISED" text="Generuj" BorderPane.alignment="CENTER" />
                     </center>
                 </BorderPane>
             </children>

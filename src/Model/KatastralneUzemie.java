@@ -1,8 +1,10 @@
 package Model;
 
+import Utils.Helper;
 import structures.AvlTree;
 
 import javax.xml.ws.Holder;
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Optional;
 
@@ -55,6 +57,10 @@ public class KatastralneUzemie {
         return inserted;
     }
 
+    public boolean odstranListVlastnictva(ListVlastnictva listVlastnictva) {
+        return listyVlastnictvaVKatastralnomUzemi_.remove(listVlastnictva) != null;
+    }
+
     public ListVlastnictva najdiListVlastnictva(long cisloListuVlastnictva) {
         dummyListVlastnictva.setCisloListuVlastnictva(cisloListuVlastnictva);
         return listyVlastnictvaVKatastralnomUzemi_.findData(dummyListVlastnictva);
@@ -102,4 +108,54 @@ public class KatastralneUzemie {
     public void setNazov(String nazov) {
         this.nazov_ = nazov;
     }
+
+    public Nehnutelnost odstranNehnutelnostZKU(Nehnutelnost nehnutelnost) {
+        return nehnutelnostiVkatastralnomUzemi_.remove(nehnutelnost);
+    }
+
+    public boolean presunVsetkoDoInehoKatastralnehoUzemia(KatastralneUzemie ineKatastralneUzemie) {
+        long pocetNehnutelnostiNaPresun =  nehnutelnostiVkatastralnomUzemi_.getSize();
+        ArrayList<Long> pouziteIndexyPreNehnutelnosti = new ArrayList<>((int) ineKatastralneUzemie.nehnutelnostiVkatastralnomUzemi_.getSize());
+        ArrayList<Long> supisneCislaPreNehnutelnosti = new ArrayList<>((int) nehnutelnostiVkatastralnomUzemi_.getSize());
+        ineKatastralneUzemie.nehnutelnostiVkatastralnomUzemi_.forEach(nehnutelnost -> pouziteIndexyPreNehnutelnosti.add(nehnutelnost.getSupisneCislo()));
+        Helper.generujUnikatneIndexy(pouziteIndexyPreNehnutelnosti, (int) pocetNehnutelnostiNaPresun, 1, supisneCislaPreNehnutelnosti);
+
+        int indexSupisneCislo = 0;
+        for (Nehnutelnost nehnutelnost: nehnutelnostiVkatastralnomUzemi_) {
+            nehnutelnost.setSupisneCislo(supisneCislaPreNehnutelnosti.get(indexSupisneCislo++));
+            boolean inserted = ineKatastralneUzemie.nehnutelnostiVkatastralnomUzemi_.insert(nehnutelnost);
+            if (!inserted) {
+                return false;
+            }
+        }
+
+        System.out.println("generovane supisne cisla: " + supisneCislaPreNehnutelnosti);
+
+        long pocetListovVlNaPresun =  listyVlastnictvaVKatastralnomUzemi_.getSize();
+        ArrayList<Long> pouziteIndexyPreListyVlastnictva = new ArrayList<>((int) ineKatastralneUzemie.listyVlastnictvaVKatastralnomUzemi_.getSize());
+        ArrayList<Long> cislaPreListyVlatnictvaNehnutelnosti = new ArrayList<>((int) nehnutelnostiVkatastralnomUzemi_.getSize());
+        ineKatastralneUzemie.listyVlastnictvaVKatastralnomUzemi_.forEach(listVlastnictva -> pouziteIndexyPreListyVlastnictva.add(listVlastnictva.getCisloListuVlastnictva()));
+        Helper.generujUnikatneIndexy(pouziteIndexyPreListyVlastnictva, (int) pocetListovVlNaPresun, 1, cislaPreListyVlatnictvaNehnutelnosti);
+
+        System.out.println("Indexy pre listy vlastnictva: " + cislaPreListyVlatnictvaNehnutelnosti);
+
+        int indexCisloVlastnictva = 0;
+        boolean zmenene = false;
+        for (ListVlastnictva listVlastnictva: listyVlastnictvaVKatastralnomUzemi_) {
+            listVlastnictva.setCisloListuVlastnictva(cislaPreListyVlatnictvaNehnutelnosti.get(indexCisloVlastnictva++));
+        }
+        for (ListVlastnictva listVlastnictva: listyVlastnictvaVKatastralnomUzemi_) {
+            zmenene = listVlastnictva.zmenKatastralneUzemie(ineKatastralneUzemie);
+            if (!zmenene) {
+                return false;
+            }
+            boolean inserted = ineKatastralneUzemie.listyVlastnictvaVKatastralnomUzemi_.insert(listVlastnictva);
+            if (!inserted) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
 }

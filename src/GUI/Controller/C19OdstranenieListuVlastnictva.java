@@ -5,8 +5,6 @@ import GUI.View.ViewItems.TableItemNehnutelnost;
 import GUI.View.ViewItems.TableItemObcanPodiel;
 import InformacnySystem.ISSpravyKatastra;
 import Model.ListVlastnictva;
-import Model.Nehnutelnost;
-import Model.Obcan;
 import Utils.Helper;
 import Utils.MyDoubleStringConverter;
 import com.jfoenix.controls.JFXButton;
@@ -20,25 +18,23 @@ import javafx.fxml.FXML;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.TextFieldTableCell;
-import javafx.scene.input.KeyCode;
-import structures.AvlTree;
 
 import java.util.Arrays;
 import java.util.List;
 
-public class C13OdstranenieMajetkovehoPodielu extends ControllerBase {
+public class C19OdstranenieListuVlastnictva extends ControllerBase {
 
     @FXML
     private JFXTextField textFieldCisloKatastralnehoUzemia;
 
     @FXML
-    private JFXTextField textFieldCisloListuVlastnictva;
+    private JFXTextField textFieldCisloListuVlastnictvaOdstranovaneho;
 
     @FXML
-    private JFXTextField textFieldRodneCislo;
+    private JFXTextField textFieldCisloListuVlastnictvaNoveho;
 
     @FXML
-    private JFXButton buttonOdstranMajetkovyPodiel;
+    private JFXButton buttonOdstranListVlastnictva;
 
     @FXML
     private TableView<TableItemNehnutelnost> tableViewNehnutelnosti;
@@ -59,10 +55,10 @@ public class C13OdstranenieMajetkovehoPodielu extends ControllerBase {
     private TableColumn<TableItemObcanPodiel, String> tableColumnMenoPriezvisko;
 
     @FXML
-    private TableColumn<TableItemObcanPodiel, String> tableColumnDatumNarodenia;
+    private TableColumn<TableItemObcanPodiel, String> tableColumnRodneCislo;
 
     @FXML
-    private TableColumn<TableItemObcanPodiel, String> tableColumnRodneCislo;
+    private TableColumn<TableItemObcanPodiel, String> tableColumnDatumNarodenia;
 
     @FXML
     private TableColumn<TableItemObcanPodiel, Number> tableColumnStaryPodiel;
@@ -74,38 +70,36 @@ public class C13OdstranenieMajetkovehoPodielu extends ControllerBase {
     private JFXButton buttonUlozMajetkovePodiely;
 
     private SimpleBooleanProperty isCisloKUOk = new SimpleBooleanProperty(false);
-    private SimpleBooleanProperty isCisloLVOk = new SimpleBooleanProperty(false);
-    private SimpleBooleanProperty isRodneCisloOk = new SimpleBooleanProperty(false);
-
-    private List<SimpleBooleanProperty> simpleBooleanProperties = Arrays.asList(
-            isCisloKUOk,
-            isCisloLVOk,
-            isRodneCisloOk
-    );
+    private SimpleBooleanProperty isCisloListuVlastnictvaOdstanenehoOk = new SimpleBooleanProperty(false);
+    private SimpleBooleanProperty isCisloListuVlastnictvaNovehoOk = new SimpleBooleanProperty(false);
 
     private List<JFXTextField> textFields;
 
-    public C13OdstranenieMajetkovehoPodielu(ISSpravyKatastra isSpravyKatastra) {
+    private List<SimpleBooleanProperty> simpleBooleanProperties = Arrays.asList(
+            isCisloKUOk,
+            isCisloListuVlastnictvaOdstanenehoOk,
+            isCisloListuVlastnictvaNovehoOk
+    );
+
+    public C19OdstranenieListuVlastnictva(ISSpravyKatastra isSpravyKatastra) {
         super(isSpravyKatastra);
         initView();
-
         textFields = Arrays.asList(
                 textFieldCisloKatastralnehoUzemia,
-                textFieldCisloListuVlastnictva,
-                textFieldRodneCislo
+                textFieldCisloListuVlastnictvaOdstranovaneho,
+                textFieldCisloListuVlastnictvaNoveho
         );
+        Helper.DecorateNumberTextFieldWithValidator(textFieldCisloKatastralnehoUzemia, isCisloKUOk);
+        Helper.DecorateNumberTextFieldWithValidator(textFieldCisloListuVlastnictvaOdstranovaneho, isCisloListuVlastnictvaOdstanenehoOk);
+        Helper.DecorateNumberTextFieldWithValidator(textFieldCisloListuVlastnictvaNoveho, isCisloListuVlastnictvaNovehoOk);
 
-        Helper.DecorateNumberTextFieldWithValidator( textFieldCisloKatastralnehoUzemia, isCisloKUOk);
-        Helper.DecorateNumberTextFieldWithValidator( textFieldCisloListuVlastnictva, isCisloLVOk);
-        Helper.DecorateTextFieldWithValidator(textFieldRodneCislo, isRodneCisloOk, Obcan.RODNE_CISLO_LENGTH, "Rodné číslo");
-
-        buttonOdstranMajetkovyPodiel.setOnAction(event -> {
-            if (Helper.DisableButton(buttonOdstranMajetkovyPodiel, simpleBooleanProperties, () -> textFields.forEach(JFXTextField::validate))) {
+        buttonOdstranListVlastnictva.setOnAction(event -> {
+            if (Helper.DisableButton(buttonOdstranListVlastnictva, simpleBooleanProperties, () -> textFields.forEach(JFXTextField::validate))) {
                 return;
             }
-            new OdstranMajetkovyPodiel().execute();
+            new OdstranenieListuVlastnictva().execute();
         });
-        Helper.SetActionOnEnter(textFields, () -> buttonOdstranMajetkovyPodiel.fire());
+        Helper.SetActionOnEnter(textFields, () -> buttonOdstranListVlastnictva.fire());
 
         tableColumnSupisneCislo.setCellValueFactory(param -> new SimpleLongProperty(param.getValue().getSupisneCislo()));
         tableColumnAdresa.setCellValueFactory(param -> new SimpleStringProperty(param.getValue().getAdresa()));
@@ -135,7 +129,6 @@ public class C13OdstranenieMajetkovehoPodielu extends ControllerBase {
             tableViewObcanPodiely.refresh();
         });
 
-
         buttonUlozMajetkovePodiely.setOnAction(event -> {
             ObservableList<TableItemObcanPodiel> tableViewObcanPodielyItems = tableViewObcanPodiely.getItems();
             if (tableViewObcanPodielyItems.size() == 0) {
@@ -148,8 +141,8 @@ public class C13OdstranenieMajetkovehoPodielu extends ControllerBase {
             }
             tableViewObcanPodielyItems.forEach(tableItemObcanPodiel -> tableItemObcanPodiel.setObcanoviNovyPodiel());
             showSuccessDialog("Nové podiely boli uložené");
-
         });
+
         Helper.InstallCopyPasteHandler(tableViewNehnutelnosti);
         Helper.InstallCopyPasteHandler(tableViewObcanPodiely);
 
@@ -165,8 +158,8 @@ public class C13OdstranenieMajetkovehoPodielu extends ControllerBase {
     }
 
     private void clearFormulars() {
-        buttonOdstranMajetkovyPodiel.disableProperty().unbind();
-        buttonOdstranMajetkovyPodiel.disableProperty().set(false);
+        buttonOdstranListVlastnictva.disableProperty().unbind();
+        buttonOdstranListVlastnictva.disableProperty().set(false);
         textFields.forEach(jfxTextField -> {
             jfxTextField.setText("");
             jfxTextField.resetValidation();
@@ -187,17 +180,17 @@ public class C13OdstranenieMajetkovehoPodielu extends ControllerBase {
 
     @Override
     protected String getViewFileName() {
-        return "13odstranenieMajetkovehoPodielu.fxml";
+        return "19odstranenieListuVlastnictva.fxml";
     }
 
     @Override
     public String getViewName() {
-        return "13. Odstránenie majetkového podielu";
+        return "19. Odstránenie listu vlastníctva";
     }
 
-    private class OdstranMajetkovyPodiel extends SimpleTask {
+    private class OdstranenieListuVlastnictva extends SimpleTask {
 
-        ListVlastnictva listVlastnictva = null;
+        ListVlastnictva listVlastnictva_ = null;
 
         @Override
         public boolean compute() {
@@ -207,33 +200,32 @@ public class C13OdstranenieMajetkovehoPodielu extends ControllerBase {
             } catch (NumberFormatException e) {
                 return false;
             }
-
-            long cisloListuVlastnictva = 0;
+            long cisloListuVlastnictvaOdstraneneho = 0;
             try {
-                cisloListuVlastnictva = Long.valueOf(textFieldCisloListuVlastnictva.getText());
+                cisloListuVlastnictvaOdstraneneho = Long.valueOf(textFieldCisloListuVlastnictvaOdstranovaneho.getText());
             } catch (NumberFormatException e) {
                 return false;
             }
-            listVlastnictva = isSpravyKatastra_.odstranMajetkovyPodielNaListeVlastnictva(cisloKatastralnehoUzemia, cisloListuVlastnictva, textFieldRodneCislo.getText());
-            return listVlastnictva != null;
+            long cisloListuVlastnictvaNoveho = 0;
+            try {
+                cisloListuVlastnictvaNoveho = Long.valueOf(textFieldCisloListuVlastnictvaNoveho.getText());
+            } catch (NumberFormatException e) {
+                return false;
+            }
+            listVlastnictva_ = isSpravyKatastra_.odstranAPresunListVlatnictva(cisloKatastralnehoUzemia, cisloListuVlastnictvaOdstraneneho, cisloListuVlastnictvaNoveho);
+            return listVlastnictva_ != null;
         }
 
         @Override
         public void onSuccess() {
-            Helper.naplnTabulkuNehnutelnosti(tableViewNehnutelnosti, listVlastnictva.getNehnutelnostiNaListeVlastnictva());
-            Helper.naplnTabulkuVlastnikov(tableViewObcanPodiely, listVlastnictva.getVlastniciSPodielom());
-
-
-            if (listVlastnictva.getVlastniciSPodielom().getSize() > 0) {
-                showSuccessDialog("Občanovi bol úspešne odstránený majetkový posiel. Môžete upraviť podiely ostatných vlastníkov.");
-            } else {
-                showSuccessDialog("Občanovi bol úspešne odstránený majetkový posiel. Na liste vlastníctva nie sú žiadny iný vlastníci.");
-            }
+            Helper.naplnTabulkuNehnutelnosti(tableViewNehnutelnosti, listVlastnictva_.getNehnutelnostiNaListeVlastnictva());
+            Helper.naplnTabulkuVlastnikov(tableViewObcanPodiely, listVlastnictva_.getVlastniciSPodielom());
+            showSuccessDialog("List vlastníctva úspešne odstránený a obsah presunutý na iny list vlatníctva. Upravte prosím majetkové podiely");
         }
 
         @Override
         public void onFail() {
-            showWarningDialog("Nepodarilo sa odstrániť majetkový podiel");
+            showWarningDialog("List vlastníctva nebol odstránený");
         }
     }
 

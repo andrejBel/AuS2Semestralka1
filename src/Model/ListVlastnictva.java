@@ -120,10 +120,13 @@ public class ListVlastnictva {
             ObcanSPodielom novyObcanSPodielom = vlastniciSPodielom_.findData(dummyObcanSPodielom);
             boolean removedStaryMajitel = vlastniciSPodielom_.remove(povodnyMajitelPodiel) != null;
             if (removedStaryMajitel) {
+                povodnyMajitel.odstranListVlastnictva(this);
                 if (novyObcanSPodielom == null) { // ked este novy majitel nema podiel na LV
                     novyObcanSPodielom = new ObcanSPodielom(novyMajitel, povodnyMajitelPodiel.getPodiel());
+                    novyMajitel.pridajAleboPonechajListVlastnictva(this);
                     return vlastniciSPodielom_.insert(novyObcanSPodielom);
                 } else {
+                    novyMajitel.pridajAleboPonechajListVlastnictva(this);
                     novyObcanSPodielom.setPodiel(novyObcanSPodielom.getPodiel() + povodnyMajitelPodiel.getPodiel());
                     return true;
                 }
@@ -131,5 +134,46 @@ public class ListVlastnictva {
         }
         return false;
     }
+
+    public boolean presunVsetokObsahNaInyListVlastnictva(ListVlastnictva inyListVlastnictva) {
+        boolean inserted = false;
+        for (Nehnutelnost nehnutelnost: nehnutelnostiNaListeVlastnictva_) {
+            nehnutelnost.setListVlastnictva(inyListVlastnictva);
+            inserted = inyListVlastnictva.vlozNehnutelnostNaListVlastnictva(nehnutelnost);
+            if (!inserted) {
+                System.out.println("tu by si nemal prist");
+                return false;
+            }
+        }
+        for (ObcanSPodielom obcanSPodielom : vlastniciSPodielom_) {
+
+            if (inyListVlastnictva.vlastniciSPodielom_.getSize() > 0) {
+                // mohlo dojst k mergu, nastavim podiel na 0
+                obcanSPodielom.setPodiel(0.0);
+            }
+            inyListVlastnictva.vlastniciSPodielom_.insert(obcanSPodielom);
+            obcanSPodielom.getObcan().odstranListVlastnictva(this);
+            obcanSPodielom.getObcan().pridajAleboPonechajListVlastnictva(inyListVlastnictva);
+        }
+        this.vlastniciSPodielom_.clear();
+        this.nehnutelnostiNaListeVlastnictva_.clear();
+        return true;
+    }
+
+    // metoda zmeni katastralne uzemia a zaroven presunie vlastnikom listy vlastnictva z 1 uzemia do druheho, konflikty nebudu
+    public boolean zmenKatastralneUzemie(KatastralneUzemie katastralneUzemie) {
+        boolean zmenene = false;
+        KatastralneUzemie katastralneUzemiePovodne = this.katastralneUzemie_;
+        this.katastralneUzemie_ = katastralneUzemie;
+        for (ObcanSPodielom obcanSPodielom: vlastniciSPodielom_) {
+            zmenene = obcanSPodielom.getObcan().zmenCisloKatastralnehoUzemiaPreListyVlastnictva(katastralneUzemiePovodne.getCisloKatastralnehoUzemia(), katastralneUzemie.getCisloKatastralnehoUzemia());
+            if (!zmenene) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
 
 }

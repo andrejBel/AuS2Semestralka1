@@ -1,9 +1,9 @@
 package GUI.View.ViewItems;
 
 public class TableItemNehnutelnost {
-    long supisneCislo_;
-    String adresa_;
-    String popis_;
+    private long supisneCislo_;
+    private String adresa_;
+    private String popis_;
 
     public TableItemNehnutelnost(long supisneCislo, String adresa, String popis) {
         this.supisneCislo_ = supisneCislo;

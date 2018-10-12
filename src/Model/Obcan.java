@@ -35,6 +35,30 @@ public class Obcan {
         return result != null ? result.getValue() : null;
     }
 
+    public boolean zmenCisloKatastralnehoUzemiaPreListyVlastnictva(long povodneCisloKatastralnehoUzemia, long noveCislokatastralnehoUzemia) {
+        dummyPair.setKey(povodneCisloKatastralnehoUzemia);
+        Pair< Long, AvlTree<ListVlastnictva> > listyVlatnictvaPovodneSKU = listyVlatnictva_.findData(dummyPair);
+        if (listyVlatnictvaPovodneSKU != null) { // nemame ziadne listy v danom uzemi, nemam co presuvat
+            AvlTree<ListVlastnictva> listyVlastnictvaPovodne = listyVlatnictvaPovodneSKU.getValue();
+            dummyPair.setKey(noveCislokatastralnehoUzemia);
+            Pair< Long, AvlTree<ListVlastnictva> > listyVlastnictvaPreNoveKatastralneUzemie = listyVlatnictva_.findData(dummyPair);
+            if (listyVlastnictvaPreNoveKatastralneUzemie == null) {
+                listyVlastnictvaPreNoveKatastralneUzemie = vyrobParPreStromListovVlastnictva(noveCislokatastralnehoUzemia);
+                listyVlatnictva_.insert(listyVlastnictvaPreNoveKatastralneUzemie);
+            }
+            AvlTree<ListVlastnictva> cieloveListyVlastnictva = listyVlastnictvaPreNoveKatastralneUzemie.getValue();
+            boolean inserted = false;
+            for (ListVlastnictva listVlastnictva: listyVlastnictvaPovodne) {
+                inserted = cieloveListyVlastnictva.insert(listVlastnictva);
+                if (!inserted) {
+                    return false;
+                }
+            }
+            return listyVlatnictva_.remove(listyVlatnictvaPovodneSKU) != null;
+        }
+        return true;
+    }
+
     public boolean pridajAleboPonechajListVlastnictva(ListVlastnictva listVlastnictva) {
         long cisloKatastralnehoUzemia = listVlastnictva.getKatastralneUzemie().getCisloKatastralnehoUzemia();
         dummyPair.setKey(cisloKatastralnehoUzemia);

@@ -33,7 +33,9 @@ public class Aplikacia {
                 new CHome(isSpravyKatastra_),
                 new CGenerator(isSpravyKatastra_),
                 new CImportExportDat(isSpravyKatastra_, stage),
+                new CVypisVsetkychInformacii(isSpravyKatastra_),
                 new C1VyhladanieNehnutelnostPodlaCislaKU(isSpravyKatastra_),
+                new C2VyhladanieTrvalehoPobytuObyvatela(isSpravyKatastra_),
                 new C3VypisOsobSTrvalymPobytom(isSpravyKatastra_),
                 new C4VyhladanieLVPodlaCislaKU(isSpravyKatastra_),
                 new C5VyhladanieNehnutelnostPodlaNazvuKU(isSpravyKatastra_),
@@ -49,8 +51,10 @@ public class Aplikacia {
                 new C16PridanieObcana(isSpravyKatastra_),
                 new C17PridanieListuVlastnictva(isSpravyKatastra_),
                 new C18PridanieNehnutelnosti(isSpravyKatastra_),
+                new C19OdstranenieListuVlastnictva(isSpravyKatastra_),
                 new C20OdstranenieNehnutelnosti(isSpravyKatastra_),
-                new C21PridanieKatastralnehoUzemia(isSpravyKatastra_)
+                new C21PridanieKatastralnehoUzemia(isSpravyKatastra_),
+                new C22OdstranenieKatastralnehoUzemia(isSpravyKatastra_)
         );
 
         for (ControllerBase controller : controllers) {

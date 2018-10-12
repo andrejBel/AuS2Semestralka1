@@ -1,6 +1,7 @@
 package Utils;
 
 import GUI.View.ViewItems.TableItemNehnutelnost;
+import GUI.View.ViewItems.TableItemNehnutelnostListVlastnictva;
 import GUI.View.ViewItems.TableItemObcan;
 import GUI.View.ViewItems.TableItemObcanPodiel;
 import Model.ListVlastnictva;
@@ -14,24 +15,24 @@ import javafx.beans.Observable;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
-import javafx.scene.control.SelectionMode;
-import javafx.scene.control.TablePosition;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextInputControl;
+import javafx.scene.control.*;
 import javafx.scene.input.*;
+import javafx.util.Callback;
 import structures.AvlTree;
 
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
+import java.util.function.Function;
 
 import static javafx.beans.binding.Bindings.createBooleanBinding;
 
 public class Helper {
 
-    private static Random GENERATOR = new Random();
+    private static Random GENERATOR = new Random(10);
     private static SimpleDateFormat SIMPLE_DATE_FORMASTTER =  new SimpleDateFormat("dd.MM.yyyy");
     public static final long NUMBER_OF_MILLISECONDS_IN_DAY = 86400000L;
     public static final String EMPTY_WARNING_MESSAGE = "Vstup musí byť zadaný";
@@ -225,6 +226,16 @@ public class Helper {
         }
     }
 
+    public static void naplnTabulkuNehnutelnostiSListomVlastnictva(TableView<TableItemNehnutelnostListVlastnictva> table, AvlTree<Nehnutelnost> nehnutelnosti) {
+        ObservableList<TableItemNehnutelnostListVlastnictva> tableViewItemsNehnutelnosti = table.getItems();
+        tableViewItemsNehnutelnosti.clear();
+        TableItemNehnutelnostListVlastnictva tableItemNehnutelnost = null;
+        for (Nehnutelnost nehnutelnost: nehnutelnosti) {
+            tableItemNehnutelnost = new TableItemNehnutelnostListVlastnictva(nehnutelnost.getSupisneCislo(), nehnutelnost.getAdresa(), nehnutelnost.getPopis(), nehnutelnost.getListVlastnictva().getCisloListuVlastnictva());
+            tableViewItemsNehnutelnosti.add(tableItemNehnutelnost);
+        }
+    }
+
     public static void naplnTabulkuVlastnikov(TableView<TableItemObcanPodiel> table, AvlTree<ListVlastnictva.ObcanSPodielom> obcaniaSPodielom) {
         ObservableList<TableItemObcanPodiel> tableViewItemObcanSPodielmi = table.getItems();
         tableViewItemObcanSPodielmi.clear();
@@ -232,6 +243,64 @@ public class Helper {
         for (ListVlastnictva.ObcanSPodielom obcanSPodielom: obcaniaSPodielom ) {
             tableItemObcanPodiel = new TableItemObcanPodiel(obcanSPodielom);
             tableViewItemObcanSPodielmi.add(tableItemObcanPodiel);
+        }
+    }
+
+    public static <T> void SetRowFactory(TableView<T> table, Function<T, Boolean> isUniqueFunction) {
+        table.setRowFactory(new Callback<TableView<T>, TableRow<T>>() {
+            @Override
+            public TableRow<T> call(TableView<T> param) {
+                return new TableRow<T>() {
+                    @Override
+                    protected void updateItem(T item, boolean empty) {
+                        super.updateItem(item, empty);
+                        if (item == null || empty) {
+                            return;
+                        }
+                        if (isUniqueFunction.apply(item)) {
+                            setStyle("-fx-background-color: #00BCD4 ;");
+                        } else {
+                            setStyle("");
+                        }
+                    }
+                };
+            }
+        });
+    }
+
+    public static void generujUnikatneIndexy(ArrayList<Long> pouziteIndexy, int kolkoNovych, long start, ArrayList<Long> vysledok) {
+        // p-redpokladame, ze pouzite indexy su usporiadane vzostupne
+        boolean sorted = true;
+        if (pouziteIndexy.size() > 1) {
+            for (int index = 0; index < pouziteIndexy.size() - 1; index++) {
+                if (pouziteIndexy.get(index) > pouziteIndexy.get(index + 1)) {
+                    sorted = false;
+                    break;
+                }
+            }
+        }
+        if (!sorted) {
+            System.out.println("musimTriedit");
+            pouziteIndexy.sort((o1, o2) -> Long.compare(o1, o2));
+        }
+        vysledok.clear();
+        long generovane = start;
+        int indexPouzite = 0;
+        int velkostPouzite = pouziteIndexy.size();
+        while (vysledok.size() < kolkoNovych) {
+            if (indexPouzite < (velkostPouzite)) { // stale mam nejake nasledujuce cislo
+                long cisloNaPozicii = pouziteIndexy.get(indexPouzite);
+                if (generovane < cisloNaPozicii) {
+                    vysledok.add(generovane++);
+                } else if (generovane == cisloNaPozicii) {
+                    ++indexPouzite;
+                    ++generovane;
+                } else  {
+                    ++indexPouzite;
+                }
+            } else { // presiel som vsetkyPouzite
+                vysledok.add(generovane++);
+            }
         }
     }
 
