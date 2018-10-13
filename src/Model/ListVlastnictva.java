@@ -64,6 +64,9 @@ public class ListVlastnictva {
     }
 
     public boolean vlozNehnutelnostNaListVlastnictva(Nehnutelnost vkladanaNehnutelnost) {
+        if (vkladanaNehnutelnost.getListVlastnictva() != this) {
+            return false;
+        }
         return nehnutelnostiNaListeVlastnictva_.insert(vkladanaNehnutelnost);
     }
 
@@ -120,15 +123,17 @@ public class ListVlastnictva {
             ObcanSPodielom novyObcanSPodielom = vlastniciSPodielom_.findData(dummyObcanSPodielom);
             boolean removedStaryMajitel = vlastniciSPodielom_.remove(povodnyMajitelPodiel) != null;
             if (removedStaryMajitel) {
-                povodnyMajitel.odstranListVlastnictva(this);
-                if (novyObcanSPodielom == null) { // ked este novy majitel nema podiel na LV
-                    novyObcanSPodielom = new ObcanSPodielom(novyMajitel, povodnyMajitelPodiel.getPodiel());
-                    novyMajitel.pridajAleboPonechajListVlastnictva(this);
-                    return vlastniciSPodielom_.insert(novyObcanSPodielom);
-                } else {
-                    novyMajitel.pridajAleboPonechajListVlastnictva(this);
-                    novyObcanSPodielom.setPodiel(novyObcanSPodielom.getPodiel() + povodnyMajitelPodiel.getPodiel());
-                    return true;
+                removedStaryMajitel = povodnyMajitel.odstranListVlastnictva(this);
+                if (removedStaryMajitel) {
+                    if (novyObcanSPodielom == null) { // ked este novy majitel nema podiel na LV
+                        novyObcanSPodielom = new ObcanSPodielom(novyMajitel, povodnyMajitelPodiel.getPodiel());
+                        novyMajitel.pridajAleboPonechajListVlastnictva(this);
+                        return vlastniciSPodielom_.insert(novyObcanSPodielom);
+                    } else {
+                        novyMajitel.pridajAleboPonechajListVlastnictva(this);
+                        novyObcanSPodielom.setPodiel(novyObcanSPodielom.getPodiel() + povodnyMajitelPodiel.getPodiel());
+                        return true;
+                    }
                 }
             }
         }
@@ -166,7 +171,7 @@ public class ListVlastnictva {
         KatastralneUzemie katastralneUzemiePovodne = this.katastralneUzemie_;
         this.katastralneUzemie_ = katastralneUzemie;
         for (ObcanSPodielom obcanSPodielom: vlastniciSPodielom_) {
-            zmenene = obcanSPodielom.getObcan().zmenCisloKatastralnehoUzemiaPreListyVlastnictva(katastralneUzemiePovodne.getCisloKatastralnehoUzemia(), katastralneUzemie.getCisloKatastralnehoUzemia());
+            zmenene = obcanSPodielom.getObcan().zmenCisloKatastralnehoUzemiaPreListyVlastnictva(katastralneUzemiePovodne.getCisloKatastralnehoUzemia(), this.katastralneUzemie_.getCisloKatastralnehoUzemia());
             if (!zmenene) {
                 return false;
             }

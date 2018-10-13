@@ -34,7 +34,6 @@ public class Nehnutelnost {
     }
 
     public void odstranObcanomTrvalyPobytVNehnutelnosti() {
-        Iterator<Obcan> iterable = obcaniaSTravalymPobytom_.iterator();
         for (Obcan obcan: obcaniaSTravalymPobytom_) {
             obcan.setTrvalyPobyt(null);
         }
@@ -56,7 +55,7 @@ public class Nehnutelnost {
         return listVlastnictva_;
     }
 
-    public AvlTree<Obcan> getObcaniaSTravalymPobytom() {
+    public AvlTree<Obcan> getObcaniaSTrvalymPobytom() {
         return obcaniaSTravalymPobytom_;
     }
 

@@ -16,9 +16,7 @@ import javafx.beans.property.SimpleLongProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.fxml.FXML;
 import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
-import javafx.util.Callback;
 
 import javax.xml.ws.Holder;
 import java.util.Arrays;
@@ -193,7 +191,7 @@ public class C1VyhladanieNehnutelnostPodlaCislaKU extends ControllerBase {
             Nehnutelnost nehnutelnost = holderNehnutelnost_.value;
 
             ListVlastnictva listVlastnictva = nehnutelnost.getListVlastnictva();
-            Helper.naplnTabulkuObcaniaSTravlymPobytom(tableViewObcaniaSTrvalymPobytom, nehnutelnost.getObcaniaSTravalymPobytom());
+            Helper.naplnTabulkuObcaniaSTrvalymPobytom(tableViewObcaniaSTrvalymPobytom, nehnutelnost.getObcaniaSTrvalymPobytom());
             Helper.naplnTabulkuNehnutelnostiSListomVlastnictva(tableViewNehnutelnosti, listVlastnictva.getNehnutelnostiNaListeVlastnictva());
             Helper.naplnTabulkuVlastnikov(tableViewObcanPodiely, listVlastnictva.getVlastniciSPodielom());
 

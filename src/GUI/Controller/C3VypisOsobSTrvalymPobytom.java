@@ -1,7 +1,6 @@
 package GUI.Controller;
 
 import GUI.SimpleTask;
-import GUI.View.ViewItems.TableItemNehnutelnost;
 import GUI.View.ViewItems.TableItemObcan;
 import InformacnySystem.ISSpravyKatastra;
 import Model.Nehnutelnost;
@@ -9,25 +8,15 @@ import Model.Obcan;
 import Utils.Helper;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextField;
-import javafx.beans.binding.Bindings;
-import javafx.beans.binding.BooleanBinding;
-import javafx.beans.binding.StringBinding;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleStringProperty;
-import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.scene.control.Labeled;
 import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
-import javafx.scene.input.KeyCode;
-import javafx.scene.paint.Color;
 import structures.AvlTree;
 
 import java.util.Arrays;
 import java.util.List;
-
-import static javafx.beans.binding.Bindings.createBooleanBinding;
 
 public class C3VypisOsobSTrvalymPobytom extends ControllerBase {
 
@@ -153,9 +142,9 @@ public class C3VypisOsobSTrvalymPobytom extends ControllerBase {
 
         @Override
         public void onSuccess() {
-            AvlTree<Obcan> obcaniaStrvalymPobytom = nehnutelnost_.getObcaniaSTravalymPobytom();
+            AvlTree<Obcan> obcaniaStrvalymPobytom = nehnutelnost_.getObcaniaSTrvalymPobytom();
             showSuccessDialog("Nehnuteľnosť bola nájdená. " + obcaniaStrvalymPobytom.getSize() + " obyvateľov má v nej trvalý pobyt");
-            Helper.naplnTabulkuObcaniaSTravlymPobytom(tableViewObcan, obcaniaStrvalymPobytom);
+            Helper.naplnTabulkuObcaniaSTrvalymPobytom(tableViewObcan, obcaniaStrvalymPobytom);
         }
 
         @Override

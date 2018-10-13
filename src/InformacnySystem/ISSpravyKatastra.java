@@ -69,11 +69,11 @@ public class ISSpravyKatastra {
         upravMajetkovyPodielNaListeVlastnictva(1,2, "1111111111111111");
         upravMajetkovyPodielNaListeVlastnictva(1,2, "1111111111111112");
 
-        exportujData("exportPred.csv");
+        //exportujData("exportPred.csv");
         //boolean presun = odstranAPresunKatastralneUzemie(1, 2, "Ide to");
 
         //System.out.println(presun ? " presun ok" : "presun nie OK!!!!!!");
-        importujData("Export/skutocnetest.csv");
+        //importujData("Export/skutocnetest.csv");
     }
 
     // 1
@@ -251,7 +251,7 @@ public class ISSpravyKatastra {
 
 
     // 15
-    public AvlTree<KatastralneUzemie> getKatastralneUzemieUtriedenychPodlaNapisu() {
+    public AvlTree<KatastralneUzemie> getKatastralneUzemieUtriedenychPodlaNazvu() {
         return katastralneUzemieNazov_;
     }
 
@@ -311,10 +311,10 @@ public class ISSpravyKatastra {
                     if (listVlastnictvaNove == null) {
                         Optional<Holder<ListVlastnictva>> listVlastnictvaHolder = Optional.of(new Holder<>());
                         boolean inserted = katastralneUzemie.vlozListVlastnictva(cisloListuVlastnictvaNoveho, listVlastnictvaHolder);
-                        listVlastnictvaNove = listVlastnictvaHolder.get().value;
                         if (!inserted) {
                             return null;
                         }
+                        listVlastnictvaNove = listVlastnictvaHolder.get().value;
                     }
                     boolean status = listVlastnictvaNaOdstranenie.presunVsetokObsahNaInyListVlastnictva(listVlastnictvaNove);
                     if (status) {
@@ -412,7 +412,7 @@ public class ISSpravyKatastra {
 
 
         for (int indexPocetObcanov = 0; indexPocetObcanov < celkovyPocetObcanov; indexPocetObcanov++) {
-            inserted = pridajObcana(Helper.GetNahodneMenoAPriezvisko(), Helper.GetNahodneRodneCislo(), Helper.GetNahodnyDatumNarodenia(), obcanHolder);
+            inserted = pridajObcana(Helper.GetNahodneMenoAPriezvisko(), Helper.GetRodneCisloSoSekvencie(), Helper.GetNahodnyDatumNarodenia(), obcanHolder);
             vlozeniObcania.add(obcanHolder.get().value);
             if (!inserted) {
                 indexPocetObcanov--;
@@ -549,8 +549,8 @@ public class ISSpravyKatastra {
                         stringBuilder.append(DEFAULT_SEPARATOR);
                         writer.println(stringBuilder.toString());
                         stringBuilder.setLength(0);
-                        writer.println("Pocet obcanov s trvalym pobytom v NEH: " + DEFAULT_SEPARATOR + nehnutelnost.getObcaniaSTravalymPobytom().getSize() + DEFAULT_SEPARATOR);
-                        Iterator<Obcan> iteratorObcaniaSTrvalymPobytom = nehnutelnost.getObcaniaSTravalymPobytom().levelOrderIterator();
+                        writer.println("Pocet obcanov s trvalym pobytom v NEH: " + DEFAULT_SEPARATOR + nehnutelnost.getObcaniaSTrvalymPobytom().getSize() + DEFAULT_SEPARATOR);
+                        Iterator<Obcan> iteratorObcaniaSTrvalymPobytom = nehnutelnost.getObcaniaSTrvalymPobytom().levelOrderIterator();
                         while (iteratorObcaniaSTrvalymPobytom.hasNext()) {
                             Obcan obcan = iteratorObcaniaSTrvalymPobytom.next();
                             stringBuilder.append(obcan.getRodneCislo());

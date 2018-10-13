@@ -109,7 +109,7 @@ public class C7VypisNehnutelnosti extends ControllerBase {
 
     @Override
     public String getViewName() {
-        return "7. Výpis nehnutelností";
+        return "7. Výpis nehnutelností KÚ";
     }
 
 

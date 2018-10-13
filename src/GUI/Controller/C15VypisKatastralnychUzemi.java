@@ -2,7 +2,7 @@ package GUI.Controller;
 
 import InformacnySystem.ISSpravyKatastra;
 import Model.KatastralneUzemie;
-import javafx.beans.property.ObjectProperty;
+import Utils.Helper;
 import javafx.beans.property.SimpleLongProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.ObservableList;
@@ -50,12 +50,13 @@ public class C15VypisKatastralnychUzemi extends ControllerBase {
         tableColumnNazovKU.setCellValueFactory(param -> {
             return new SimpleStringProperty( param.getValue().getNazovKU());
         });
+        Helper.InstallCopyPasteHandler(tableViewKatastralneUzemia);
     }
 
     private void nacitajKatastralneUzemia() {
         ObservableList<TableItemKatastralneUzemie> items = tableViewKatastralneUzemia.getItems();
         items.clear();
-        AvlTree<KatastralneUzemie> katastralneUzemia = isSpravyKatastra_.getKatastralneUzemieUtriedenychPodlaNapisu();
+        AvlTree<KatastralneUzemie> katastralneUzemia = isSpravyKatastra_.getKatastralneUzemieUtriedenychPodlaNazvu();
         for (KatastralneUzemie uzemie: katastralneUzemia) {
             TableItemKatastralneUzemie item = new TableItemKatastralneUzemie(uzemie.getCisloKatastralnehoUzemia(), uzemie.getNazov());
             items.add(item);

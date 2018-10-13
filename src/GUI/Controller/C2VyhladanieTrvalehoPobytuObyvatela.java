@@ -1,7 +1,6 @@
 package GUI.Controller;
 
 import GUI.SimpleTask;
-import GUI.View.ViewItems.TableItemNehnutelnost;
 import GUI.View.ViewItems.TableItemNehnutelnostListVlastnictva;
 import GUI.View.ViewItems.TableItemObcan;
 import GUI.View.ViewItems.TableItemObcanPodiel;
@@ -185,7 +184,7 @@ public class C2VyhladanieTrvalehoPobytuObyvatela extends ControllerBase {
             if (nehnutelnost != null) {
                 showSuccessDialog("Trvalý pobyt občana nájdený");
                 ListVlastnictva listVlastnictva = nehnutelnost.getListVlastnictva();
-                Helper.naplnTabulkuObcaniaSTravlymPobytom(tableViewObcaniaSTrvalymPobytom, nehnutelnost.getObcaniaSTravalymPobytom());
+                Helper.naplnTabulkuObcaniaSTrvalymPobytom(tableViewObcaniaSTrvalymPobytom, nehnutelnost.getObcaniaSTrvalymPobytom());
                 Helper.naplnTabulkuNehnutelnostiSListomVlastnictva(tableViewNehnutelnosti, listVlastnictva.getNehnutelnostiNaListeVlastnictva());
                 Helper.naplnTabulkuVlastnikov(tableViewObcanPodiely, listVlastnictva.getVlastniciSPodielom());
             } else {

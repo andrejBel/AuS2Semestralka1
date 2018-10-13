@@ -29,14 +29,6 @@ public class AvlTreeNode<T> {
         return (byte) (rightSubtreeHeight - leftSubtreeHeight);
     }
 
-    boolean isLeftHeavy(byte balance) {
-        return balance < -1;
-    }
-
-    boolean isRightHeavy(byte balance) {
-        return balance > 1;
-    }
-
     public void updateHeight() {
         byte leftSubtreeHeight = AvlTreeNode.GetAvlTreeNodeHeight(this.leftSon_);
         byte rightSubtreeHeight = AvlTreeNode.GetAvlTreeNodeHeight(this.rightSon_);
@@ -89,18 +81,6 @@ public class AvlTreeNode<T> {
 
     public void setData_(T data) {
         this.data_ = data;
-    }
-
-    AvlTreeNode<T> changeLeftSon(AvlTreeNode<T> newLeftSon) {
-        AvlTreeNode<T> oldLeftSon = leftSon_;
-        leftSon_ = newLeftSon;
-        return oldLeftSon;
-    }
-
-    AvlTreeNode<T> changeRightSon(AvlTreeNode<T> newRightSon) {
-        AvlTreeNode<T> oldRightSon = rightSon_;
-        rightSon_ = newRightSon;
-        return oldRightSon;
     }
 
     int getNumberOfSons() {

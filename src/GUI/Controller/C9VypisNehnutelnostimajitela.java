@@ -149,6 +149,6 @@ public class C9VypisNehnutelnostimajitela extends ControllerBase {
 
     @Override
     public String getViewName() {
-        return "9. Výpis nehnuteľností";
+        return "9. Výpis nehnuteľností občana";
     }
 }

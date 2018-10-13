@@ -9,7 +9,7 @@ public class AvlTree<T> implements Iterable<T> {
         return new InOrderIterator();
     }
 
-    public  Iterator<T> levelOrderIterator() { return new LevelOrderIterator(); }
+    public Iterator<T> levelOrderIterator() { return new LevelOrderIterator(); }
 
     private static class Stack<T> {
         private ArrayList<T> list_;
@@ -57,9 +57,17 @@ public class AvlTree<T> implements Iterable<T> {
         root_ = null;
         comparator_ = comparator;
         stack_ = new Stack();
+        size_ = 0;
     }
 
-    public AvlTreeNode<T> getRoot() {
+    public AvlTree(Comparator<T> comparator, byte initialStackSize) {
+        root_ = null;
+        comparator_ = comparator;
+        stack_ = new Stack(initialStackSize);
+        size_ = 0;
+    }
+
+    private AvlTreeNode<T> getRoot() {
         return root_;
     }
 

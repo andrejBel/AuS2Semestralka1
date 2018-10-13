@@ -1,6 +1,7 @@
 package GUI.Controller;
 
 import GUI.AsyncTask;
+import GUI.SimpleTask;
 import InformacnySystem.ISSpravyKatastra;
 import Model.Obcan;
 import Utils.Helper;
@@ -117,62 +118,25 @@ public class C16PridanieObcana extends ControllerBase {
         datePicker.resetValidation();
     }
 
-    private class PridajObcana extends AsyncTask {
+    private class PridajObcana extends SimpleTask {
 
         @Override
-        public void onPreExecute() {
-            Label label = new Label("Pridávanie obyvateľa");
-            label.setAlignment(Pos.CENTER);
-            JFXSpinner spinner = new JFXSpinner();
-            dialogVBox.getChildren().clear();
-            dialogVBox.getChildren().addAll(label, spinner);
-            dialog.show();
-        }
-
-        @Override
-        public Object doInBackground(Object[] params) throws InterruptedException {
+        public boolean compute() {
             String menoAPriezvisko = textFieldMenoAPriezvisko.getText();
             String rodneCislo = textFieldRodneCislo.getText();
             LocalDate datumNarodenia = datePicker.getValue();
             long datumLong = Helper.ConvertLocalDateToLong(datumNarodenia);
-            return new Boolean( isSpravyKatastra_.pridajObcana(menoAPriezvisko, rodneCislo, datumLong));
+            return isSpravyKatastra_.pridajObcana(menoAPriezvisko, rodneCislo, datumLong);
         }
 
         @Override
-        public void onPostExecute(Object params) {
-            boolean added = (Boolean) params;
-            if (added) {
-                clearFormulars();
-            }
-
-
-            Label label = new Label();
-            label.setStyle("-fx-font-weight: bold");
-            label.setAlignment(Pos.CENTER);
-            dialogVBox.getChildren().clear();
-            dialogVBox.getChildren().addAll(label);
-            JFXButton button = new JFXButton("Zavrieť");
-            button.setOnAction(event1 -> {
-                dialog.close();
-            });
-            dialogLayout.setActions(button);
-            if (added) {
-                label.setTextFill(Color.GREEN);
-                label.setText("Občan úspešne pridaný");
-            } else {
-                label.setTextFill(Color.RED);
-                label.setText("Občan nebol pridaný");
-            }
+        public void onSuccess() {
+            showSuccessDialog("Občan úspešne pridaný");
         }
 
         @Override
-        public void progressCallback(Object[] params) {
-
-        }
-
-        @Override
-        public void onFail(Exception e) {
-
+        public void onFail() {
+            showWarningDialog("Občan nebol pridaný");
         }
     }
 

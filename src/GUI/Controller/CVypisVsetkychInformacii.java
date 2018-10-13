@@ -10,10 +10,8 @@ import Utils.Pair;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTreeView;
 import javafx.collections.ObservableList;
-import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.scene.control.TreeItem;
-import javafx.scene.control.TreeView;
 import structures.AvlTree;
 
 public class CVypisVsetkychInformacii extends  ControllerBase {
@@ -144,7 +142,7 @@ public class CVypisVsetkychInformacii extends  ControllerBase {
 
 
 
-        for (Obcan obcan: nehnutelnost.getObcaniaSTravalymPobytom()) {
+        for (Obcan obcan: nehnutelnost.getObcaniaSTrvalymPobytom()) {
             obcaniaSTrvalymPobytomTreeItem.getChildren().add(new TreeItem<>(
                   "RČ: " + obcan.getRodneCislo()
             ));

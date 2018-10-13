@@ -92,7 +92,6 @@ public class C17PridanieListuVlastnictva extends ControllerBase {
 
         @Override
         public boolean compute() {
-            String nazovKatastralnehoUzemia = textFieldNazovKatastralnehoUzemia.getText();
             long cisloListuVlastnictva = 0;
             try {
                 cisloListuVlastnictva = Long.valueOf(textFieldCisloListuVlastnictva.getText());

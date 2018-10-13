@@ -7,13 +7,13 @@ import java.util.Comparator;
 
 public class Obcan {
 
-    public static int RODNE_CISLO_LENGTH = 16;
+    public static final int RODNE_CISLO_LENGTH = 16;
     private String menoPriezvisko_;
     private String rodneCislo_;
-    long datumNarodenia_;
-    Nehnutelnost trvalyPobyt_;
+    private long datumNarodenia_;
+    private Nehnutelnost trvalyPobyt_;
     // kluc je cislo katastralnehoo uzemia, hodnota su nehnutelnosti obcana v danom uzemi
-    AvlTree<Pair< Long, AvlTree<ListVlastnictva> >> listyVlatnictva_;
+    private AvlTree<Pair< Long, AvlTree<ListVlastnictva> >> listyVlatnictva_;
 
     private static final  Pair< Long, AvlTree<ListVlastnictva> > dummyPair = new Pair<>((long) 0, null);
 

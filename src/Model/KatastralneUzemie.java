@@ -15,8 +15,8 @@ public class KatastralneUzemie {
     private AvlTree<Nehnutelnost> nehnutelnostiVkatastralnomUzemi_;
     private AvlTree<ListVlastnictva> listyVlastnictvaVKatastralnomUzemi_;
 
-    ListVlastnictva dummyListVlastnictva = new ListVlastnictva();
-    Nehnutelnost dummyNehnutelnost = new Nehnutelnost();
+    private static final ListVlastnictva dummyListVlastnictva = new ListVlastnictva();
+    private static final Nehnutelnost dummyNehnutelnost = new Nehnutelnost();
 
     public KatastralneUzemie(long cisloKatastralnehoUzemia_, String nazov_) {
         this.cisloKatastralnehoUzemia_ = cisloKatastralnehoUzemia_;

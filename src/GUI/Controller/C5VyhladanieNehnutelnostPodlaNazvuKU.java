@@ -202,7 +202,7 @@ public class C5VyhladanieNehnutelnostPodlaNazvuKU extends ControllerBase {
             Nehnutelnost nehnutelnost = holderNehnutelnost_.value;
 
             ListVlastnictva listVlastnictva = nehnutelnost.getListVlastnictva();
-            Helper.naplnTabulkuObcaniaSTravlymPobytom(tableViewObcaniaSTrvalymPobytom, nehnutelnost.getObcaniaSTravalymPobytom());
+            Helper.naplnTabulkuObcaniaSTrvalymPobytom(tableViewObcaniaSTrvalymPobytom, nehnutelnost.getObcaniaSTrvalymPobytom());
             Helper.naplnTabulkuNehnutelnostiSListomVlastnictva(tableViewNehnutelnosti, listVlastnictva.getNehnutelnostiNaListeVlastnictva());
             Helper.naplnTabulkuVlastnikov(tableViewObcanPodiely, listVlastnictva.getVlastniciSPodielom());
 

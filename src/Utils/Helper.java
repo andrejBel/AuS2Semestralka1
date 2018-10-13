@@ -37,7 +37,7 @@ public class Helper {
     public static final long NUMBER_OF_MILLISECONDS_IN_DAY = 86400000L;
     public static final String EMPTY_WARNING_MESSAGE = "Vstup musí byť zadaný";
     public static final String EMPTY_WARNING_MESSAGE_NUMBER = "Vstup musí byť celé číslo";
-
+    private static GeneratorId RODNE_CISLO_GENERATOR_ID = new GeneratorId(Long.valueOf("1111111111111111"));
 
     private Helper() {}
 
@@ -65,8 +65,8 @@ public class Helper {
         return GENERATOR.nextInt();
     }
 
-    public static String GetNahodneRodneCislo() {
-        return GetNahodnyString(16);
+    public static String GetRodneCisloSoSekvencie() {
+        return Long.toString(RODNE_CISLO_GENERATOR_ID.getNextValue());
     }
 
     public static String GetNahodnyNazovKatastralnehoUzemie() {
@@ -208,7 +208,7 @@ public class Helper {
         }));
     }
 
-    public static void naplnTabulkuObcaniaSTravlymPobytom(TableView<TableItemObcan> table, AvlTree<Obcan> obcaniaStrvalymPobytom) {
+    public static void naplnTabulkuObcaniaSTrvalymPobytom(TableView<TableItemObcan> table, AvlTree<Obcan> obcaniaStrvalymPobytom) {
         ObservableList<TableItemObcan> tableItems = table.getItems();
         tableItems.clear();
         for (Obcan obcan: obcaniaStrvalymPobytom) {
@@ -303,6 +303,24 @@ public class Helper {
             }
         }
     }
+
+    private static class GeneratorId {
+
+        private long value_;
+
+        public GeneratorId(long startValue) {
+            this.value_ = startValue - 1;
+        }
+        public long getCurrentValue() {
+            return value_;
+        }
+
+        public long getNextValue() {
+            return ++value_;
+        }
+
+    }
+
 
     /**
      * Copy/Paste keyboard event handler.
