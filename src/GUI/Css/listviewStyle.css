@@ -1,6 +1,6 @@
 .jfx-list-view {
     -fx-background-insets: 0;
-    -fx-cell-vertical-margin: 10.0;
+    -fx-cell-vertical-margin: 10.0px;
     -fx-vertical-gap: 10;
     -fx-pref-width: 150;
     -fx-background-color: transparent;

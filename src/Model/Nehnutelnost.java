@@ -2,14 +2,11 @@ package Model;
 
 import structures.AvlTree;
 
-import java.util.Comparator;
-import java.util.Iterator;
-
 public class Nehnutelnost {
 
     private long supisneCislo_;
-    private String adresa_;
-    private String popis_;
+    private final String adresa_;
+    private final String popis_;
     private AvlTree<Obcan> obcaniaSTravalymPobytom_;
     private ListVlastnictva listVlastnictva_; // list vlastnictva, na ktoromn sa nachadza nehnutelnost
 
@@ -57,10 +54,6 @@ public class Nehnutelnost {
 
     public AvlTree<Obcan> getObcaniaSTrvalymPobytom() {
         return obcaniaSTravalymPobytom_;
-    }
-
-    public void setObcaniaSTravalymPobytom_(AvlTree<Obcan> obcaniaSTravalymPobytom_) {
-        this.obcaniaSTravalymPobytom_ = obcaniaSTravalymPobytom_;
     }
 
     public void setSupisneCislo(long supisneCislo) {

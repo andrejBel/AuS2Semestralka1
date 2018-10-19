@@ -81,9 +81,7 @@ public class C11ZmenaMajitelaNehnutelnosti extends ControllerBase {
 
     @Override
     public Runnable getRunnableOnSelection() {
-        return () -> {
-            clearFormulars();
-        };
+        return this::clearFormulars;
     }
 
     @Override

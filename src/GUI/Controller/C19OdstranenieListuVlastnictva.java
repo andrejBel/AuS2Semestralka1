@@ -122,7 +122,7 @@ public class C19OdstranenieListuVlastnictva extends ControllerBase {
         });
 
         tableColumnNovyPodiel.setOnEditCommit(event -> {
-            final Double value = event.getNewValue() != null ?
+            final double value = event.getNewValue() != null ?
                     event.getNewValue().doubleValue() : (event.getOldValue() != null ? event.getOldValue().doubleValue() : 0.0);
             ((TableItemObcanPodiel) event.getTableView().getItems()
                     .get(event.getTablePosition().getRow())).setNovyPodiel(value);
@@ -139,7 +139,7 @@ public class C19OdstranenieListuVlastnictva extends ControllerBase {
                 showWarningDialog("Suma podielov musí byť rovná 100");
                 return;
             }
-            tableViewObcanPodielyItems.forEach(tableItemObcanPodiel -> tableItemObcanPodiel.setObcanoviNovyPodiel());
+            tableViewObcanPodielyItems.forEach(TableItemObcanPodiel::setObcanoviNovyPodiel);
             showSuccessDialog("Nové podiely boli uložené");
         });
 
@@ -170,7 +170,7 @@ public class C19OdstranenieListuVlastnictva extends ControllerBase {
 
     @Override
     public Runnable getRunnableOnSelection() {
-        return () -> clearFormulars();
+        return this::clearFormulars;
     }
 
     @Override

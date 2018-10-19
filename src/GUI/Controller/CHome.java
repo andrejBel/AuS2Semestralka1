@@ -5,12 +5,7 @@ import com.jfoenix.controls.JFXListCell;
 import com.jfoenix.controls.JFXListView;
 import com.jfoenix.controls.JFXTabPane;
 import javafx.fxml.FXML;
-import javafx.scene.control.Label;
 import javafx.scene.control.Tab;
-
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class CHome extends ControllerBase {
 
@@ -57,7 +52,7 @@ public class CHome extends ControllerBase {
 
     @Override
     public Runnable getRunnableOnSelection() {
-        return () -> clearSelection();
+        return this::clearSelection;
     }
 
     @Override

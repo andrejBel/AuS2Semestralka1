@@ -12,7 +12,7 @@ public class AvlTree<T> implements Iterable<T> {
     public Iterator<T> levelOrderIterator() { return new LevelOrderIterator(); }
 
     private static class Stack<T> {
-        private ArrayList<T> list_;
+        private final ArrayList<T> list_;
 
         public Stack(int initialCapacity) {
             list_ = new ArrayList<>(initialCapacity);
@@ -49,21 +49,21 @@ public class AvlTree<T> implements Iterable<T> {
     }
 
     private AvlTreeNode<T> root_;
-    private Comparator<T> comparator_;
+    private final Comparator<T> comparator_;
     private long size_;
-    private Stack<AvlTreeNode<T>> stack_;
+    private final Stack<AvlTreeNode<T>> stack_;
 
     public AvlTree(Comparator<T> comparator) {
         root_ = null;
         comparator_ = comparator;
-        stack_ = new Stack();
+        stack_ = new Stack<>();
         size_ = 0;
     }
 
     public AvlTree(Comparator<T> comparator, byte initialStackSize) {
         root_ = null;
         comparator_ = comparator;
-        stack_ = new Stack(initialStackSize);
+        stack_ = new Stack<>(initialStackSize);
         size_ = 0;
     }
 
@@ -269,7 +269,7 @@ public class AvlTree<T> implements Iterable<T> {
         // ak ho najdem, tak mazem
 
         if (found) {
-            T elementToRemove = stack_.<T>peek().getData();
+            T elementToRemove = stack_.peek().getData();
             extractNode();
             return elementToRemove;
         }
@@ -440,7 +440,7 @@ public class AvlTree<T> implements Iterable<T> {
         private final Stack<AvlTreeNode<T>> stack_;
 
         public InOrderIterator() {
-            stack_ = new Stack();
+            stack_ = new Stack<>();
             stack_.push(root_);
         }
 

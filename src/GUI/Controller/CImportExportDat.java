@@ -94,9 +94,7 @@ public class CImportExportDat extends ControllerBase {
 
     @Override
     public Runnable getRunnableOnSelection() {
-        return () -> {
-            clearFormulars();
-        };
+        return this::clearFormulars;
     }
 
     @Override
@@ -129,7 +127,7 @@ public class CImportExportDat extends ControllerBase {
 
         @Override
         public Object doInBackground(Object[] params) {
-            return new Boolean(isSpravyKatastra_.importujData(cestaKSuboru_));
+            return isSpravyKatastra_.importujData(cestaKSuboru_);
         }
 
         @Override
@@ -168,7 +166,7 @@ public class CImportExportDat extends ControllerBase {
 
         @Override
         public Object doInBackground(Object[] params) {
-            return new Boolean(isSpravyKatastra_.exportujData(cestaKSuboru_));
+            return isSpravyKatastra_.exportujData(cestaKSuboru_);
         }
 
         @Override

@@ -192,9 +192,7 @@ public class CVypisVsetkychInformacii extends  ControllerBase {
 
     @Override
     public Runnable getRunnableOnSelection() {
-        return () -> {
-            clearFormulars();
-        };
+        return this::clearFormulars;
     }
 
     @Override
@@ -220,7 +218,7 @@ public class CVypisVsetkychInformacii extends  ControllerBase {
         }
 
         @Override
-        public Object doInBackground(Object[] params) throws InterruptedException {
+        public Object doInBackground(Object[] params) {
             return napln();
         }
 

@@ -4,9 +4,9 @@ import Model.ListVlastnictva;
 
 public class TableItemObcanPodiel extends TableItemObcan {
 
-    double staryPodiel_;
-    double novyPodiel_;
-    ListVlastnictva.ObcanSPodielom obcanSPodielom_;
+    private final double staryPodiel_;
+    private double novyPodiel_;
+    private final ListVlastnictva.ObcanSPodielom obcanSPodielom_;
 
     public TableItemObcanPodiel(ListVlastnictva.ObcanSPodielom obcanSPodielom) {
         super(obcanSPodielom.getObcan().getMenoPriezvisko(), obcanSPodielom.getObcan().getRodneCislo(), obcanSPodielom.getObcan().getDatumNarodenia());

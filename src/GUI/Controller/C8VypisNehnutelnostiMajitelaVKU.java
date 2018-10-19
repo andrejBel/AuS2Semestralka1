@@ -140,7 +140,7 @@ public class C8VypisNehnutelnostiMajitelaVKU extends ControllerBase {
 
     @Override
     public Runnable getRunnableOnSelection() {
-        return () -> clearFormulars();
+        return this::clearFormulars;
     }
 
     @Override

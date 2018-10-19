@@ -139,11 +139,12 @@ public class C1VyhladanieNehnutelnostPodlaCislaKU extends ControllerBase {
         tableViewObcaniaSTrvalymPobytom.getItems().clear();
         tableViewNehnutelnosti.getItems().clear();
         tableViewObcanPodiely.getItems().clear();
+        holderNehnutelnost_.value = null;
     }
 
     @Override
     public Runnable getRunnableOnSelection() {
-        return () -> clearFormulars();
+        return this::clearFormulars;
     }
 
     @Override

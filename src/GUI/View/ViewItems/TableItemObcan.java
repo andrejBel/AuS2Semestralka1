@@ -2,9 +2,9 @@ package GUI.View.ViewItems;
 
 public class TableItemObcan {
 
-    private String menoPriezvisko_;
-    private String rodneCislo_;
-    private long datumNarodenia_;
+    private final String menoPriezvisko_;
+    private final String rodneCislo_;
+    private final long datumNarodenia_;
 
     public TableItemObcan(String menoPriezvisko, String rodneCislo, long datumNarodenia) {
         this.menoPriezvisko_ = menoPriezvisko;

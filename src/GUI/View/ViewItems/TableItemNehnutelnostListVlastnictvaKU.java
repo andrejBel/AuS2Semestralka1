@@ -2,7 +2,7 @@ package GUI.View.ViewItems;
 
 public class TableItemNehnutelnostListVlastnictvaKU extends TableItemNehnutelnostListVlastnictvaPodiel {
 
-    private long cisloKatastralnehoUzemia_;
+    private final long cisloKatastralnehoUzemia_;
 
     public TableItemNehnutelnostListVlastnictvaKU(long supisneCislo, String adresa, String popis, double podiel, long cisloListuVlastnictva, long cisloKatastralnehoUzemia) {
         super(supisneCislo, adresa, popis, podiel, cisloListuVlastnictva);

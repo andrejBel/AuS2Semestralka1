@@ -2,11 +2,11 @@ package GUI;
 
 public abstract class SimpleTask {
 
-    public abstract boolean compute();
+    protected abstract boolean compute();
 
-    public abstract void onSuccess();
+    protected abstract void onSuccess();
 
-    public abstract void onFail();
+    protected abstract void onFail();
 
     public void execute() {
         if (compute()) {

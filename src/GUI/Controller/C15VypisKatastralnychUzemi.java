@@ -70,9 +70,7 @@ public class C15VypisKatastralnychUzemi extends ControllerBase {
 
     @Override
     public Runnable getRunnableOnSelection() {
-        return () -> {
-            nacitajKatastralneUzemia();
-        };
+        return this::nacitajKatastralneUzemia;
     }
 
     @Override

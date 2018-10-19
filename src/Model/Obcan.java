@@ -8,12 +8,12 @@ import java.util.Comparator;
 public class Obcan {
 
     public static final int RODNE_CISLO_LENGTH = 16;
-    private String menoPriezvisko_;
+    private final String menoPriezvisko_;
     private String rodneCislo_;
-    private long datumNarodenia_;
+    private final long datumNarodenia_;
     private Nehnutelnost trvalyPobyt_;
     // kluc je cislo katastralnehoo uzemia, hodnota su nehnutelnosti obcana v danom uzemi
-    private AvlTree<Pair< Long, AvlTree<ListVlastnictva> >> listyVlatnictva_;
+    private final AvlTree<Pair< Long, AvlTree<ListVlastnictva> >> listyVlatnictva_;
 
     private static final  Pair< Long, AvlTree<ListVlastnictva> > dummyPair = new Pair<>((long) 0, null);
 
@@ -38,7 +38,7 @@ public class Obcan {
     public boolean zmenCisloKatastralnehoUzemiaPreListyVlastnictva(long povodneCisloKatastralnehoUzemia, long noveCislokatastralnehoUzemia) {
         dummyPair.setKey(povodneCisloKatastralnehoUzemia);
         Pair< Long, AvlTree<ListVlastnictva> > listyVlatnictvaPovodneSKU = listyVlatnictva_.findData(dummyPair);
-        if (listyVlatnictvaPovodneSKU != null) { // nemame ziadne listy v danom uzemi, nemam co presuvat
+        if (listyVlatnictvaPovodneSKU != null) {
             AvlTree<ListVlastnictva> listyVlastnictvaPovodne = listyVlatnictvaPovodneSKU.getValue();
             dummyPair.setKey(noveCislokatastralnehoUzemia);
             Pair< Long, AvlTree<ListVlastnictva> > listyVlastnictvaPreNoveKatastralneUzemie = listyVlatnictva_.findData(dummyPair);
@@ -55,8 +55,11 @@ public class Obcan {
                 }
             }
             return listyVlatnictva_.remove(listyVlatnictvaPovodneSKU) != null;
+        } else {
+            dummyPair.setKey(noveCislokatastralnehoUzemia);
+            Pair< Long, AvlTree<ListVlastnictva> > listyVlastnictvaNoveKU = listyVlatnictva_.findData(dummyPair);
+            return listyVlastnictvaNoveKU != null;
         }
-        return true;
     }
 
     public boolean pridajAleboPonechajListVlastnictva(ListVlastnictva listVlastnictva) {

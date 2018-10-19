@@ -19,13 +19,13 @@ import java.util.Optional;
 
 public class ISSpravyKatastra {
 
-    private AvlTree<Obcan> obcania_;
-    private AvlTree<KatastralneUzemie> katastralneUzemieCislo_;
-    private AvlTree<KatastralneUzemie> katastralneUzemieNazov_;
+    private final AvlTree<Obcan> obcania_;
+    private final AvlTree<KatastralneUzemie> katastralneUzemieCislo_;
+    private final AvlTree<KatastralneUzemie> katastralneUzemieNazov_;
 
-    private Obcan dummyObcan = new Obcan();
-    private KatastralneUzemie dummyKatastralneUzemie = new KatastralneUzemie();
-    private Nehnutelnost dummyNehnutelnost = new Nehnutelnost();
+    private final Obcan dummyObcan = new Obcan();
+    private final KatastralneUzemie dummyKatastralneUzemie = new KatastralneUzemie();
+    private final Nehnutelnost dummyNehnutelnost = new Nehnutelnost();
 
     private static final char DEFAULT_SEPARATOR = ';';
 
@@ -289,7 +289,7 @@ public class ISSpravyKatastra {
         return pridajNehnutelnostNaListVlastnictva(cisloKatastralnehoUzemia, cisloListuVlastnictva, supisneCisloNehnutelnosti, adresaNehnutelnosti, popisNehnutelnosti, Optional.empty());
     }
 
-    public boolean pridajNehnutelnostNaListVlastnictva(long cisloKatastralnehoUzemia, long cisloListuVlastnictva, long supisneCisloNehnutelnosti, String adresaNehnutelnosti, String popisNehnutelnosti, Optional<Holder<Nehnutelnost>> vlozenaNehnutelnost) {
+    private boolean pridajNehnutelnostNaListVlastnictva(long cisloKatastralnehoUzemia, long cisloListuVlastnictva, long supisneCisloNehnutelnosti, String adresaNehnutelnosti, String popisNehnutelnosti, Optional<Holder<Nehnutelnost>> vlozenaNehnutelnost) {
         dummyKatastralneUzemie.setCisloKatastralnehoUzemia(cisloKatastralnehoUzemia);
         KatastralneUzemie katastralneUzemie = katastralneUzemieCislo_.findData(dummyKatastralneUzemie);
         if (katastralneUzemie != null) {
@@ -403,13 +403,14 @@ public class ISSpravyKatastra {
     public boolean generujData(int pocetKatastralnychUzemi, int celkovyPocetObcanov, int pocetObyvatelovStrvalymPobytom, int pocetListovVlastnictvaVKatastralnomUzemi, int pocetVlastnikovNaListeVlastnictva, int pocetNehnutelnostiNaListeVlastnictva) {
         boolean inserted = false;
         vycistiData();
+
         ArrayList<Obcan> vlozeniObcania = new ArrayList<>(celkovyPocetObcanov);
         ArrayList<Nehnutelnost> vlozeneNehnutelnosti = new ArrayList<>(pocetObyvatelovStrvalymPobytom);
         Optional<Holder<KatastralneUzemie>> katastralneUzemieHolder = Optional.of(new Holder<>());
         Optional<Holder<Nehnutelnost>> nehnutelnostHolder = Optional.of(new Holder<>());
         Optional<Holder<ListVlastnictva>> listVlastnictvaHolder = Optional.of(new Holder<>());
         Optional<Holder<Obcan>> obcanHolder = Optional.of(new Holder<>());
-
+        Helper.ResetRodneCisloGenerator();
 
         for (int indexPocetObcanov = 0; indexPocetObcanov < celkovyPocetObcanov; indexPocetObcanov++) {
             inserted = pridajObcana(Helper.GetNahodneMenoAPriezvisko(), Helper.GetRodneCisloSoSekvencie(), Helper.GetNahodnyDatumNarodenia(), obcanHolder);
@@ -425,18 +426,18 @@ public class ISSpravyKatastra {
                 return false;
             }
             KatastralneUzemie katastralneUzemie = katastralneUzemieHolder.get().value;
-            //System.out.println("Cislo k u: " + katastralneUzemie.getCisloKatastralnehoUzemia());
-            for (int indexPocetListovVlastnictvaVkatastralnomUzemi = 1; indexPocetListovVlastnictvaVkatastralnomUzemi <= pocetListovVlastnictvaVKatastralnomUzemi; indexPocetListovVlastnictvaVkatastralnomUzemi++) {
+            long posledneSupisneCislo = 1;
+            int randomPocetListovVlastnictvaVKatastralnomUzemi = Helper.GetNahodneCislo(pocetListovVlastnictvaVKatastralnomUzemi);
+            for (int indexPocetListovVlastnictvaVkatastralnomUzemi = 1; indexPocetListovVlastnictvaVkatastralnomUzemi <= randomPocetListovVlastnictvaVKatastralnomUzemi; indexPocetListovVlastnictvaVkatastralnomUzemi++) {
                 inserted = katastralneUzemie.vlozListVlastnictva(indexPocetListovVlastnictvaVkatastralnomUzemi, listVlastnictvaHolder);
                 //System.out.println("    Cislo listu vlastnictva: " + indexPocetListovVlastnictvaVkatastralnomUzemi);
                 if (!inserted) {
                     return false;
                 }
                 ListVlastnictva listVlastnictva = listVlastnictvaHolder.get().value;
-                for (int indexPocetNehnutelnostinaListeVlastnictva = 1; indexPocetNehnutelnostinaListeVlastnictva <= pocetNehnutelnostiNaListeVlastnictva; indexPocetNehnutelnostinaListeVlastnictva++) {
-                    long supisneCislo = ((indexPocetListovVlastnictvaVkatastralnomUzemi - 1) * pocetNehnutelnostiNaListeVlastnictva) + indexPocetNehnutelnostinaListeVlastnictva;
-                    //System.out.println("        Supisne cislo: " + supisneCislo);
-                    inserted = katastralneUzemie.vlozNehnutelnostNaListVlastnictva(listVlastnictva, supisneCislo, Helper.GetNahodnaAdresa(), Helper.GetNahodnyPopis(), nehnutelnostHolder);
+                int randomPocetNehnutelnostiNaListeVlastnictva = Helper.GetNahodneCislo(pocetNehnutelnostiNaListeVlastnictva);
+                for (int indexPocetNehnutelnostinaListeVlastnictva = 1; indexPocetNehnutelnostinaListeVlastnictva <= randomPocetNehnutelnostiNaListeVlastnictva; indexPocetNehnutelnostinaListeVlastnictva++) {
+                    inserted = katastralneUzemie.vlozNehnutelnostNaListVlastnictva(listVlastnictva, posledneSupisneCislo++, Helper.GetNahodnaAdresa(), Helper.GetNahodnyPopis(), nehnutelnostHolder);
                     if (vlozeneNehnutelnosti.size() < pocetObyvatelovStrvalymPobytom) {
                         vlozeneNehnutelnosti.add(nehnutelnostHolder.get().value);
                     }
@@ -446,8 +447,10 @@ public class ISSpravyKatastra {
 
                 }
                 if (vlozeniObcania.size() > 0 && pocetVlastnikovNaListeVlastnictva > 0) {
-                    //int randomPocetVlastnikovNaListeVlastnictva = 1 + Helper.GetNahodneCislo(pocetVlastnikovNaListeVlastnictva);
-                    int randomPocetVlastnikovNaListeVlastnictva = pocetVlastnikovNaListeVlastnictva;
+                    int randomPocetVlastnikovNaListeVlastnictva = Helper.GetNahodneCislo(pocetVlastnikovNaListeVlastnictva);
+                    if (randomPocetVlastnikovNaListeVlastnictva == 0) {
+                        randomPocetVlastnikovNaListeVlastnictva = 1;
+                    }
                     int priemernyPodiel = 100 / randomPocetVlastnikovNaListeVlastnictva;
                     int celkovyPodiel = 100;
                     for (int ndexPocetVlastnikovNaListeVlastnictva = 1; ndexPocetVlastnikovNaListeVlastnictva <= randomPocetVlastnikovNaListeVlastnictva ; ndexPocetVlastnikovNaListeVlastnictva++) {
@@ -682,7 +685,7 @@ public class ISSpravyKatastra {
 
         result.clear();
         //if empty, return!
-        if (cvsLine == null && cvsLine.isEmpty()) {
+        if (cvsLine == null || cvsLine.isEmpty()) {
             return;
         }
         char separator = DEFAULT_SEPARATOR;

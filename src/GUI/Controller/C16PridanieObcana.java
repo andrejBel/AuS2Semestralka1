@@ -1,21 +1,15 @@
 package GUI.Controller;
 
-import GUI.AsyncTask;
 import GUI.SimpleTask;
 import InformacnySystem.ISSpravyKatastra;
 import Model.Obcan;
 import Utils.Helper;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXDatePicker;
-import com.jfoenix.controls.JFXSpinner;
 import com.jfoenix.controls.JFXTextField;
 import com.jfoenix.validation.RequiredFieldValidator;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.fxml.FXML;
-import javafx.geometry.Pos;
-import javafx.scene.control.Label;
-import javafx.scene.input.KeyCode;
-import javafx.scene.paint.Color;
 
 import java.time.LocalDate;
 import java.util.Arrays;
@@ -102,9 +96,7 @@ public class C16PridanieObcana extends ControllerBase {
 
     @Override
     public Runnable getRunnableOnSelection() {
-        return () -> {
-            clearFormulars();
-        };
+        return this::clearFormulars;
     }
 
     private void clearFormulars() {
@@ -132,6 +124,7 @@ public class C16PridanieObcana extends ControllerBase {
         @Override
         public void onSuccess() {
             showSuccessDialog("Občan úspešne pridaný");
+            clearFormulars();
         }
 
         @Override

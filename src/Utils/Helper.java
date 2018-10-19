@@ -32,12 +32,13 @@ import static javafx.beans.binding.Bindings.createBooleanBinding;
 
 public class Helper {
 
-    private static Random GENERATOR = new Random(10);
-    private static SimpleDateFormat SIMPLE_DATE_FORMASTTER =  new SimpleDateFormat("dd.MM.yyyy");
-    public static final long NUMBER_OF_MILLISECONDS_IN_DAY = 86400000L;
+    private static final Random GENERATOR = new Random();
+    private static final SimpleDateFormat SIMPLE_DATE_FORMASTTER =  new SimpleDateFormat("dd.MM.yyyy");
+    private static final long NUMBER_OF_MILLISECONDS_IN_DAY = 86400000L;
     public static final String EMPTY_WARNING_MESSAGE = "Vstup musí byť zadaný";
-    public static final String EMPTY_WARNING_MESSAGE_NUMBER = "Vstup musí byť celé číslo";
-    private static GeneratorId RODNE_CISLO_GENERATOR_ID = new GeneratorId(Long.valueOf("1111111111111111"));
+    private static final String EMPTY_WARNING_MESSAGE_NUMBER = "Vstup musí byť celé číslo";
+    private static final Long GENERATOR_INITIAL_VALUE = Long.valueOf("1111111111111111");
+    private static final GeneratorId RODNE_CISLO_GENERATOR_ID = new GeneratorId(GENERATOR_INITIAL_VALUE);
 
     private Helper() {}
 
@@ -57,12 +58,18 @@ public class Helper {
 
     // generuje cislo v rozsahy 0 az max - 1
     public static int GetNahodneCislo(int max) {
-        int generated = GENERATOR.nextInt(max);
-        return generated;
+        if (max <= 0) {
+            return 0;
+        }
+        return GENERATOR.nextInt(max);
     }
 
     public static int GetNahodneCislo() {
         return GENERATOR.nextInt();
+    }
+
+    public static void ResetRodneCisloGenerator() {
+        RODNE_CISLO_GENERATOR_ID.setValue(GENERATOR_INITIAL_VALUE);
     }
 
     public static String GetRodneCisloSoSekvencie() {
@@ -181,11 +188,11 @@ public class Helper {
     }
 
     public static boolean DisableButton(JFXButton button, List<SimpleBooleanProperty> simpleBooleanProperties, Runnable validationCheck) {
-        if (button.isDisable() == false && simpleBooleanProperties.stream().anyMatch(simpleBooleanProperty -> simpleBooleanProperty.get() == false)) {
+        if (!button.isDisable() && simpleBooleanProperties.stream().anyMatch(simpleBooleanProperty -> !simpleBooleanProperty.get())) {
             validationCheck.run();
             button.disableProperty().unbind();
             button.disableProperty().bind( createBooleanBinding(
-                    () -> simpleBooleanProperties.stream().anyMatch(simpleBooleanProperty -> simpleBooleanProperty.get() == false),(Observable[]) simpleBooleanProperties.toArray()
+                    () -> simpleBooleanProperties.stream().anyMatch(simpleBooleanProperty -> !simpleBooleanProperty.get()),(Observable[]) simpleBooleanProperties.toArray()
             ));
             return true;
         }
@@ -255,6 +262,7 @@ public class Helper {
                     protected void updateItem(T item, boolean empty) {
                         super.updateItem(item, empty);
                         if (item == null || empty) {
+                            setStyle("");
                             return;
                         }
                         if (isUniqueFunction.apply(item)) {
@@ -281,7 +289,7 @@ public class Helper {
         }
         if (!sorted) {
             System.out.println("musimTriedit");
-            pouziteIndexy.sort((o1, o2) -> Long.compare(o1, o2));
+            pouziteIndexy.sort(Long::compare);
         }
         vysledok.clear();
         long generovane = start;
@@ -319,6 +327,9 @@ public class Helper {
             return ++value_;
         }
 
+        public void setValue(long value) {
+            this.value_ = value - 1;
+        }
     }
 
 
@@ -352,10 +363,6 @@ public class Helper {
 
     }
 
-    /**
-     * Get table selection and copy it to the clipboard.
-     * @param table
-     */
     public static void copySelectionToClipboard(TableView<?> table) {
 
         StringBuilder clipboardString = new StringBuilder();
@@ -369,7 +376,7 @@ public class Helper {
             int row = position.getRow();
             int col = position.getColumn();
 
-            Object cell = (Object) table.getColumns().get(col).getCellData(row);
+            Object cell = table.getColumns().get(col).getCellData(row);
 
             // null-check: provide empty string for nulls
             if (cell == null) {
@@ -406,7 +413,7 @@ public class Helper {
         Clipboard.getSystemClipboard().setContent(clipboardContent);
     }
 
-    private static List<String> MENA = Arrays.asList(
+    private static final List<String> MENA = Arrays.asList(
             "Adam",
             "Adrian",
             "Adriana",
@@ -785,7 +792,7 @@ public class Helper {
             "Zuzana"
     );
 
-    private static List<String> PRIEZVISKA = Arrays.asList(
+    private static final List<String> PRIEZVISKA = Arrays.asList(
             "Abaffy",
             "Abrahamek",
             "Abrosimov",
@@ -2787,7 +2794,7 @@ public class Helper {
             "Kuris"
     );
 
-    private static List<String> KATASTRALNE_UZEMIA = Arrays.asList(
+    private static final List<String> KATASTRALNE_UZEMIA = Arrays.asList(
             "Klokocov",
             "Dolna Tizina",
             "Zuberec",
@@ -3633,7 +3640,7 @@ public class Helper {
             "Oravska Podhora"
             );
 
-    private static List<String> ADRESY = Arrays.asList(
+    private static final List<String> ADRESY = Arrays.asList(
             "Castkovce, Castkovce 332, 91627",
             "Zilina, Karpatska 2/32, 01008",
             "Puchov, Namestie slobody 165, 02001",
@@ -5957,7 +5964,7 @@ public class Helper {
             "Levice, kpt.Jarosa 20, 93405"
     );
 
-    private static List<String> POPIS = Arrays.asList(
+    private static final List<String> POPIS = Arrays.asList(
             "No mea malis viderer percipit",
             "Semper dissentiet ut his",
             "At populo torquatos est",

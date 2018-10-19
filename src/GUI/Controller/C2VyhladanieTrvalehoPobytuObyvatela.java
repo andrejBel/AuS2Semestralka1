@@ -139,11 +139,13 @@ public class C2VyhladanieTrvalehoPobytuObyvatela extends ControllerBase {
         tableViewObcaniaSTrvalymPobytom.getItems().clear();
         tableViewNehnutelnosti.getItems().clear();
         tableViewObcanPodiely.getItems().clear();
+        holderNehnutelnost_.value = null;
+        holderObcan_.value = null;
     }
 
     @Override
     public Runnable getRunnableOnSelection() {
-        return () -> clearFormulars();
+        return this::clearFormulars;
     }
 
     @Override
@@ -171,8 +173,10 @@ public class C2VyhladanieTrvalehoPobytuObyvatela extends ControllerBase {
         public boolean compute() {
 
             Obcan obcan = isSpravyKatastra_.najdiObcana(textFieldRodneCislo.getText());
-            holderObcan_.value = obcan;
-            holderNehnutelnost_.value = obcan.getTrvalyPobyt();
+            if (obcan != null) {
+                holderObcan_.value = obcan;
+                holderNehnutelnost_.value = obcan.getTrvalyPobyt();
+            }
             return obcan != null;
         }
 
@@ -190,8 +194,6 @@ public class C2VyhladanieTrvalehoPobytuObyvatela extends ControllerBase {
             } else {
                 showSuccessDialog("Občan nemá trvalý pobyt");
             }
-
-
 
 
         }

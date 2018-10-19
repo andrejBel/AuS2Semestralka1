@@ -5,7 +5,6 @@ import GUI.View.ViewItems.TableItemNehnutelnost;
 import GUI.View.ViewItems.TableItemObcanPodiel;
 import InformacnySystem.ISSpravyKatastra;
 import Model.ListVlastnictva;
-import Model.Nehnutelnost;
 import Model.Obcan;
 import Utils.Helper;
 import Utils.MyDoubleStringConverter;
@@ -20,8 +19,6 @@ import javafx.fxml.FXML;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.TextFieldTableCell;
-import javafx.scene.input.KeyCode;
-import structures.AvlTree;
 
 import java.util.Arrays;
 import java.util.List;
@@ -128,7 +125,7 @@ public class C12ZapisZmenaMajetkovehoPodielu extends ControllerBase {
         });
 
         tableColumnNovyPodiel.setOnEditCommit(event -> {
-            final Double value = event.getNewValue() != null ?
+            final double value = event.getNewValue() != null ?
                     event.getNewValue().doubleValue() : (event.getOldValue() != null ? event.getOldValue().doubleValue() : 0.0);
             ((TableItemObcanPodiel) event.getTableView().getItems()
                     .get(event.getTablePosition().getRow())).setNovyPodiel(value);
@@ -145,7 +142,7 @@ public class C12ZapisZmenaMajetkovehoPodielu extends ControllerBase {
                 showWarningDialog("Suma podielov musí byť rovná 100");
                 return;
             }
-            tableViewObcanPodielyItems.forEach(tableItemObcanPodiel -> tableItemObcanPodiel.setObcanoviNovyPodiel());
+            tableViewObcanPodielyItems.forEach(TableItemObcanPodiel::setObcanoviNovyPodiel);
             showSuccessDialog("Nové podiely boli uložené");
         });
 
@@ -176,7 +173,7 @@ public class C12ZapisZmenaMajetkovehoPodielu extends ControllerBase {
 
     @Override
     public Runnable getRunnableOnSelection() {
-        return () -> clearFormulars();
+        return this::clearFormulars;
     }
 
 

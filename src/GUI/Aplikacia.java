@@ -15,7 +15,7 @@ import java.util.List;
 public class Aplikacia {
 
     //IS
-    private ISSpravyKatastra isSpravyKatastra_ = new ISSpravyKatastra();
+    private final ISSpravyKatastra isSpravyKatastra_ = new ISSpravyKatastra();
 
     // javafx
     private JFXTabPane tabPane_;

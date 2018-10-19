@@ -8,7 +8,6 @@ import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextField;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.fxml.FXML;
-import javafx.scene.input.KeyCode;
 
 import java.util.Arrays;
 import java.util.List;
@@ -66,9 +65,7 @@ public class C10PridanieTrvalehoPobytu extends ControllerBase {
 
     @Override
     public Runnable getRunnableOnSelection() {
-        return () -> {
-            clearFormulars();
-        };
+        return this::clearFormulars;
     }
 
     private void clearFormulars() {

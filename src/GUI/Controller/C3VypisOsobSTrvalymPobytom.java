@@ -93,7 +93,7 @@ public class C3VypisOsobSTrvalymPobytom extends ControllerBase {
 
     @Override
     public Runnable getRunnableOnSelection() {
-        return () -> clearFormulars();
+        return this::clearFormulars;
     }
 
     @Override

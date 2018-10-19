@@ -16,7 +16,7 @@ public class MyDoubleStringConverter extends NumberStringConverter {
         }
 
     }
-    public boolean isNumber(String value) {
+    private boolean isNumber(String value) {
         int size = value.length();
         value = value.trim();
         int numberOfDots = 0;

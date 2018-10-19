@@ -8,21 +8,21 @@ public abstract class AsyncTask<T1, T2, T3> {
 
     private T1[] params;
 
-    public abstract void onPreExecute();
+    protected abstract void onPreExecute();
 
-    public abstract T3 doInBackground(T1... params) throws InterruptedException;
+    protected abstract T3 doInBackground(T1... params);
 
-    public abstract void onPostExecute(T3 params);
+    protected abstract void onPostExecute(T3 params);
 
-    public abstract void progressCallback(T2... params);
+    protected abstract void progressCallback(T2... params);
 
-    public abstract void onFail(Exception e);
+    protected abstract void onFail(Exception e);
 
     public void publishProgress(final T2... progressParams) {
         Platform.runLater(() -> progressCallback(progressParams));
     }
 
-    public final Thread backGroundThread = new Thread(new Runnable() {
+    private final Thread backGroundThread = new Thread(new Runnable() {
         @Override
         public void run() {
 

@@ -2,8 +2,8 @@ package structures;
 
 public class AvlTreeNode<T> {
 
-    private AvlTreeNode leftSon_;
-    private AvlTreeNode rightSon_;
+    private AvlTreeNode<T> leftSon_;
+    private AvlTreeNode<T> rightSon_;
     private T data_;
     private byte height_;
 
@@ -92,11 +92,11 @@ public class AvlTreeNode<T> {
     }
 
     boolean isLeftSon(AvlTreeNode<T> parent) {
-        return parent == null ? false : parent.getLeftSon() == this;
+        return parent != null && parent.getLeftSon() == this;
     }
 
     boolean isRightSon(AvlTreeNode<T> parent) {
-        return parent == null ? false : parent.getRightSon() == this;
+        return parent != null && parent.getRightSon() == this;
     }
 
     @Override

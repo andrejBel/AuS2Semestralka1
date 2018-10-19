@@ -4,12 +4,7 @@ import GUI.AsyncTask;
 import InformacnySystem.ISSpravyKatastra;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXSlider;
-import com.jfoenix.controls.JFXSpinner;
 import javafx.fxml.FXML;
-import javafx.geometry.Pos;
-import javafx.scene.control.Label;
-import javafx.scene.paint.Color;
-import javafx.scene.paint.Paint;
 
 public class CGenerator extends ControllerBase {
 
@@ -72,7 +67,7 @@ public class CGenerator extends ControllerBase {
         }
 
         @Override
-        public Object doInBackground(Object[] params) throws InterruptedException {
+        public Object doInBackground(Object[] params) {
             int pocetKatastralnychUzemi = (int) sliderKatastralneUzemie_.getValue();
             int celkovyPocetObcanov = (int) sliderObcania_.getValue();
             int pocetObyvatelovSTravlymPobytom = (int) sliderPocetObyvatelovSTrvalymPobytom.getValue();
@@ -84,7 +79,7 @@ public class CGenerator extends ControllerBase {
             System.out.println("pocetListovVlastnictvaVKatastralnomUzemi: " + pocetListovVlastnictvaVKatastralnomUzemi);
             System.out.println("pocetVlastnikovNaListeVlastnictva: " + pocetVlastnikovNaListeVlastnictva);
             System.out.println("pocetNehnutelnostiNaListeVlastnictva: " + pocetNehnutelnostiNaListeVlastnictva);
-            return new Boolean(isSpravyKatastra_.generujData( pocetKatastralnychUzemi, celkovyPocetObcanov, pocetObyvatelovSTravlymPobytom, pocetListovVlastnictvaVKatastralnomUzemi, pocetVlastnikovNaListeVlastnictva, pocetNehnutelnostiNaListeVlastnictva));
+            return isSpravyKatastra_.generujData(pocetKatastralnychUzemi, celkovyPocetObcanov, pocetObyvatelovSTravlymPobytom, pocetListovVlastnictvaVKatastralnomUzemi, pocetVlastnikovNaListeVlastnictva, pocetNehnutelnostiNaListeVlastnictva);
         }
 
         @Override

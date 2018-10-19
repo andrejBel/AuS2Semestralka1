@@ -66,9 +66,7 @@ public class C22OdstranenieKatastralnehoUzemia extends ControllerBase {
 
     @Override
     public Runnable getRunnableOnSelection() {
-        return () -> {
-            clearFormulars();
-        };
+        return this::clearFormulars;
     }
 
     private void clearFormulars() {

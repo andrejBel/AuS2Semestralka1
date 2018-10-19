@@ -2,9 +2,7 @@ package Model;
 
 import structures.AvlTree;
 
-import javax.xml.ws.Holder;
 import java.util.Comparator;
-import java.util.Optional;
 
 public class ListVlastnictva {
 
@@ -46,8 +44,8 @@ public class ListVlastnictva {
 
     private KatastralneUzemie katastralneUzemie_;
     private long cisloListuVlastnictva_;
-    private AvlTree<Nehnutelnost> nehnutelnostiNaListeVlastnictva_;
-    private AvlTree<ObcanSPodielom> vlastniciSPodielom_;
+    private final AvlTree<Nehnutelnost> nehnutelnostiNaListeVlastnictva_;
+    private final AvlTree<ObcanSPodielom> vlastniciSPodielom_;
 
     private static final ObcanSPodielom dummyObcanSPodielom = new ObcanSPodielom();
     private static final Nehnutelnost dummyNehnutelnost = new Nehnutelnost();
@@ -96,12 +94,20 @@ public class ListVlastnictva {
     }
 
     public boolean pridajAleboPonechajVlastnika(Obcan obcan) {
-        return pridajAleboPonechajVlastnika(obcan, 0.0);
+        ObcanSPodielom obcanNaPridanie = new ObcanSPodielom(obcan, 0.0);
+        vlastniciSPodielom_.insert(obcanNaPridanie);
+        return true;
     }
 
     public boolean pridajAleboPonechajVlastnika(Obcan obcan, double podiel) {
-        ObcanSPodielom obcanNaPridanie = new ObcanSPodielom(obcan, podiel);
-        boolean inserted = vlastniciSPodielom_.insert(obcanNaPridanie);
+        dummyObcanSPodielom.setObcan(obcan);
+        ObcanSPodielom obcanSPodielom = vlastniciSPodielom_.findData(dummyObcanSPodielom);
+        if (obcanSPodielom == null) {
+            ObcanSPodielom obcanNaPridanie = new ObcanSPodielom(obcan, podiel);
+            vlastniciSPodielom_.insert(obcanNaPridanie);
+        } else {
+            obcanSPodielom.setPodiel(obcanSPodielom.getPodiel() + podiel);
+        }
         return true;
     }
 
@@ -146,17 +152,15 @@ public class ListVlastnictva {
             nehnutelnost.setListVlastnictva(inyListVlastnictva);
             inserted = inyListVlastnictva.vlozNehnutelnostNaListVlastnictva(nehnutelnost);
             if (!inserted) {
-                System.out.println("tu by si nemal prist");
                 return false;
             }
         }
+        long pocetVlastnikovPredMergom = inyListVlastnictva.vlastniciSPodielom_.getSize();
         for (ObcanSPodielom obcanSPodielom : vlastniciSPodielom_) {
-
-            if (inyListVlastnictva.vlastniciSPodielom_.getSize() > 0) {
-                // mohlo dojst k mergu, nastavim podiel na 0
+            boolean novyVlastnik = inyListVlastnictva.vlastniciSPodielom_.insert(obcanSPodielom);
+            if (novyVlastnik && pocetVlastnikovPredMergom > 0) {
                 obcanSPodielom.setPodiel(0.0);
             }
-            inyListVlastnictva.vlastniciSPodielom_.insert(obcanSPodielom);
             obcanSPodielom.getObcan().odstranListVlastnictva(this);
             obcanSPodielom.getObcan().pridajAleboPonechajListVlastnictva(inyListVlastnictva);
         }
