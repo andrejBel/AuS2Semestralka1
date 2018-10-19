@@ -1,7 +1,7 @@
 package Model;
 
 import Utils.Helper;
-import structures.AvlTree;
+import Structures.AvlTree;
 
 import javax.xml.ws.Holder;
 import java.util.ArrayList;

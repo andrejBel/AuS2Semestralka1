@@ -6,8 +6,7 @@ import Model.Nehnutelnost;
 import Model.Obcan;
 import Utils.Helper;
 import Utils.Pair;
-import Utils.Status;
-import structures.AvlTree;
+import Structures.AvlTree;
 
 import javax.xml.ws.Holder;
 import java.io.*;
@@ -717,22 +716,6 @@ public class ISSpravyKatastra {
 
     public AvlTree<KatastralneUzemie> getKatastralneUzemia() {
         return katastralneUzemieCislo_;
-    }
-
-    private boolean skontrolujVkladanieKatastralnehoUzemia(Optional<Status> status, KatastralneUzemie katastralneUzemie, boolean result) {
-        if (!result) {
-            status.ifPresent(s -> s.setStatus_(false));
-            status.ifPresent(s -> s.setMessage("Nepodarilo sa vložiť katastrálne územie: " + katastralneUzemie) );
-        }
-        return result;
-    }
-
-    private boolean skontrolujVkladanieObcana(Optional<Status> status, Obcan obcan, boolean result) {
-        if (!result) {
-            status.ifPresent(s -> s.setStatus_(false));
-            status.ifPresent(s -> s.setMessage("Nepodarilo sa vložiť občana: " + obcan) );
-        }
-        return result;
     }
 
 }

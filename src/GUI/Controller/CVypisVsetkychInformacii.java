@@ -12,7 +12,7 @@ import com.jfoenix.controls.JFXTreeView;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.TreeItem;
-import structures.AvlTree;
+import Structures.AvlTree;
 
 public class CVypisVsetkychInformacii extends  ControllerBase {
 

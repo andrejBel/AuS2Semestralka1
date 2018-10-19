@@ -17,7 +17,7 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-import structures.AvlTree;
+import Structures.AvlTree;
 
 import java.util.Arrays;
 import java.util.List;

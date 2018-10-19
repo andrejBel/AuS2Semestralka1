@@ -7,7 +7,7 @@ import InformacnySystem.ISSpravyKatastra;
 import Model.ListVlastnictva;
 import Model.Obcan;
 import Utils.Helper;
-import Utils.MyDoubleStringConverter;
+import GUI.MyDoubleStringConverter;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextField;
 import javafx.beans.property.SimpleBooleanProperty;

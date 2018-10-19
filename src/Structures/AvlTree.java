@@ -1,4 +1,4 @@
-package structures;
+package Structures;
 
 import java.util.*;
 

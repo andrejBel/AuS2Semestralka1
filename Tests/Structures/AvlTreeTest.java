@@ -1,4 +1,4 @@
-package structures;
+package Structures;
 
 import org.junit.Assert;
 import org.junit.Before;
@@ -7,16 +7,13 @@ import org.junit.Test;
 import java.util.*;
 
 
-import java.util.stream.IntStream;
-
-
 public class AvlTreeTest {
 
     AvlTree<Integer> testAvlTreeAscendant_;
 
     @Before
     public void initialize() {
-        testAvlTreeAscendant_ = new AvlTree<>((o1, o2) -> o1 - o2);  // 1 < 2
+        testAvlTreeAscendant_ = new AvlTree<>((o1, o2) -> o1 - o2, Byte.MAX_VALUE);  // 1 < 2
     }
 
     @Test
@@ -49,9 +46,9 @@ public class AvlTreeTest {
         for (int j = 0; j < iteration; j++) {
             testAvlTreeAscendant_.clear();
             long start = System.nanoTime();
-            for (int i = 10000; i > 0; i--) {
+            for (int i = 10000000; i > 0; i--) {
                 Assert.assertTrue(testAvlTreeAscendant_.insert(i));
-                Assert.assertTrue("Nie je spnena podmienka AVL stromu", testAvlTreeAscendant_.checkAvlTreeConditions());
+                //Assert.assertTrue("Nie je spnena podmienka AVL stromu", testAvlTreeAscendant_.checkAvlTreeConditions());
             }
             long end = (System.nanoTime() - start) / 1000000;
             totalTime += end;

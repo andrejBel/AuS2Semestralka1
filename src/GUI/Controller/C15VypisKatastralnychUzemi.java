@@ -9,7 +9,7 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-import structures.AvlTree;
+import Structures.AvlTree;
 
 public class C15VypisKatastralnychUzemi extends ControllerBase {
 

@@ -1,6 +1,6 @@
 package Model;
 
-import structures.AvlTree;
+import Structures.AvlTree;
 
 public class Nehnutelnost {
 

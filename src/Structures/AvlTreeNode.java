@@ -1,4 +1,4 @@
-package structures;
+package Structures;
 
 public class AvlTreeNode<T> {
 

@@ -1,7 +1,7 @@
 package Model;
 
 import Utils.Pair;
-import structures.AvlTree;
+import Structures.AvlTree;
 
 import java.util.Comparator;
 

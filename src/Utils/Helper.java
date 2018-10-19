@@ -18,7 +18,7 @@ import javafx.event.EventHandler;
 import javafx.scene.control.*;
 import javafx.scene.input.*;
 import javafx.util.Callback;
-import structures.AvlTree;
+import Structures.AvlTree;
 
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
