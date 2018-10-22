@@ -32,6 +32,7 @@ public class ISSpravyKatastra {
         this.obcania_ = new AvlTree<>((o1, o2) -> o1.getRodneCislo().compareTo(o2.getRodneCislo()));
         this.katastralneUzemieCislo_ = new AvlTree<>(Comparator.comparingLong(KatastralneUzemie::getCisloKatastralnehoUzemia));
         this.katastralneUzemieNazov_ = new AvlTree<>((o1, o2) -> o1.getNazov().compareTo(o2.getNazov()));
+        /*
         pridajObcana("Andrej Beliancin", "1111111111111111", Helper.GetNahodnyDatumNarodenia());
         pridajObcana("Gabriela Beliancinova", "1111111111111112", Helper.GetNahodnyDatumNarodenia());
         pridajObcana("Mirka Beliancinova", "1111111111111113", Helper.GetNahodnyDatumNarodenia());
@@ -73,6 +74,7 @@ public class ISSpravyKatastra {
 
         //System.out.println(presun ? " presun ok" : "presun nie OK!!!!!!");
         //importujData("Export/skutocnetest.csv");
+        */
     }
 
     // 1
