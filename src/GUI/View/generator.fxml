@@ -32,13 +32,13 @@
                     </rowConstraints>
                     <children>
                         <Label text="Počet katastrálnych území" />
-                        <JFXSlider fx:id="sliderKatastralneUzemie_" blockIncrement="100.0" majorTickUnit="250.0" max="4000.0" showTickLabels="true" value="0" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" />
+                        <JFXSlider fx:id="sliderKatastralneUzemie_" blockIncrement="100.0" majorTickUnit="250.0" max="5000.0" showTickLabels="true" value="0" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" />
                         <Label text="Celkový počet občanov" GridPane.rowIndex="1" />
                         <JFXSlider fx:id="sliderObcania_" blockIncrement="100.0" majorTickUnit="250.0" max="100000.0" showTickLabels="true" value="0" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" />
                         <Label text="Počet občanov s trvalým pobytom" GridPane.rowIndex="2" />
                         <JFXSlider fx:id="sliderPocetObyvatelovSTrvalymPobytom" blockIncrement="100.0" majorTickUnit="250.0" max="100000.0" showTickLabels="true" value="0" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" />
                         <Label text="Max. počet listov vlastníctva v katastrálnom území" GridPane.rowIndex="3" />
-                        <JFXSlider fx:id="sliderListVlastnictva_" blockIncrement="1.0" majorTickUnit="10.0" showTickLabels="true" value="0" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="3" />
+                        <JFXSlider fx:id="sliderListVlastnictva_" blockIncrement="10.0" majorTickUnit="100.0" showTickLabels="true" value="0" max="500.0" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="3" />
                         <Label text="Max. počet vlastníkov na liste vlastníctva" GridPane.rowIndex="4" />
                         <JFXSlider fx:id="sliderPocetObyvatelovVListeVl_" blockIncrement="1.0" majorTickUnit="2.0" max="20.0" showTickLabels="true" value="0" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="4" />
                         <Label text="Max. počet nehnuteľností na liste vlastníctva" GridPane.rowIndex="5" />
